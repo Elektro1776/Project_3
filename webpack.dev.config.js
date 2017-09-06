@@ -9,12 +9,13 @@ const common = require('./webpack.common.config.js');
 
 module.exports = merge(common, {
   devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './dist',
-  },
+  // devServer: {
+  //   contentBase: './dist',
+  // },
   entry: './client/index.jsx',
   output: {
     path: path.resolve('dist'),
     filename: 'index_bundle.js',
+    publicPath: '/',
   },
 });
