@@ -4,7 +4,10 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
+    "react-router": "^4.2.0",
     "redux": "^3.7.2",
+    "redux-observable": "^0.16.0",
+    "rxjs": "^5.4.3",
     "yarn": "^0.27.5"
   }
 }
