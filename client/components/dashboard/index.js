@@ -1,7 +1,7 @@
 
 /*  eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 
 class Dashboard extends Component {
   constructor(props) {
@@ -21,11 +21,11 @@ class Dashboard extends Component {
   }
 }
 
-function mapStateToProps(state, ownProps) {
-  return {};
-}
-
-function bindActions(dispatch) {
-  return {};
-}
-export default connect(mapStateToProps, bindActions)(Dashboard);
+// function mapStateToProps(state, ownProps) {
+//   return {};
+// }
+//
+// function bindActions(dispatch) {
+//   return {};
+// }
+export default Dashboard;
