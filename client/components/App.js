@@ -2,7 +2,7 @@
     ./client/components/App.jsx
 */
 import React, { Component } from 'react';
-// import Dashboard from './dashboard';
+import Dashboard from './dashboard';
 class App extends Component {
   state = {
     answer: 42
@@ -18,8 +18,8 @@ class App extends Component {
   render() {
     return(
       <div style={{ textAlign: 'center' }}>
-        <h1>Hello uTile! Rawr { this.state.answer }</h1>
-        {/* <Dashboard /> */}
+        {/* <h1>Hello uTile! Rawr { this.state.answer }</h1> */}
+        <Dashboard />
       </div>
     );
   }

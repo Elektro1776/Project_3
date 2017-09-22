@@ -2,3 +2,9 @@ language: node_js
 node_js:
   - "node"
   - "8"
+
+cache:
+  yarn: true
+
+env:
+  - PORT=3000
