@@ -3,20 +3,20 @@
 */
 import React, { Component } from 'react';
 import Dashboard from './dashboard';
+
 class App extends Component {
   state = {
-    answer: 42
-  }
-  asyncFunc = () => {
-    return Promise.resolve(37);
-  }
+    answer: 42,
+  };
+
   async componentDidMount() {
     this.setState({
-      answer: await this.asyncFunc()
+      answer: await this.asyncFunc(),
     });
   }
+  asyncFunc = () => Promise.resolve(37);
   render() {
-    return(
+    return (
       <div style={{ textAlign: 'center' }}>
         {/* <h1>Hello uTile! Rawr { this.state.answer }</h1> */}
         <Dashboard />
