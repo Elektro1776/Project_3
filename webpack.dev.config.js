@@ -9,13 +9,24 @@ const common = require('./webpack.common.config.js');
 
 module.exports = merge(common, {
   devtool: 'inline-source-map',
-  // devServer: {
-  //   contentBase: './dist',
-  // },
-  entry: './client/index.jsx',
+  entry: [
+    'babel-polyfill', './client/index.js',
+  ],
   output: {
-    path: path.resolve('dist'),
-    filename: 'index_bundle.js',
+    path: path.resolve(__dirname, 'server/src/public'),
+    filename: 'bundle.js',
     publicPath: '/',
   },
+  module: {
+    rules: [{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      use: {
+        loader: 'babel-loader',
+        options: {
+          presets: ['react', 'env', 'stage-2']
+        }
+      }
+    }]
+  }
 });
