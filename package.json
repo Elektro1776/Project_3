@@ -33,7 +33,7 @@
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-dom-server": "^0.0.5",
-    "react-hot-loader": "3.x",
+    "react-hot-loader": "3.0.0-beta.7",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"
   },
