@@ -19,9 +19,9 @@ module.exports = merge(common, {
     './client/index.js',
   ],
   output: {
-    path: path.join(__dirname, 'build/public'),
+    path: path.join(__dirname, 'build/dist'),
     filename: 'bundle.js',
-    publicPath: 'http://localhost:3000/public',
+    publicPath: 'http://localhost:3000/dist',
   },
   module: {
     rules: [{
@@ -37,7 +37,7 @@ module.exports = merge(common, {
   },
   plugins: [
     // webpack.optimize.OccurenceOrderPlugin(),
-    // new CleanWebpackPlugin(['build/public']),
+    new CleanWebpackPlugin(['build/public']),
     new webpack.HotModuleReplacementPlugin(),
 
   ],

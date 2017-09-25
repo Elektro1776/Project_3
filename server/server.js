@@ -43,10 +43,13 @@ console.info('it', it);
 //   hearbeat: 4000,
 // }));
 // app.use(require('webpack-hot-middleware')(compiler));
-app.use(express.static(path.join(__dirname, '../build/public/')));
+app.use(express.static(path.join(__dirname, '../build/dist/')));
 app.get('/', async (req, res) => {
   res.render('index', { answer: 42 });
 });
+app.get('/test', (req, res) => {
+  res.json({ Hello: 'uTile'})
+})
 // Serve the files on port 3000.
 app.listen(config.port, () => {
   console.info('Example app listening on port 3000!\n');
