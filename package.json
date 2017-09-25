@@ -6,7 +6,7 @@
   "author": "Austin <elektricwebdesign@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "pm2 start server/server.js --watch --interpreter babel-node",
+    "dev": "babel-node server/server.js",
     "webpack": "webpack --config webpack.dev.config.js -wd",
     "test": "jest",
     "test:watchAll": "jest --watchAll",
@@ -31,6 +31,9 @@
     "path": "^0.12.7",
     "pm2": "^2.7.0",
     "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-dom-server": "^0.0.5",
+    "react-hot-loader": "3.0.0-beta.7",
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"
   },
@@ -46,6 +49,7 @@
     "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.2",
     "babel-preset-es2015": "^6.24.1",
+    "babel-preset-react-hmre": "^1.1.1",
     "clean-webpack-plugin": "^0.1.16",
     "eslint": "^4.7.2",
     "eslint-config-airbnb": "^15.1.0",
@@ -56,6 +60,7 @@
     "jest": "^21.1.0",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack-dev-middleware": "^1.12.0",
+    "webpack-hot-middleware": "^2.19.1",
     "webpack-merge": "^4.1.0"
   }
 }
