@@ -1,21 +1,27 @@
 /*
     ./webpack.config.js
 */
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const path = require('path');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+
 const common = require('./webpack.common.config.js');
 
 
 module.exports = merge(common, {
-  devtool: 'inline-source-map',
+  devtool: 'eval',
   entry: [
-    'babel-polyfill', './client/index.js',
+    'babel-polyfill/dist/polyfill.js',
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client?http://localhost:3000',
+    'webpack/hot/only-dev-server',
+    './client/index.js',
   ],
   output: {
-    path: path.resolve(__dirname, 'server/src/public'),
+    path: path.join(__dirname, 'build/public'),
     filename: 'bundle.js',
-    publicPath: '/',
+    publicPath: 'http://localhost:3000/public',
   },
   module: {
     rules: [{
@@ -24,9 +30,15 @@ module.exports = merge(common, {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['react', 'env', 'stage-2']
-        }
-      }
-    }]
-  }
+          presets: ['react', ['env', { targets: { node: true } }], 'stage-2'],
+        },
+      },
+    }],
+  },
+  plugins: [
+    // webpack.optimize.OccurenceOrderPlugin(),
+    // new CleanWebpackPlugin(['build/public']),
+    new webpack.HotModuleReplacementPlugin(),
+
+  ],
 });

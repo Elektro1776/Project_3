@@ -1,6 +1,5 @@
 const webpack = require('webpack');
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -13,13 +12,12 @@ module.exports = {
   //   app: './client/index.jsx',
   // },
   plugins: [
-    new CleanWebpackPlugin(['dist']),
     HtmlWebpackPluginConfig,
   ],
-  output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, './client/public/dist'),
-  },
+  // output: {
+  //   filename: '[name].bundle.js',
+  //   path: path.resolve(__dirname, '/server/src/public'),
+  // },
   // module: {
   //   loaders: [
   //     { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },

@@ -15,7 +15,7 @@ class Dashboard extends Component {
         className="container-fluid"
         style={{ backgroundColor: 'blue' }}
       >
-        <h1>Hello World</h1>
+        <h1>Woooooo!</h1>
       </div>
     );
   }

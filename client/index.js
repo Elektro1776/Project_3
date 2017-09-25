@@ -2,14 +2,25 @@
 /* eslint-disable no-undef */
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import {render} from 'react-dom';
 import { Provider } from 'react-redux';
-import App  from './components/App';
+import { AppContainer } from 'react-hot-loader'
+import App from './components/App';
 import createStore from './createstore';
 
 const store = createStore();
-ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
-  document.getElementById('root'));
+const renderApp = (Component) =>
+  render(
+    <AppContainer>
+        <Component />
+    </AppContainer>,
+    document.getElementById("root"),
+);
+renderApp(App);
+if (module.hot) {
+    module.hot.accept("./components/App", () => {
+      console.log(' THIS IS FIRING?');
+      const NextApp = require('./components/App').default
+        renderApp(NextApp);
+    });
+}
