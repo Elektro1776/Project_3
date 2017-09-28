@@ -1,8 +1,8 @@
 
 function homeReducer(state = {}, action) {
   switch (action.type) {
-    case 'expression':
-      return state;
+    case 'TEST':
+      return Object.assign({}, state, { test: action.test});
     default:
       return state;
   }

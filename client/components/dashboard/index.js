@@ -2,19 +2,28 @@
 /*  eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
 // import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: 'Fuck yea!!!'
+      data: 'Fuck yea!!!',
     };
   }
   componentDidMount() {
-    fetch('/test').then(response => response.json()).then(result => {
-      console.log(' RESULLLTTT', result);
-      this.setState({ data: result.Hello })
-    })
+    console.log(' DOES THIS EVER GET FIRED?');
+    fetch('/test').then((response) => response.json()).then((result) => {
+      console.info('What is our response', result)
+      this.setState({ data: result.Hello });
+    }).catch((err) => {
+      console.error('Error Huston!', err);
+    });
+    // fetch('/fuckAll').then((response) => response.json()).then((result) => {
+    //   this.setState({ data: result.Fuck });
+    // }).catch((err) => {
+    //   console.error('Error Huston!');
+    // });
   }
   render() {
     return (
@@ -23,6 +32,9 @@ class Dashboard extends Component {
         style={{ backgroundColor: 'blue' }}
       >
         <h1>{this.state.data}</h1>
+        <Link to={'/about'}>
+         Rendering with React
+        </Link>
       </div>
     );
   }
