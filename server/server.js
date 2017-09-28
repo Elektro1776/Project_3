@@ -10,13 +10,17 @@ const PROD = process.env.NODE_ENV === 'production';
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 app.use(express.static(path.join(__dirname, '../build/dist')));
+if (PROD) {
+  app.get('/', async (req, res) => {
 
-app.get('/', async (req, res) => {
-
-  const initalContent = renderPage(req);
-  // console.log(' WHAT IS OUR INITAL CONTENT?', initalContent);
-  res.render('index', { initalContent });
-});
+    const initalContent = renderPage(req);
+    // console.log(' WHAT IS OUR INITAL CONTENT?', initalContent);
+    res.render('index', { initalContent });
+  });
+}
+app.get('/', (req, res) => {
+  res.render('index', { initalContent: 'Loading' });
+})
 app.get('/test', (req, res) => {
   res.json({ Hello: 'uTile FOR THE WIN' });
 });

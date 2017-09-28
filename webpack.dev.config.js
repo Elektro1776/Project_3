@@ -5,13 +5,13 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-//   template: '!!raw-loader!./server/src/views/index.ejs',
-//   filename: 'index.html',
-//   inject: 'body',
-// });
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: '!!raw-loader!./server/src/views/index.ejs',
+  filename: 'index.html',
+  inject: 'body',
+});
 const root = process.cwd();
 
 module.exports = {
@@ -57,7 +57,8 @@ module.exports = {
     ],
   },
   plugins: [
-    new CleanWebpackPlugin(['build/public']),
+    HtmlWebpackPluginConfig,
+    new CleanWebpackPlugin(['build/dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
