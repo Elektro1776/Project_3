@@ -34,7 +34,7 @@ module.exports = {
     publicPath: '/dist',
   },
   devServer: {
-    publicPath: '/dist',
+    publicPath: '/',
     port: 8080,
     host: 'localhost',
     hot: true,
@@ -57,7 +57,7 @@ module.exports = {
     ],
   },
   plugins: [
-    HtmlWebpackPluginConfig,
+    // HtmlWebpackPluginConfig,
     new CleanWebpackPlugin(['build/dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
