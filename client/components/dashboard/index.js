@@ -29,7 +29,7 @@ class Dashboard extends Component {
     return (
       <div
         className="container-fluid"
-        style={{ backgroundColor: 'blue' }}
+        style={{ backgroundColor: 'red' }}
       >
         <h1>{this.state.data}</h1>
         <Link to={'/about'}>
