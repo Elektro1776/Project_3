@@ -104,22 +104,20 @@ var Dashboard = function (_Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
+      console.log(' DOES THIS EVER GET FIRED?');
       fetch('/test').then(function (response) {
         return response.json();
       }).then(function (result) {
-        console.log(' RESULLLTTT', result);
+        console.info('What is our response', result);
         _this2.setState({ data: result.Hello });
       }).catch(function (err) {
-        console.error("Error Huston!");;
+        console.error('Error Huston!', err);
       });
-      fetch('/fuckAll').then(function (response) {
-        return response.json();
-      }).then(function (result) {
-        console.log(' RESULLLTTT', result);
-        _this2.setState({ data: result.Fuck });
-      }).catch(function (err) {
-        console.error("Error Huston!");;
-      });
+      // fetch('/fuckAll').then((response) => response.json()).then((result) => {
+      //   this.setState({ data: result.Fuck });
+      // }).catch((err) => {
+      //   console.error('Error Huston!');
+      // });
     }
   }, {
     key: 'render',
@@ -228,8 +226,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__("./node_modules/react/react.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -244,49 +240,19 @@ var _Routes = __webpack_require__("./client/routes/Routes.js");
 
 var _Routes2 = _interopRequireDefault(_Routes);
 
-var _dashboard = __webpack_require__("./client/components/dashboard/index.js");
-
-var _dashboard2 = _interopRequireDefault(_dashboard);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var ConnectedContainer = function (_Component) {
-  _inherits(ConnectedContainer, _Component);
-
-  function ConnectedContainer() {
-    _classCallCheck(this, ConnectedContainer);
-
-    return _possibleConstructorReturn(this, (ConnectedContainer.__proto__ || Object.getPrototypeOf(ConnectedContainer)).apply(this, arguments));
-  }
-
-  _createClass(ConnectedContainer, [{
-    key: 'render',
-    value: function render() {
-      var history = this.props.history;
-
-      return (
-        // <ConnectedRouter history={history} >
-        _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref) {
-            var location = _ref.location;
-
-            return _react2.default.createElement(_reactRouterDom.Route, { exact: true, location: location, path: '/', component: _dashboard2.default });
-          }
-        })
-        // </ConnectedRouter>
-
-      );
-    }
-  }]);
-
-  return ConnectedContainer;
-}(_react.Component);
-
+var ConnectedContainer = function ConnectedContainer(_ref) {
+  var history = _ref.history;
+  return _react2.default.createElement(
+    _reactRouterRedux.ConnectedRouter,
+    { history: history },
+    _react2.default.createElement(_reactRouterDom.Route, { render: function render(_ref2) {
+        var location = _ref2.location;
+        return _react2.default.createElement(_Routes2.default, { location: location });
+      } })
+  );
+};
 ConnectedContainer.propTypes = {
   history: _propTypes.PropTypes.object.isRequired
 };
@@ -326,7 +292,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 function configureStore(history) {
   var routeMiddleware = (0, _reactRouterRedux.routerMiddleware)(history);
 
-  var enhancer = (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, routeMiddleware), (0, _remoteReduxDevtools2.default)());
+  var enhancer = (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, routeMiddleware), (0, _remoteReduxDevtools2.default)({ suppressConnectErrors: false }));
 
   var store = (0, _redux.createStore)(_reducers2.default, enhancer);
   if (true) {
@@ -1818,7 +1784,7 @@ var ConnectedRouter = function (_Component) {
   };
 
   ConnectedRouter.prototype.render = function render() {
-    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["Router"], this.props);
+    return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_2_react_router__["a" /* Router */], this.props);
   };
 
   return ConnectedRouter;
@@ -6442,8 +6408,6 @@ var _reactDom = __webpack_require__("./node_modules/react-dom/index.js");
 
 var _reactRedux = __webpack_require__("./node_modules/react-redux/es/index.js");
 
-var _reactRouter = __webpack_require__("./node_modules/react-router/es/index.js");
-
 var _reactHotLoader = __webpack_require__("./node_modules/react-hot-loader/index.js");
 
 var _createBrowserHistory = __webpack_require__("./node_modules/history/createBrowserHistory.js");
@@ -6460,9 +6424,9 @@ var _createstore2 = _interopRequireDefault(_createstore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var history = (0, _createBrowserHistory2.default)();
 /* eslint-disable no-undef */
 
-var history = (0, _createBrowserHistory2.default)();
 var store = (0, _createstore2.default)(history);
 var root = document.getElementById('root');
 var renderApp = function renderApp(Component) {
@@ -6472,19 +6436,14 @@ var renderApp = function renderApp(Component) {
     _react2.default.createElement(
       _reactRedux.Provider,
       { store: store },
-      _react2.default.createElement(
-        _reactRouter.ConnectedRouter,
-        { history: history },
-        _react2.default.createElement(Component, { history: history })
-      )
+      _react2.default.createElement(Component, { history: history })
     )
   ), root);
 };
 renderApp(_ConnectedContainer2.default);
 if (true) {
   module.hot.accept("./client/containers/ConnectedContainer.js", function () {
-    console.log(' HOT ACCEPTE!!!!!');
-    var NextApp = __webpack_require__("./client/containers/ConnectedContainer.js");
+    var NextApp = __webpack_require__("./client/containers/ConnectedContainer.js").default;
     renderApp(NextApp);
   });
 }
@@ -41160,25 +41119,24 @@ Switch.propTypes = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__ = __webpack_require__("./node_modules/react-router/es/MemoryRouter.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__["a"]; });
+/* unused harmony reexport MemoryRouter */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Prompt__ = __webpack_require__("./node_modules/react-router/es/Prompt.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_1__Prompt__["a"]; });
+/* unused harmony reexport Prompt */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Redirect__ = __webpack_require__("./node_modules/react-router/es/Redirect.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_2__Redirect__["a"]; });
+/* unused harmony reexport Redirect */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__("./node_modules/react-router/es/Route.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_3__Route__["a"]; });
+/* unused harmony reexport Route */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__("./node_modules/react-router/es/Router.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__StaticRouter__ = __webpack_require__("./node_modules/react-router/es/StaticRouter.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_5__StaticRouter__["a"]; });
+/* unused harmony reexport StaticRouter */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Switch__ = __webpack_require__("./node_modules/react-router/es/Switch.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_6__Switch__["a"]; });
+/* unused harmony reexport Switch */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__matchPath__ = __webpack_require__("./node_modules/react-router/es/matchPath.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_7__matchPath__["a"]; });
+/* unused harmony reexport matchPath */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__withRouter__ = __webpack_require__("./node_modules/react-router/es/withRouter.js");
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_8__withRouter__["a"]; });
+/* unused harmony reexport withRouter */
 
 
 

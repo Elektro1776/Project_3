@@ -12,11 +12,12 @@ class Dashboard extends Component {
     };
   }
   componentDidMount() {
+    console.log(' DOES THIS EVER GET FIRED?');
     fetch('/test').then((response) => response.json()).then((result) => {
       console.info('What is our response', result)
       this.setState({ data: result.Hello });
     }).catch((err) => {
-      console.error('Error Huston!');
+      console.error('Error Huston!', err);
     });
     // fetch('/fuckAll').then((response) => response.json()).then((result) => {
     //   this.setState({ data: result.Fuck });
@@ -28,7 +29,7 @@ class Dashboard extends Component {
     return (
       <div
         className="container-fluid"
-        style={{ backgroundColor: 'red' }}
+        style={{ backgroundColor: 'blue' }}
       >
         <h1>{this.state.data}</h1>
         <Link to={'/about'}>

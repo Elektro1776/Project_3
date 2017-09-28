@@ -10,7 +10,7 @@ export default function configureStore(history) {
 
   const enhancer = compose(
     applyMiddleware(thunk, routeMiddleware),
-    devTools(),
+    devTools({suppressConnectErrors: false}),
   );
 
   const store = createStore(reducer, enhancer);
