@@ -46,7 +46,7 @@
     "mocha": "^3.5.3",
     "mongoose": "^4.11.11",
     "passport": "^0.4.0",
-    "passport-github": "^1.1.0",
+    "passport-github2": "^0.1.11",
     "path": "^0.12.7",
     "pm2": "^2.7.0",
     "react": "^15.6.1",
