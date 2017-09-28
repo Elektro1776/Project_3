@@ -126,7 +126,7 @@ var Dashboard = function (_Component) {
         'div',
         {
           className: 'container-fluid',
-          style: { backgroundColor: 'blue' }
+          style: { backgroundColor: 'red' }
         },
         _react2.default.createElement(
           'h1',
@@ -135,7 +135,7 @@ var Dashboard = function (_Component) {
         ),
         _react2.default.createElement(
           _reactRouterDom.Link,
-          { to: '/about' },
+          { to: '/about', style: { color: '#fff' } },
           'Rendering with React'
         )
       );
@@ -277,8 +277,6 @@ var _reactRouterRedux = __webpack_require__("./client/node_modules/react-router-
 
 var _remoteReduxDevtools = __webpack_require__("./client/node_modules/remote-redux-devtools/lib/index.js");
 
-var _remoteReduxDevtools2 = _interopRequireDefault(_remoteReduxDevtools);
-
 var _reduxThunk = __webpack_require__("./client/node_modules/redux-thunk/lib/index.js");
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
@@ -291,10 +289,17 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function configureStore(history) {
   var routeMiddleware = (0, _reactRouterRedux.routerMiddleware)(history);
+  var composeEnhancers = (0, _remoteReduxDevtools.composeWithDevTools)({ realtime: true });
+  var middleware = [_reduxThunk2.default, routeMiddleware];
+  // const enhancer = composeWithDevTools(
+  //   applyMiddleware(thunk, routeMiddleware),
+  //   // devTools({suppressConnectErrors: false}),
+  // );
 
-  var enhancer = (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, routeMiddleware), (0, _remoteReduxDevtools2.default)({ suppressConnectErrors: false }));
-
-  var store = (0, _redux.createStore)(_reducers2.default, enhancer);
+  var store = (0, _redux.createStore)(_reducers2.default, composeEnhancers(_redux.applyMiddleware.apply(undefined, middleware)
+  // other store enhancers if any
+  ));
+  // const store = createStore(reducer, enhancer );
   if (true) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept("./client/reducers/index.js", function () {
@@ -6347,9 +6352,11 @@ module.exports = WebSocket ? ws : null;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-
+var initalState = {
+  testState: 'Testing!!!!'
+};
 function homeReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : initalState;
   var action = arguments[1];
 
   switch (action.type) {

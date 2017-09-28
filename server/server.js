@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
   res.render('index', { initalContent: 'Loading' });
 })
 app.get('/test', (req, res) => {
-  res.json({ Hello: 'uTile FOR THE WIN' });
+  res.json({ Hello: 'uTile FUCKING ROCKS' });
 });
 app.get('/fuckAll', (req, res) => {
   res.json({ Fuck: 'Hellyea Bitchessss' });

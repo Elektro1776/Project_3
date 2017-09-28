@@ -11,7 +11,7 @@
     "start:server": "pm2 start ecosystem.config.js",
     "webpack": "webpack --config webpack.dev.config.js ",
     "test": "jest",
-    "test:watchAll": "jest --watchAll",
+    "test:watchAll": "jest --watch",
     "build": "webpack --config webpack.prod.config.js"
   },
   "babel": {
