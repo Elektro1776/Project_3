@@ -1,8 +1,10 @@
-
-function homeReducer(state = {}, action) {
+const initalState = {
+  testState: 'Testing!!!!'
+}
+function homeReducer(state = initalState, action) {
   switch (action.type) {
-    case 'expression':
-      return state;
+    case 'TEST':
+      return Object.assign({}, state, { test: action.test });
     default:
       return state;
   }

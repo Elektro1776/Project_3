@@ -1,28 +1,31 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
-// import devTools from 'remote-redux-devtools'
-// import thunk from 'redux-thunk';
-// import { createEpicMiddleware } from 'redux-observable';
+import { routerMiddleware } from 'react-router-redux';
+import { composeWithDevTools } from 'remote-redux-devtools';
+import thunk from 'redux-thunk';
 import reducer from './reducers';
-// import rootEpic from './epics';
-// import { autoRehydrate, persistStore } from 'redux-persist'
-// import promise from './promise';
-// const epicMiddleware = createEpicMiddleware(rootEpic)
-export default function configureStore() {
-  const enhancer = compose(
-    // applyMiddleware(epicMiddleware),
-    // autoRehydrate(),
-    // devTools(),
-  );
 
-  const store = createStore(reducer, enhancer);
-  // const persist = persistStore(
-  // store,
-  // { storage: AsyncStorage, blacklist: ['userData'] }, (err, storage) => {
-  // console.log(' WHAT IS IN OUR STORAGE', storage);
-  // });
-  // NOTE: if you need to clear your async storage just uncomment below method
-  //  persist.purge();
+export default function configureStore(history) {
+  const routeMiddleware = routerMiddleware(history);
+  const composeEnhancers = composeWithDevTools({ realtime: true });
+  const middleware = [thunk, routeMiddleware];
+  // const enhancer = composeWithDevTools(
+  //   applyMiddleware(thunk, routeMiddleware),
+  //   // devTools({suppressConnectErrors: false}),
+  // );
 
+  const store = createStore(reducer, composeEnhancers(
+    applyMiddleware(...middleware),
+    // other store enhancers if any
+  ));
+  // const store = createStore(reducer, enhancer );
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('./reducers', () => {
+      const nextReducers = require('./reducers');
+      const rootReducer = nextReducers;
+      store.replaceReducer(rootReducer);
+    });
+  }
   return store;
 }

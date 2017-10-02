@@ -1,21 +1,47 @@
 /*
     ./webpack.config.js
 */
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const merge = require('webpack-merge');
 const path = require('path');
-const common = require('./webpack.common.config.js');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: '!!raw-loader!./server/src/views/index.ejs',
+  filename: 'index.html',
+  inject: 'body',
+});
+const root = process.cwd();
 
-module.exports = merge(common, {
-  devtool: 'inline-source-map',
-  entry: [
-    'babel-polyfill', './client/index.js',
-  ],
+module.exports = {
+  devtool: 'source-map',
+  resolve: {
+    modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(root, 'client/node_modules')],
+  },
+  entry: {
+    app: [
+      // 'babel-polyfill',
+      'react-hot-loader/patch',
+      // 'webpack-hot-middleware/client?http://localhost:8080',
+      'webpack/hot/only-dev-server',
+      './client/renderers/hmr.js',
+    ]
+  },
   output: {
-    path: path.resolve(__dirname, 'server/src/public'),
-    filename: 'bundle.js',
+    path: path.join(__dirname, 'build/dist'),
+    filename: '[name].js',
+    publicPath: '/dist',
+  },
+  devServer: {
     publicPath: '/',
+    port: 8080,
+    host: 'localhost',
+    hot: true,
+    inline: true,
+    proxy: {
+      '**': 'http://localhost:3000',
+    },
   },
   module: {
     rules: [{
@@ -24,9 +50,19 @@ module.exports = merge(common, {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['react', 'env', 'stage-2']
-        }
-      }
-    }]
-  }
-});
+          presets: ['react', 'env', 'stage-2'],
+        },
+      },
+    },
+    ],
+  },
+  plugins: [
+    // HtmlWebpackPluginConfig,
+    new CleanWebpackPlugin(['build/dist']),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NamedModulesPlugin(),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
+  ],
+};

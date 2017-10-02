@@ -1,29 +1,43 @@
 const webpack = require('webpack');
 const path = require('path');
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const template = require("ejs!./server/src/views/index.ejs");
 
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: './server/src/views/index.ejs',
-  filename: 'index.html',
-  inject: 'body',
-});
+// const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+//   template: './server/src/views/index.ejs',
+//   filename: 'index.html',
+//   inject: 'body',
+// });
 module.exports = {
-  // entry: {
-  //   app: './client/index.jsx',
-  // },
-  plugins: [
-    new CleanWebpackPlugin(['dist']),
-    HtmlWebpackPluginConfig,
-  ],
-  output: {
-    filename: '[name].bundle.js',
-    path: path.resolve(__dirname, './client/public/dist'),
+  entry: {
+    vendor: [
+      'babel-polyfill',
+      'react',
+      'react-dom',
+      // 'prop-types',
+      // 'axios',
+      // 'lodash.debounce',
+      // 'lodash.pickby',
+    ],
   },
-  // module: {
-  //   loaders: [
-  //     { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-  //     { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
-  //   ],
+  plugins: [
+    // HtmlWebpackPluginConfig,
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+    }),
+  ],
+  // output: {
+  //   filename: '[name].bundle.js',
+  //   path: path.resolve(__dirname, '/server/src/public'),
   // },
+  module: {
+    loaders: [
+      { test: /\.ejs$/, loader: 'ejs-loader' },
+    ],
+    ejsLoader: {
+      variable: 'data',
+      interpolate: /\{\{(.+?)\}\}/g,
+      evaluate: /\[\[(.+?)\]\]/g,
+    },
+  },
 };
