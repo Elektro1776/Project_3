@@ -17,7 +17,7 @@ const root = process.cwd();
 module.exports = {
   devtool: 'source-map',
   resolve: {
-    modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(root, 'client/node_modules')],
+    modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(__dirname, 'client/node_modules')],
   },
   entry: {
     app: [
@@ -58,7 +58,7 @@ module.exports = {
   },
   plugins: [
     HtmlWebpackPluginConfig,
-    new CleanWebpackPlugin(['build/dist']),
+    // new CleanWebpackPlugin(['build/dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new webpack.optimize.CommonsChunkPlugin({

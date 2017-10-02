@@ -12,7 +12,7 @@
     "webpack": "webpack --config webpack.dev.config.js ",
     "test": "jest",
     "test:watchAll": "jest --watchAll",
-    "build": "webpack --config webpack.prod.config.js"
+    "build:prod": "webpack --config webpack.prod.config.js -p"
   },
   "babel": {
     "presets": [
