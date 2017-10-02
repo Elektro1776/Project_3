@@ -1,19 +1,27 @@
-
 const path = require('path');
 const webpack = require('webpack');
-const merge = require('webpack-merge');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
-const common = require('./webpack.common.config.js');
 
 module.exports = {
-  devtool: 'source-map',
+  resolve: {
+    modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(__dirname, 'client/node_modules')],
+  },
   entry: {
-    app: ['babel-polyfill', './client/renderers/hmr.js'],
+    vendor: [
+      'babel-polyfill',
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router-dom',
+      'react-router',
+      'redux',
+      'redux-thunk',
+    ],
+    app: ['./client/renderers/hmr.js'],
   },
   output: {
     path: path.join(__dirname, 'build/dist'),
     filename: '[name].js',
-    publicPath: '/dist',
   },
   module: {
     rules: [{
@@ -30,7 +38,10 @@ module.exports = {
   },
   plugins: [
     new UglifyJSPlugin({
-      sourceMap: true,
+      sourcemap: true,
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
     }),
     new webpack.DefinePlugin({
       'process.env': {
