@@ -9,3 +9,27 @@ env:
 notifications:
   slack:
     secure: dDMHdhfvS1TV9r5MKDKAWUeC2J1sjn1P89KwiQXLOCjbf9mMp2X43Req/TNSYFG+B1SEgFI4V0f+y77L+/iknNYmnljBJZoNCmuM8uWFnelncVm3QJJwyv/SNj4nFo0xnaRbg6mJ0HFGTO460EyaPAVxnhCRMK2dLiFFiz8xpIGIT22C9U/pgyq4FB5bvZaU85TpWwteydGKOOlPlDxVhv3Kl3B/Tqb7PN6kvipBLMi1bp81fgKN4VXJdL5GGxOhj27wJS2kKzJ9XBgxXw8YSEtDU/6gm0YjfNimxEW83L6ixTpe+TAcE6vXGjvLvhypMyDLovlyxV3aMdrOp5z+MZys+RwEue6eLvKVDFieFFNYrR9nCTtTSVedNd3OliN9MQrO57ZJzFIm7p8fe1BY+5LPROxt3oeHIJob00U99kzHyl81OtGXUc3yU99xL5lNCyAXr0x2dKOt/+D77RgnVHJoY3A9Okfy05UP3pDQZEVVGPdJCivnogKvTmblq2SAt2wVyxpPFJi6sxeLOUoVHseb8IKkt6ZC3qoMzURUL36UZakJKLsN0XrxPEHZbwBNwkBn7LUF7TY07TkDR4rE3G8l1bEGoY9UhfjqrC2cRdhgUTDXQR5W0w1iYaEQnp2TsJA6GBImspY+zX2IczwYy+ey2bnOHQcghAeHoVjAoJw=
+deploy:
+- provider: s3
+  access_key_id: AKIAJ6AI6U6SLFDXLRKQ
+  secret_access_key: &1
+    secure: ZcrvnyPlNJlJY59LwiTdbRC539zKxDz/4nI3snh3daENUjxuaFmociiegE7kS7JPQh09R87j1ymd35jtARyqiGq/p/1oZGwgMwPi7QpLJeIENBPb0DPmR1b0W+dsWTN5J/HzG5fHOG/T150NdBnONukHrrPLbjBSvE/39Zon430VnBKf0ivFQHdcU0hrIYOASbGs1r02jpliVM69vVDfEXcE7hSN5KfI372uBEE/4COAJOJr+jVyTZ6hYoPSBBwEuPf1XTtY/sp7URxlxP81wB2akBufFBcZaasPT24X07CKywbSdJxP8h2DIFB+w66hitR2vXV0qGZTpp8dT9auHTib2j9cYzggqwO/BaNju6hGt2TgrT1LYB7cY2v1o99adoEKJj4qQBjo4oBCE+ICFm702zxfJCKoHrfMZn7a7RA+dnuUAL0CZtva+Q5SUugCirygIQiNbonEPMm7NauH8qKcbxq6i5qcdGyrHlC2rWScXeR69s4GppOSVxpdK+AqW3vSYehUTSIX3CaPbsFzpME7ibN4WHMXVs0llXL9+K5Ui23wNDa8M1N2VJUmLgDk/B+6/0OSOyV2MUjz2b/1y38eI+c9bbQ3mIT1CyPRHrsyKv5YJF5i67FgvyLkmN4RtKHS3y5FNtAdyMh/QkCSAlRjJqQnJzPulz/40qh1jbw=
+  local_dir: dpl_cd_upload
+  skip_cleanup: true
+  on: &2
+    repo: Elektro1776/Project_3
+  bucket: utile
+  upload_dir: latest
+- provider: codedeploy
+  access_key_id: AKIAJ6AI6U6SLFDXLRKQ
+  secret_access_key: *1
+  bucket: utile
+  key: latest/uTile.zip
+  bundle_type: zip
+  application: uTile
+  deployment_group: uTileDeploymentFleet-a4tjbet
+  on:
+    branch: development
+before_deploy:
+- mkdir -p dpl_cd_upload
+- mv uTile.zip dpl_cd_upload/uTile.zip
