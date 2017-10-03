@@ -2,7 +2,7 @@
     ./webpack.config.js
 */
 const webpack = require('webpack');
-const merge = require('webpack-merge');
+// const merge = require('webpack-merge');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -17,7 +17,7 @@ const root = process.cwd();
 module.exports = {
   devtool: 'source-map',
   resolve: {
-    modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(root, 'client/node_modules')],
+    modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(__dirname, 'client/node_modules')],
   },
   entry: {
     app: [
@@ -26,7 +26,7 @@ module.exports = {
       // 'webpack-hot-middleware/client?http://localhost:8080',
       'webpack/hot/only-dev-server',
       './client/renderers/hmr.js',
-    ]
+    ],
   },
   output: {
     path: path.join(__dirname, 'build/dist'),
@@ -44,32 +44,39 @@ module.exports = {
     },
   },
   module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['react', 'env', 'stage-2'],
-        },
-      },
-    },
-    {
-      test: /\.css$/,
-      use: [
-        'style-loader',
-        {
-          loader: 'css-loader',
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
           options: {
-            modules: true, // default is false
-            sourceMap: true,
-            importLoaders: 1,
-            localIdentName: '[name]--[local]--[hash:base64:8]',
+            presets: ['react', 'env', 'stage-2'],
           },
         },
-        'postcss-loader',
-      ],
-    },
+      },
+      {
+      // test: /\.css$/,
+        test: /(\.css|\.scss)$/,
+        use: [
+          {
+            loader: 'style-loader', // creates style nodes from JS strings
+          },
+          {
+            loader: 'css-loader',
+            options: {
+              importLoaders: 1,
+              modules: true,
+            },
+          },
+          {
+            loader: 'sass-loader', // compiles Sass to CSS
+          },
+        // {
+        //   loader: 'postcss-loader', // translates CSS into CommonJS
+        // },
+        ],
+      },
     ],
   },
   plugins: [
