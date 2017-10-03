@@ -1,14 +1,18 @@
 {
   "dependencies": {
     "add": "^2.0.6",
+    "axios": "^0.16.2",
     "history": "^4.7.2",
     "prop-types": "^15.6.0",
     "react": "^15.6.1",
+    "react-dnd": "^2.5.3",
+    "react-dnd-html5-backend": "^2.5.3",
     "react-dom": "^15.6.1",
     "react-redux": "^5.0.6",
     "react-router": "^4.2.0",
     "react-router-dom": "^4.2.2",
     "react-router-redux": "^5.0.0-alpha.4",
+    "react-toolbox": "^2.0.0-beta.12",
     "redux": "^3.7.2",
     "redux-observable": "^0.16.0",
     "redux-thunk": "^2.2.0",
