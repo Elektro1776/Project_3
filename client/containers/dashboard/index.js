@@ -1,6 +1,7 @@
 
 /*  eslint-disable react/jsx-filename-extension */
 import React, { Component } from 'react';
+import axios from 'axios';
 // import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
@@ -12,18 +13,13 @@ class Dashboard extends Component {
     };
   }
   componentDidMount() {
-    console.log(' DOES THIS EVER GET FIRED?');
-    fetch('/test').then((response) => response.json()).then((result) => {
-      console.info('What is our response', result)
-      this.setState({ data: result.Hello });
-    }).catch((err) => {
-      console.error('Error Huston!', err);
-    });
-    // fetch('/fuckAll').then((response) => response.json()).then((result) => {
-    //   this.setState({ data: result.Fuck });
-    // }).catch((err) => {
-    //   console.error('Error Huston!');
-    // });
+    axios.get('/test')
+      .then((result) => {
+        console.info('What is our response', result);
+        this.setState({ data: result.data.Hello });
+      }).catch((err) => {
+        console.info('Error Huston!', err);
+      });
   }
   render() {
     return (
