@@ -1,3 +1,3 @@
 
-export { default as Dashboard } from '../components/dashboard';
-export { default as About } from '../components/about';
+export { default as Dashboard } from '../containers/dashboard';
+export { default as About } from '../containers/about';
