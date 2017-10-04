@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ["react", "babel", "react", "jsx-a11y"],
   rules: {
+    "import/first": ["off"],
     "global-require": ["off"],
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true, "optionalDependencies": false, "peerDependencies": false}],
     "react/prop-types": ["off"],
