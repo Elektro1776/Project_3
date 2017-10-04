@@ -1,6 +1,8 @@
 
 // import React from 'react';
 // import ReactDomServer from 'react-dom/server';
+import csshook from 'css-modules-require-hook/preset'; // import hook before routes
+
 import { renderPage } from '../client/renderers/server';
 import express from 'express';
 import path from 'path';
