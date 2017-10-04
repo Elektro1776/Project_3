@@ -6,7 +6,7 @@ const webpack = require('webpack');
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: '!!raw-loader!./server/src/views/index.ejs',
   filename: 'index.html',
@@ -56,27 +56,62 @@ module.exports = {
         },
       },
       {
-      // test: /\.css$/,
         test: /(\.css|\.scss)$/,
-        use: [
-          {
-            loader: 'style-loader', // creates style nodes from JS strings
-          },
-          {
-            loader: 'css-loader',
-            options: {
-              importLoaders: 1,
-              modules: true,
+        loader: ExtractTextPlugin.extract({
+          use: [
+            {
+              loader: 'css-loader',
+              query: {
+                localIdentName: '[hash:8]',
+                modules: true,
+              },
             },
-          },
-          {
-            loader: 'sass-loader', // compiles Sass to CSS
-          },
-        // {
-        //   loader: 'postcss-loader', // translates CSS into CommonJS
-        // },
-        ],
+            // {
+            //   loader: 'postcss-loader',
+            // },
+            {
+              loader: 'sass-loader',
+            },
+          ],
+        }),
       },
+    //   {
+    //   test: /(\.css|\.scss)$/,
+    //   include: /(\node_modules\/react-toolbox)/,
+    //   loader: ExtractTextPlugin.extract(
+    //     ['style-loader',
+    //     { loader: 'css-loader',
+    //     options: { importLoaders: 1,
+    //       modules: true
+    //     }
+    //   },
+    //   'sass-loader',
+    //   ],
+    //     'css?modules&localIdentName=[name]__[local]___[hash:base64:5]!postcss!sass!toolbox')
+    // },
+    // {
+    //   test: /(\.css|\.scss)$/,
+    //   exclude: /(\node_modules\/react-toolbox)/,
+    //   loader: ExtractTextPlugin.extract('style-loader', 'css?!postcss!sass')
+    // },
+      // {
+      //   test: /(\.css|\.scss)$/,
+      //   use: [
+      //     {
+      //       loader: 'style-loader', // creates style nodes from JS strings
+      //     },
+      //     {
+      //       loader: 'css-loader',
+      //       options: {
+      //         importLoaders: 1,
+      //         modules: true,
+      //       },
+      //     },
+      //     {
+      //       loader: 'sass-loader', // compiles Sass to CSS
+      //     },
+      //   ],
+      // },
     ],
   },
   plugins: [
@@ -84,6 +119,10 @@ module.exports = {
     new CleanWebpackPlugin(['build/dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
+    new ExtractTextPlugin({
+      filename: '[name].css',
+      allChunks: true,
+    }),
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
     }),
