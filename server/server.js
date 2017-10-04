@@ -10,6 +10,7 @@ import passport from 'passport';
 
 import { renderPage } from '../client/renderers/server';
 import config from './config';
+import { isAuthenticated } from './src/middleware/isAuthenticated';
 
 const MongoStore = require('connect-mongo')(session);
 
@@ -17,7 +18,6 @@ const app = express();
 
 const PROD = process.env.NODE_ENV === 'production';
 const DEV = process.env.NODE_ENV === 'development';
-let mongoConnection;
 const options = {
   server: {
     reconnectTries: Number.MAX_VALUE,
@@ -26,7 +26,7 @@ const options = {
   promiseLibrary: require('bluebird'),
 };
 if (DEV) {
-  mongoConnection = mongoose.connect(process.env.MONGO_LOCAL_URI, options)
+  mongoose.connect(process.env.MONGO_LOCAL_URI, options)
     .then((success) => {
       console.info('Success connect to mongo!');
     })
@@ -41,10 +41,20 @@ app.set('views', path.join(__dirname, 'src/views'));
 app.use(express.static(path.join(__dirname, '../build/dist')));
 app.use(session({
   secret: 'foo',
+  resave: false,
+  saveUninitialized: false,
   store: new MongoStore({ mongooseConnection: mongoose.connection }),
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+// TODO: ALL ROUTING NEEDS TO GET PASSED TO OUR STORE FOR CORRECT AUTH
+// HANDLING ON CLIENT SIDE AND CORRECT URLS TO BE HANDLED BY BROWSWER ROUTER
+
+// app.use('/about', isAuthenticated);
+app.use(function(err, req, res, next) {
+       res.status(err.status || 500);
+       console.log('What the fuck is the errrrr', err.message);
+   });
 app.use('/test', (req, res) => {
   res.send({ Hello: 'uTile is Served' });
 });
@@ -60,6 +70,7 @@ if (PROD) {
   });
 }
 app.get('*', (req, res) => {
+  console.log( 'IS THIS GETTING HIT ?');
   res.render('index', { initalContent: 'Loading' });
 });
 // Serve the files on port 3000.
