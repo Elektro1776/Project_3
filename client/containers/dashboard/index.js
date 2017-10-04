@@ -4,13 +4,15 @@ import React, { Component } from 'react';
 import axios from 'axios';
 // import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-
+import { Button } from 'react-toolbox/lib/button';
 class Dashboard extends Component {
   constructor(props) {
     super(props);
     this.state = {
       data: 'Fuck yea!!!',
+      active: false,
     };
+    this.handleToggle = this.handleToggle.bind(this);
   }
   componentDidMount() {
     axios.get('/test')
@@ -21,12 +23,16 @@ class Dashboard extends Component {
         console.info('Error Huston!', err);
       });
   }
+  handleToggle() {
+    this.setState({ active: !this.state.active });
+  }
   render() {
     return (
       <div
         className="container-fluid"
         style={{ backgroundColor: 'red' }}
       >
+        <Button label='Hello World'/>
         <h1>{this.state.data}</h1>
         <Link to={'/about'}>
          Rendering with React
