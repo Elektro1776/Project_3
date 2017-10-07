@@ -8,13 +8,26 @@ import { Provider } from 'react-redux';
 import Routes from '../routes/Routes';
 import createStore from '../createstore';
 
+const routes = [
+  '/',
+  '/login',
+  '/signup',
+  '/dashboard',
+  '/projects',
+  '/settings',
+  'profile',
+  '/about',
+]
 function renderApp(url, store) {
   // console.info("We should be rendering the app???", url, window.location)
   const context = {};
   const ssr = ()  => {
-    const match = matchPath(url);
+    // const match = matchPath(url);
+    // console.log(' WHAT IS MATCH????', match());
+    console.log(' WHAT IS OUR MATCHPath???', matchPath(url, { path: '/about', exact: true, strict: false }));
+    const match = routes.reduce((acc, route) => matchPath(url, route, { exact: true }) || acc, null);
+    console.log('ANY MATCH?????', match);
     if (!match) {
-      console.log(' WHAT IS OUR MATCH???', match);
 
     }
     return renderToString(
@@ -31,6 +44,7 @@ function renderApp(url, store) {
 export const renderPage = function serveIt(req, res) {
   const history = createHistory();
   const store = createStore(history);
+  console.log(' WHAT IS OUR REQ URL??', req.url);
   // const assets = require('../../build/assets.json');
   // assets.manifest.text = fs.readFileSync(
   //   join(__dirname, '..', '..', 'build', basename(assets.manifest.js)),

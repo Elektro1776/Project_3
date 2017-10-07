@@ -10,6 +10,7 @@ import passport from 'passport';
 
 import { renderPage } from '../client/renderers/server';
 import config from './config';
+import { isAuthenticated } from './src/middleware/isAuthenticated';
 
 const MongoStore = require('connect-mongo')(session);
 
@@ -17,18 +18,18 @@ const app = express();
 
 const PROD = process.env.NODE_ENV === 'production';
 const DEV = process.env.NODE_ENV === 'development';
-let mongoConnection;
+mongoose.Promise = require('bluebird');
+let connection;
 const options = {
-  server: {
-    reconnectTries: Number.MAX_VALUE,
-  },
   useMongoClient: true,
   promiseLibrary: require('bluebird'),
 };
 if (DEV) {
-  mongoConnection = mongoose.connect(process.env.MONGO_LOCAL_URI, options)
+  console.log('DEV IS RUNNING');
+  mongoose.createConnection(process.env.MONGO_LOCAL_URI, options)
     .then((success) => {
       console.info('Success connect to mongo!');
+      connection = success;
     })
     .catch((err) => {
       console.info('Could not complete connection', err);
@@ -41,7 +42,9 @@ app.set('views', path.join(__dirname, 'src/views'));
 app.use(express.static(path.join(__dirname, '../build/dist')));
 app.use(session({
   secret: 'foo',
-  store: new MongoStore({ mongooseConnection: mongoose.connection }),
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore({ url: process.env.MONGO_LOCAL_URI, autoRemove: 'native' }),
 }));
 app.use(passport.initialize());
 app.use(passport.session());
@@ -60,8 +63,14 @@ if (PROD) {
   });
 }
 app.get('*', (req, res) => {
-  res.render('index', { initalContent: 'Loading' });
+  console.log(' CATCH ALL ROUTE HIT!');
+  // return renderPage(req, res);
+  res.render('index', { initalContent: renderPage(req, res) });
 });
+// app.get('/about', (req, res) => {
+//   console.log(' CATCH ALL ROUTE HIT!');
+//   res.render('index', { initalContent: 'Loading' });
+// });
 // Serve the files on port 3000.
 app.listen(config.port, () => {
   console.info('Example app listening on port 3000!!!!!!!!! !\n');
