@@ -19,6 +19,7 @@ const app = express();
 const PROD = process.env.NODE_ENV === 'production';
 const DEV = process.env.NODE_ENV === 'development';
 mongoose.Promise = require('bluebird');
+
 let connection;
 const options = {
   useMongoClient: true,
