@@ -10,7 +10,7 @@ class SignupForm extends Component {
   constructor() {
     super();
     this.state = {
-      user_name: '',
+      username: '',
       email: '',
       password: '',
     };
@@ -31,7 +31,7 @@ class SignupForm extends Component {
           label="Name"
           name="name"
           value={this.state.user_name}
-          onChange={(name) => this.handleChange('user_name', name)}
+          onChange={(name) => this.handleChange('username', name)}
           maxLength={16}
         />
         <Input

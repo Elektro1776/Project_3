@@ -24,11 +24,11 @@ function renderApp(url, store) {
   const ssr = ()  => {
     // const match = matchPath(url);
     // console.log(' WHAT IS MATCH????', match());
-    console.log(' WHAT IS OUR MATCHPath???', matchPath(url, { path: '/about', exact: true, strict: false }));
+    // console.log(' WHAT IS OUR MATCHPath???', matchPath(url, { path: '/about', exact: true, strict: false }));
     const match = routes.reduce((acc, route) => matchPath(url, route, { exact: true }) || acc, null);
-    console.log('ANY MATCH?????', match);
+    // console.log('ANY MATCH?????', match);
     if (!match) {
-
+      return
     }
     return renderToString(
       <Provider store={store}>
@@ -44,7 +44,7 @@ function renderApp(url, store) {
 export const renderPage = function serveIt(req, res) {
   const history = createHistory();
   const store = createStore(history);
-  console.log(' WHAT IS OUR REQ URL??', req.url);
+  // console.log(' WHAT IS OUR REQ URL??', req.url);
   // const assets = require('../../build/assets.json');
   // assets.manifest.text = fs.readFileSync(
   //   join(__dirname, '..', '..', 'build', basename(assets.manifest.js)),

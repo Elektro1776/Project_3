@@ -1,15 +1,27 @@
 import express from 'express';
 
 const router = express.Router();
-import User from '../../schema/User';
+import Account from '../../schema/User';
+import passport from 'passport';
 
 router.post('/', (req, res, next) => {
-  const { user_name, email } = req.body;
-  console.info(' WE GOT HIT WITH A POST???', user_name, email);
-  User.register({ username: 'fuck this' }, 'fuccckkkkkk', (err, account) => {
-    console.log(' WTHHHHHHHEHEHEELLLL', err, account);
+  console.log(' WHAT IS THE REQ BODY USERNAME ?', req.body);
+  Account.register(new Account({  username: req.body.username }), req.body.password, (err, account) => {
+    if (err) {
+      console.log(' WHAT IS THE ERRR???', err);
+      return res.send(err);
+    }
+    // console.log(' ANYTHING HITTING HER?', err, 'account', account);
+    passport.authenticate('local', function(err, user, info) {
+      console.log(' DOES THIS WORK????', err, 'USER,', user, 'INFOO', info);
+    if (err) { return next(err); }
+    if (!user) { return res.redirect('/'); }
+      req.logIn(user, function(err) {
+        if (err) { return next(err); }
+        return res.redirect('/users/' + user.username);
+      });
+    })(req, res, next);
   });
-  // console.log('USER . register', Uer);
 });
 
 export default router;
