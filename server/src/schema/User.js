@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const minlength = [5, 'The value of path `{PATH}` (`{VALUE}`) is shorter than the minimum allowed length ({MINLENGTH}).'];
 
 const User = new Schema({
-  user_name: 'String',
+  username: 'String',
   email: 'String',
   password: {
     type: 'String',

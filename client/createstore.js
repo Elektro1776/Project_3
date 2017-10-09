@@ -7,17 +7,14 @@ import reducer from './reducers';
 
 export default function configureStore(history) {
   const routeMiddleware = routerMiddleware(history);
-  const composeEnhancers = composeWithDevTools({ realtime: true });
+  const composeEnhancers = composeWithDevTools({ suppressConnectErrors: false, realtime: true });
   const middleware = [thunk, routeMiddleware];
   // const enhancer = composeWithDevTools(
   //   applyMiddleware(thunk, routeMiddleware),
   //   // devTools({suppressConnectErrors: false}),
   // );
 
-  const store = createStore(reducer, composeEnhancers(
-    applyMiddleware(...middleware),
-    // other store enhancers if any
-  ));
+  const store = createStore(reducer, applyMiddleware(...middleware));
   // const store = createStore(reducer, enhancer );
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
