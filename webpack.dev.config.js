@@ -128,7 +128,7 @@ module.exports = {
   },
   plugins: [
     // HtmlWebpackPluginConfig,
-    // new CleanWebpackPlugin(['build/dist']),
+    new CleanWebpackPlugin(['build/dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new ExtractTextPlugin({

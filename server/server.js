@@ -45,13 +45,13 @@ if (DEV) {
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, '../build/dist')));
 app.use(session({
   secret: 'foo',
-  resave: false,
-  saveUninitialized: false,
+  resave: true,
+  saveUninitialized: true,
   store: new MongoStore({ url: process.env.MONGO_LOCAL_URI }),
 }));
-app.use(express.static(path.join(__dirname, '../build/dist')));
 // passport config
 app.use(passport.initialize());
 app.use(passport.session());
@@ -65,15 +65,14 @@ app.post('/signup', (req, res, next) => {
       return res.send(err);
     }
     // console.log(' ANYTHING HITTING HER?', err, 'account', account);
-    passport.authenticate('local', function(err, user, info) {
+    passport.authenticate('local', (err, user, info) => {
       // console.log(' DOES THIS WORK????', err, 'USER,', user, 'INFOO', info);
-    if (err) { return next(err); }
-    if (!user) { return res.redirect('/'); }
-      req.logIn(user, function(err) {
-        console.log(' WE SHOULD LOG THE USER IN ???', err);
+      if (err) { return next(err); }
+      if (!user) { return res.redirect('/'); }
+      req.logIn(user, (err) => {
         if (err) { return next(err); }
-        console.log(' WE SHOULD REDIRECT!!!', user.username);
-        return res.json(user);
+        console.info(' WE SHOULD REDIRECT!!!', req.isAuthenticated());
+        return res.redirect('back');
       });
     })(req, res, next);
   });
@@ -87,8 +86,12 @@ passport.deserializeUser(Account.deserializeUser());
 app.use('/test', (req, res) => {
   res.send({ Hello: 'uTile is Served' });
 });
-app.get('*', (req, res) => {
-  // console.log(' CATCH ALL ROUTE HIT!', Object.keys(req));
+app.get('/', (req, res) => {
+  res.render('index',{ initalContent: renderPage(req, res) })
+})
+app.get('/signup', (req, res) => {
+  console.log(' REQ USER?????', req.isAuthenticated());
+  // console.log(' CATCH ALL ROUTE HIT!',Object.keys(req));
   // return renderPage(req, res);
   res.render('index', { initalContent: renderPage(req, res) });
 });

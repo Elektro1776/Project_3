@@ -14,7 +14,7 @@ export const signupUser = (userData) => {
         }
         return response;
       })
-      .then((result) => result.json())
+      // .then((result) => result.json())
       .then((user) => {
         console.log(' WHAT IS OUR USER ????', user);
         dispatch(successUserSignIn(user))
