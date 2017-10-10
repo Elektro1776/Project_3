@@ -76,12 +76,8 @@ app.use('/test', (req, res) => {
 // }
 
 app.get('*', jwt({ secret: process.env.JWT_SECRET, credentialsRequired: false }), (req, res) => {
-  // if (!req.user && req.url === '/') {
-  //   console.log(' ');
-  //   return res.redirect(301, 'http://localhost:8080/signup');
-  // }
-  // console.log(' WHAT IS OUR REQ URL ????', req.user);
-  res.render('index', { initalContent: renderPage(req, res) });
+  const initalContent = renderPage(req, res);
+  res.render('index', { ...initalContent });
 });
 
 // Serve the files on port 3000.

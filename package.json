@@ -11,7 +11,7 @@
     "start:react": "NODE_ENV=development webpack-dev-server --config webpack.dev.config --open ",
     "start:server": "pm2 start ecosystem.config.js",
     "dev": "NODE_ENV=development yarn start:server | yarn start:react",
-    "webpack": "webpack --config webpack.dev.config.js ",
+    "webpack": "webpack --config webpack.dev.config.js -wd",
     "test": "jest",
     "test:watch": "jest --watch",
     "build:prod": "NODE_ENV=production webpack --config webpack.prod.config.js -p"

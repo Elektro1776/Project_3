@@ -5,6 +5,22 @@ import { Route } from 'react-router-dom';
 import * as RouteMap from './static';
 import AppContainer from '../containers/AppContainer';
 
+const PrivateRoute = ({ component: Component, ...rest }) => (
+  <Route
+    {...rest}
+    render={(props) => (
+      fakeAuth.isAuthenticated ? (
+        <Component {...props} />
+      ) : (
+        <Redirect to={{
+          pathname: '/login',
+          state: { from: props.location },
+        }}
+        />
+      )
+    )}
+  />
+);
 class Routes extends Component {
   constructor(props) {
     super(props);

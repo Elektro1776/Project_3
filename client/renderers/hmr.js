@@ -7,10 +7,15 @@ import { Provider } from 'react-redux';
 import { AppContainer } from 'react-hot-loader';
 import createHistory from 'history/createBrowserHistory';
 import App from '../containers/ConnectedContainer';
-import createStore from '../createstore';
+import configureStore from '../createstore';
 
 const history = createHistory();
-const store = createStore(history);
+const initalState = window.__INITALSTATE__;
+// garbage collect the initalState
+// then just go ahead and remove the script tag for shigrins.... :)
+delete window.__INITALSTATE__;
+document.getElementById('initalState').remove();
+const store = configureStore(history, initalState);
 const root = document.getElementById('root');
 const renderApp = (Component) =>
   render(

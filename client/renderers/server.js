@@ -6,7 +6,7 @@ import { Route } from 'react-router-dom';
 import createHistory from 'history/createMemoryHistory';
 import { Provider } from 'react-redux';
 import Routes from '../routes/Routes';
-import createStore from '../createstore';
+import configureServerStore from '../createServerstore';
 
 const routes = [
   '/',
@@ -26,19 +26,30 @@ function renderApp(url, store) {
     if (!match) {
       return;
     }
-    return renderToString(
+    const initalContent = renderToString(
       <Provider store={store}>
         <StaticRouter location={url} context={context}>
           <Route render={({ location }) => (<Routes location={location} />)} />
         </StaticRouter>
       </Provider>,
     );
+    const initalState = store.getState();
+    return {
+      initalContent,
+      initalState,
+    };
   };
   return ssr();
 }
 export const renderPage = function serveIt(req, res) {
   const history = createHistory();
-  const store = createStore(history);
+  const initalServerState = {};
+  if (!req.user) {
+    initalServerState.auth = { isAuthenticated: false, username: '' };
+  } else {
+    initalServerState.auth = { isAuthenticated: true, username: req.user };
+  }
+  const store = configureServerStore(history, initalServerState);
   // console.log(' WHAT IS OUR REQ URL??', req.url);
   // const assets = require('../../build/assets.json');
   // assets.manifest.text = fs.readFileSync(
