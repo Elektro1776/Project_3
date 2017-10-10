@@ -17,6 +17,7 @@ class Routes extends Component {
           <Route exact location={location} path="/" component={RouteMap.Dashboard} />
           <Route exact location={location} path="/about" component={RouteMap.About} />
           <Route exact location={location} path="/signup" component={RouteMap.Signup} />
+          <Route exact location={location} path="/login" component={RouteMap.Login} />
 
         </div>
       </AppContainer>
