@@ -17,18 +17,14 @@ const routes = [
   '/settings',
   'profile',
   '/about',
-]
+];
 function renderApp(url, store) {
   // console.info("We should be rendering the app???", url, window.location)
   const context = {};
-  const ssr = ()  => {
-    // const match = matchPath(url);
-    // console.log(' WHAT IS MATCH????', match());
-    console.log(' WHAT IS OUR MATCHPath???', matchPath(url, { path: '/about', exact: true, strict: false }));
+  const ssr = () => {
     const match = routes.reduce((acc, route) => matchPath(url, route, { exact: true }) || acc, null);
-    console.log('ANY MATCH?????', match);
     if (!match) {
-
+      return;
     }
     return renderToString(
       <Provider store={store}>
@@ -37,14 +33,13 @@ function renderApp(url, store) {
         </StaticRouter>
       </Provider>,
     );
-  }
-  // console.log(' WHAT THE HELL IS SSR?', ssr());
+  };
   return ssr();
 }
 export const renderPage = function serveIt(req, res) {
   const history = createHistory();
   const store = createStore(history);
-  console.log(' WHAT IS OUR REQ URL??', req.url);
+  // console.log(' WHAT IS OUR REQ URL??', req.url);
   // const assets = require('../../build/assets.json');
   // assets.manifest.text = fs.readFileSync(
   //   join(__dirname, '..', '..', 'build', basename(assets.manifest.js)),
