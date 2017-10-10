@@ -1,28 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { CardTitle } from 'react-toolbox/lib/card';
+import styles from './cardAssignees.css';
 
-
-class CardAssignees extends Component {
-  constructor(props) {
-    super(props);
-
+const CardAssignees = (props) => {
+  if (props.assigneesData[props.indexValue].length === 0) {
+    return <div>None Currently</div>;
   }
-  render () {
-    return (
-      <div>
-        {props.assigneeData.map(assignee=>{
-          return (
-            <CardTitle
-              avatar={assignee.avatar_url}
-            />
-
-          );
-        }
-      )
-    }
+  return (
+    <div className={styles.mainCont} >
+      { props.assigneesData[props.indexValue].map((assignee, i) => (
+        <div key={assignee.id}>
+          <CardTitle
+            avatar={assignee.avatar_url}
+          />
+        </div>
+      ))}
     </div>
-);
-}
+  );
 };
+
 
 export default CardAssignees;
