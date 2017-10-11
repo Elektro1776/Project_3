@@ -1,23 +1,23 @@
 
 import { createStore, applyMiddleware, compose } from 'redux';
 import { routerMiddleware } from 'react-router-redux';
-import { composeWithDevTools } from 'remote-redux-devtools';
+// import devTools from 'remote-redux-devtools';
 import thunk from 'redux-thunk';
 import reducer from './reducers';
 
 export default function configureStore(history) {
   const routeMiddleware = routerMiddleware(history);
-  const composeEnhancers = composeWithDevTools({ realtime: true });
   const middleware = [thunk, routeMiddleware];
-  // const enhancer = composeWithDevTools(
-  //   applyMiddleware(thunk, routeMiddleware),
-  //   // devTools({suppressConnectErrors: false}),
-  // );
-
-  const store = createStore(reducer, composeEnhancers(
+  const enhancer = compose(
     applyMiddleware(...middleware),
-    // other store enhancers if any
-  ));
+    // devTools({
+    //   realtime: false,
+    //   sendOnError: 1,
+    //   maxAge: 30
+    // })
+  );
+
+  const store = createStore(reducer, enhancer);
   // const store = createStore(reducer, enhancer );
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
