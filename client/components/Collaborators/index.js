@@ -6,7 +6,7 @@ class Collaborators extends Component {
   render() {
   return (
     <div>
-      <Chip />
+      <Chip collabs={collabData} />
     </div>
   );
 }

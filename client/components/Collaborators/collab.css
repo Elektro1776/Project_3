@@ -1,0 +1,31 @@
+.background {
+  background-color: black;
+  color:white;
+}
+.container {
+  display:flex;
+  flex-wrap: wrap;
+  border:2px solid black;
+}
+.child {
+  margin:15px auto auto auto;
+}
+
+a:link {
+    color: white;
+}
+
+/* visited link */
+a:visited {
+    color: white;
+}
+
+/* mouse over link */
+a:hover {
+    color: red;
+}
+
+/* selected link */
+a:active {
+    color: purple;
+}
