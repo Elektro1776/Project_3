@@ -5,6 +5,7 @@ import CardComments from './Card_Comments';
 import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 
+
 class IssueCard extends Component {
   fetchIssue() {
     //grabs issues for specific repos and passes them in as props

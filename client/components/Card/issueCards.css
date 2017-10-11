@@ -1,0 +1,10 @@
+.mainCont {
+  display:flex;
+  flex-wrap: wrap;
+
+}
+.child {
+  width:350px;
+  margin:10px;
+
+}
