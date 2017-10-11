@@ -4,6 +4,7 @@ import newReadme from './convert_readme_links.js';
 
 class RenderMarkdown extends Component {
   render() {
+    console.log(newReadme)
     return (
         <div>
           <Markdown source={ newReadme } />

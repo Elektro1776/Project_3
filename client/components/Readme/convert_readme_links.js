@@ -65,7 +65,8 @@ let matchRep = str;
 function replaceLinks() {
   if (cycles === 0) {
     //console.log(matchRep);
-    return matchRep;
+    console.log('I have finished your request');
+
   }
   else {
     //replacing the string
@@ -76,6 +77,8 @@ function replaceLinks() {
   }
 };
 replaceLinks();
+return matchRep;
 };
-var newReadme = convertLinks(psuedoResponse, '901david', 'Flashcard-Fun');
-console.log(newReadme);
+const repo = 'Flashcard-Fun';
+var newReadme = convertLinks(psuedoResponse, '901david', repo);
+export default newReadme;
