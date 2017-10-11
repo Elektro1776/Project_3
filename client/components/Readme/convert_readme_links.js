@@ -1,35 +1,48 @@
 
 
-const psuedoResponse = `# Flashcard-Fun
+const psuedoResponse = `# uTile Developer's Application
 
-FlashCard-Fun is designed to be a web-based application that helps users to learn information in an interactive and fun manner. Users are required to sign up with a username and password so that their created cards can be saved and can be reviewed at their leisure.
+## Purpose
 
-![Shot1](readmeimages/shot1.png)
+This site was created to allow developer's to interact with their GitHub in an effective and quick manner to manage projects and tasks in a streamlined manner.
 
-## Creating Cards
+![LoginFeature](readmeimages/image1.png)
 
-Once a user logs in they are started on the create cards screen.  Here users create a front and a back for two different types of flash cards.  The first type is a basic card. This is kind of a freedom card because it basically allows you to put anything for a question and anything for an answer. The second type of card is a cloze card or a fill in the blank card.  This requires that the exact phrase you want removed from the question is entered as the back of the card.  Each time a user creates a card you can see it populate in the sidebar to the left, which contains all created cards.
+## Features
 
-![Shot2](readmeimages/shot2.png)
+* GitHub repository management
 
-## Reviewing Cards
+  From your projects view you are able to manage all of your GitHub repositories. Once a repo is opened up you are able to view all open issues, and who they are assigned.  In this view you are also able to add collaborators to your repos, add active issues, create pull requests and assign existing issues. This allows users to quickly use inline commands to accomplish several tasks in one location.
 
-There are two ways to review cards.  Click the review cards on the create card screen.  This will start the user with the first card in the first group.  You can also click on any card in the sidebar to review that card.  Once you are reviewing a card from that screen you are able to review previous or next cards or simply click the card in the card sidebar to review it.
+  ### Repository Management
+  ![RepoManagement](./readmeimages/image2.png)
 
-![Shot3](readmeimages/shot3.png)
+  ### View Issues/Assignees
+  ![issueDisplay](./readmeimages/image3.png)
 
-## Version 2 aspirations
-Some of the aspirations for Version 2 of this app would be, collapsing groups for better organization.  Click on group headers to start reviewing that group, delete card button on both the display card screen in addition to the card sidebar. Also, have a checkbox when creating a cards to determine whether the user simply wants to review data in a traditional flash card manner or if they want to attempt to input the correct answer.
+  ### Interact with GitHub
+  ![createGitHubStuff](./readmeimages/image4.png)
 
-## Technologies Used
-* Html
-* Bootstrap
-* Css
-* Animate Css
-* Firebase
-* Photoshop
-* Javascript
-* JQuery`;
+
+* Task Management through the Matrix
+
+  In this view, users are also able to enter into the matrix for each project. This is a grid that allows users to create user stories and place them into a specific category.  These are:  Low Importance, or High Importance, which also include two categories, High Value and Low Value.  This allows a user to create a user story and prioritize exactly its importance and value and maximizes collaboration.
+
+  ### Create User Stories
+  ![TaskCreate](./readmeimages/image5.png)
+
+  ### Manage User stories
+  ![TaskManage](./readmeimages/image6.png)
+
+* Code writing and building
+
+  Also available in the projects area, are the ability to write syntax highlighted code that can be copied and pasted into something else.  If you have some thing on yoru mind you have to get down NOW before it is forgotten, or you just want to tool around with some javascript, you are able to write code with dynamic syntax highlighting to help you out. In addition, there is a window where you are able to write in plain text and insert images, videos and files in a similar manner to a word document and the it is converted into html code that a user could copy and paste into their favorite coding IDE.
+
+  ![snippetFeature](./readmeimages/image7.jpg)
+
+* Where to go?
+
+  We are currently working on version 2 of this application.  It is being built in React, and will basically be the same features.  We are hoping to create a more robust interface for users when interacting with GitHub and also tie in Slack as well.  Alot of the limitations on this version were because we were using Handlebars and did not have acces to two way data binding.  Keep your eyes peeled for Version 2.`;
 
 
 function convertLinks(string, user, repo) {
@@ -51,7 +64,12 @@ let newLinkArray = [];
 // Map the array calling the function that determines if the link needs to be changed
 matches.map((stringInput) => {
   if (stringInput.includes('.') && !stringInput.includes('http')) {
+    if(!stringInput.includes('./')){
     newLinkArray.push(`(${newLink}${stringInput})`);
+    }
+    else {
+      newLinkArray.push(`(${newLink}${stringInput.replace('./', '')})`);
+    }
   }
   else {
     newLinkArray.push(`(${stringInput})`);
@@ -79,6 +97,6 @@ function replaceLinks() {
 replaceLinks();
 return matchRep;
 };
-const repo = 'Flashcard-Fun';
+const repo = 'utileDevelopersApplication';
 var newReadme = convertLinks(psuedoResponse, '901david', repo);
 export default newReadme;
