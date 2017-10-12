@@ -21,6 +21,16 @@ module.exports = {
     modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(__dirname, 'client/node_modules')],
   },
   entry: {
+    vendor: [
+      'babel-polyfill',
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router-dom',
+      'react-router',
+      'redux',
+      'redux-thunk',
+    ],
     app: [
       'react-hot-loader/patch',
       'webpack/hot/only-dev-server',
@@ -28,12 +38,14 @@ module.exports = {
     ],
   },
   output: {
-    path: path.join(__dirname, 'build/dist'),
+    path: path.join(__dirname, 'public/dist'),
     filename: '[name].js',
-    publicPath: '/dist',
+    publicPath: '/public',
   },
   devServer: {
-    publicPath: '/',
+    contentBase: path.join(__dirname, 'buld/dist'),
+
+    publicPath: '/public',
     port: 8080,
     host: 'localhost',
     hot: true,
@@ -75,13 +87,11 @@ module.exports = {
   },
   plugins: [
     // HtmlWebpackPluginConfig,
-    new CleanWebpackPlugin(['build/dist']),
+    new CleanWebpackPlugin(['public/dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development'),
-    }),
     new ExtractTextPlugin({
+      publicPath: '/public',
       filename: '[name].css',
       allChunks: true,
     }),
