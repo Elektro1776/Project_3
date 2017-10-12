@@ -75,6 +75,10 @@ module.exports = {
           ],
         }),
       },
+      {
+       test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/,
+       loader: 'url-loader'
+     }
     //   {
     //   test: /(\.css|\.scss)$/,
     //   include: /(\node_modules\/react-toolbox)/,
