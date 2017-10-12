@@ -35,6 +35,7 @@ class Routes extends Component {
     };
   }
   componentWillReceiveProps(nextProps) {
+    console.log(' WHAT HAPPENS HERE ?', nextProps);
     const { isAuthenticated, loadingUser } = nextProps.auth;
     if (isAuthenticated !== this.props.auth.isAuthenticated) {
       this.setState({ userIsAuthorized: nextProps.auth.isAuthenticated, userNotFound: false });
@@ -42,9 +43,13 @@ class Routes extends Component {
       this.setState({ userNotFound: true, loadingUser: false })
     }
   }
+  shouldComponentUpdate(nextProps, nextState) {
+    return true;
+  }
   render() {
     const { location } = this.props;
     const { userIsAuthorized, userNotFound, loadingUser } = this.state;
+    console.log(' WHAT IS THE STATE?', this.props);
     if (userNotFound && loadingUser) {
       return (
         <AppContainer>
