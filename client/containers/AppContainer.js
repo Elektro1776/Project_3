@@ -23,8 +23,7 @@ class AppContainer extends Component {
     );
   }
 }
-
-export default connect(null, (dispatch) => (
+const ConnectedAppContainer = connect(null, (dispatch) => (
   {
     loadUserFromToken: () => {
       console.log(' CHECKING FOR TOKEN!?');
@@ -37,3 +36,17 @@ export default connect(null, (dispatch) => (
       dispatch(checkUserToken(token));
     },
   }))(AppContainer);
+export default ConnectedAppContainer
+// export default connect(null, (dispatch) => (
+//   {
+//     loadUserFromToken: () => {
+//       console.log(' CHECKING FOR TOKEN!?');
+//       const token = localStorage.getItem('jwt_token');
+//       if (!token || token === '') {
+//         console.info(' NO TOKEN FOUND!');
+//         return dispatch(userTokenNotFound());
+//       }
+//       console.info('FOUND A TOKEN!', token);
+//       dispatch(checkUserToken(token));
+//     },
+//   }))(AppContainer);

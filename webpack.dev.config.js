@@ -16,7 +16,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 const root = process.cwd();
 
 module.exports = {
-  devtool: 'source-map',
+  // devtool: 'source-map',
   resolve: {
     modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(__dirname, 'client/node_modules')],
   },
@@ -40,7 +40,7 @@ module.exports = {
   output: {
     path: path.join(__dirname, 'public/dist'),
     filename: '[name].js',
-    publicPath: '/public',
+    publicPath: '/dist',
   },
   devServer: {
     publicPath: '/dist',
