@@ -7,7 +7,7 @@ import Routes from '../routes/Routes';
 
 const ConnectedContainer = ({ history }) => (
   <ConnectedRouter history={history} >
-    <Route render={({ location }) => (<Routes location={location} />)} />
+    <Route render={({ location }) => (<Routes location={location} meowmix={'fuckthisshit'}/>)} />
   </ConnectedRouter>
 );
 ConnectedContainer.propTypes = {
