@@ -43,9 +43,7 @@ module.exports = {
     publicPath: '/public',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'buld/dist'),
-
-    publicPath: '/public',
+    publicPath: '/dist',
     port: 8080,
     host: 'localhost',
     hot: true,
