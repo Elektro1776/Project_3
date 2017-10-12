@@ -13,7 +13,7 @@ router.post('/api/github/getRepos', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `https://api.github.com/users/${req.body.id}/repos`,
+    url: `https://api.github.com/users/${req.body.id}/repos?sort=updated`,
   }, (err, response, body) => {
     console.log(' WHAT IS THE BODY?', body);
   });
