@@ -60,7 +60,7 @@ class Routes extends Component {
           <PrivateRoute exact path="/dashboard" component={RouteMap.Dashboard} authorized={userIsAuthorized} />
           {/* <PrivateRoute path="/projects" component={RouteMap.Projects} authorized={userIsAuthorized} /> */}
           {/* <PrivateRoute path="/settings" component={RouteMap.Settings} authorized={userIsAuthorized} /> */}
-          <PrivateRoute exact path="/about" component={RouteMap.About} authorized={userIsAuthorized} />
+          {/* <PrivateRoute exact path="/about" component={RouteMap.Profile} authorized={userIsAuthorized} /> */}
           {/* <Route exact location={location} path="/about" component={RouteMap.About} /> */}
         </div>
       </AppContainer>
