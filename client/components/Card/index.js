@@ -4,7 +4,8 @@ import { Button } from 'react-toolbox/lib/button';
 import CardComments from './Card_Comments';
 import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
-
+import Collapsible from 'react-collapsible';
+import DropdownTrigger from './Dropdown_Card';
 
 class IssueCard extends Component {
   fetchIssue() {
@@ -29,18 +30,17 @@ class IssueCard extends Component {
 
     return (
       <div className={styles.mainCont}>
+
         { this.props.issues.map((issue, i) => (
           <div key={issue.id}>
-            <Card
-            className={styles.child}
-            >
+            <Collapsible trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
+            <Card className={styles.child}>
               <CardTitle
                 avatar={issue.user.avatar_url}
                 title={issue.user.login}
                 subtitle={this.props.repoName}
               />
               <CardTitle
-                title={`${issue.title} #${issue.number}`}
                 subtitle={issue.body}
               />
               <CardComments comments={this.props.comments} />
@@ -54,6 +54,7 @@ class IssueCard extends Component {
                 <Button label="Add to Matrix" />
               </CardActions>
             </Card>
+          </Collapsible>
           </div>
         ),
 
