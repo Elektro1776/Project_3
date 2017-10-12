@@ -8,6 +8,7 @@ export const signupUser = (userData) => (dispatch) => {
     body: JSON.stringify(userData),
   })
     .then((response) => {
+      
       if (!response.ok) {
         throw new Error(response.statusText);
       }
@@ -15,7 +16,10 @@ export const signupUser = (userData) => (dispatch) => {
     })
     .then((result) => result.json())
     .then((user) => {
-      console.info(' WHAT IS OUR USER ????', user.body);
+      console.info(' WHAT IS OUR USER ????', user);
+      if (user.token) {
+        localStorage.setItem('jwt_token', user.token);
+      }
       dispatch(successUserSignIn(user));
     })
     .catch((err) => {
