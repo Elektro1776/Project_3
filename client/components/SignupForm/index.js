@@ -6,6 +6,8 @@ import { Button } from 'react-toolbox/lib/button';
 import PropTypes from 'prop-types';
 import { signupUser } from '../../actions/signupActions';
 
+
+
 class SignupForm extends Component {
   constructor() {
     super();

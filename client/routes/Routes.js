@@ -55,6 +55,7 @@ class Routes extends Component {
     return (
       <AppContainer>
         <div>
+
           <Route exact location={location} path="/" component={RouteMap.Signup} />
           {/* <Route exact location={location} path="/login" component={RouteMap.Login} /> */}
           <PrivateRoute exact path="/dashboard" component={RouteMap.Dashboard} authorized={userIsAuthorized} />
