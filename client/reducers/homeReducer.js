@@ -1,6 +1,6 @@
 const initalState = {
-  testState: 'Testing!!!!'
-}
+  testState: 'Testing!!!!',
+};
 function homeReducer(state = initalState, action) {
   switch (action.type) {
     case 'TEST':

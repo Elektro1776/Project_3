@@ -1,6 +1,6 @@
 
-export const meow = test => {
-  console.log(' THIS ACTION FIRED!');
+export const meow = (test) => {
+  console.info(' THIS ACTION FIRED!');
   return {
     type: 'TEST',
     test,
