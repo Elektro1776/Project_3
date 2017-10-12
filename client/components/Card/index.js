@@ -33,7 +33,7 @@ class IssueCard extends Component {
 
         { this.props.issues.map((issue, i) => (
           <div key={issue.id}>
-            <Collapsible trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
+            <Collapsible lazyRender={true} trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
             <Card className={styles.child}>
               <CardTitle
                 avatar={issue.user.avatar_url}
