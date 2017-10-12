@@ -11,11 +11,14 @@ import configureStore from '../createstore';
 
 const history = createHistory();
 const initalState = window.__INITALSTATE__;
+// console.log(' THIS IS OUR CLIENT SIDE REHYDRATE STATE?', window.__INITALSTATE__);
 // garbage collect the initalState
 // then just go ahead and remove the script tag for shigrins.... :)
-delete window.__INITALSTATE__;
-document.getElementById('initalState').remove();
+// delete window.__INITALSTATE__;
+// document.getElementById('initalState').remove();
 const store = configureStore(history, initalState);
+const meow = store.getState();
+// console.log(' WHAT IS THIS STORE STATE???? MEOWWWWWW', meow)
 const root = document.getElementById('root');
 const renderApp = (Component) =>
   render(
@@ -27,6 +30,7 @@ const renderApp = (Component) =>
     root,
   );
 renderApp(App);
+
 if (module.hot) {
   module.hot.accept('../containers/ConnectedContainer', () => {
     const NextApp = require('../containers/ConnectedContainer').default;

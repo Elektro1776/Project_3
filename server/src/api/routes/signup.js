@@ -7,10 +7,11 @@ const router = express.Router();
 
 router.post('/', (req, res) => {
   // TODO: **** Need to encrypt the user password here probably *****
-
+console.log(' HELLLOOOO WORLD!!!!!!');
   const { username, email, password } = req.body;
   User.findOne({ username })
     .then((user) => {
+      console.log(' NO user!!!!!', user);
       if (!user) {
         const newUser = new User({ username, email });
         newUser.save()

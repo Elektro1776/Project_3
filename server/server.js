@@ -7,10 +7,14 @@ import path from 'path';
 import mongoose from 'mongoose';
 import config from './config';
 import { renderPage } from '../client/renderers/server';
-// import jsonwebtoken from 'jsonwebtoken';
+import jsonwebtoken from 'jsonwebtoken';
 import jwt from 'express-jwt';
-import signupRouter from './src/api/routes/signup';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
+
+// CUSTOM ROUTERS
+import authRouter from './src/auth/localAuth';
+import signupRouter from './src/api/routes/signup';
 
 const app = express();
 
@@ -34,10 +38,12 @@ if (DEV) {
 }
 
 
+app.use(express.static(path.join(__dirname, '../public')));
+// app.use('/favicon.ico', express.static(path.join(__dirname, '../public/favicon.ico')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'src/views'));
-app.use(express.static(path.join(__dirname, '../build/dist')));
 // app.use();
+app.use(cookieParser());
 app.use(bodyParser.json());
 // middleware that checks if JWT token exists and verifies it if it does exist.
 // In all the future routes, this helps to know if the request is authenticated or not.
@@ -48,7 +54,7 @@ app.use((req, res, next) => {
   token = token.replace('Bearer ', '');
 
 
-  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+  jsonwebtoken.verify(token, process.env.JWT_SECRET, (err, user) => {
     if (err) {
       return res.status(401).json({
         success: false,
@@ -56,9 +62,11 @@ app.use((req, res, next) => {
       });
     }
     req.user = user;
+    // console.log(' WE SHOULD HAVE A USER???', user);
     next();
   });
 });
+app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
 app.use('/test', (req, res) => {
   res.send({ Hello: 'uTile is Served' });
@@ -74,10 +82,9 @@ app.use('/test', (req, res) => {
 //     res.render('index', { initalContent });
 //   });
 // }
-
 app.get('*', jwt({ secret: process.env.JWT_SECRET, credentialsRequired: false }), (req, res) => {
-  const initalContent = renderPage(req, res);
-  res.render('index', { ...initalContent });
+  const { initalContent } = renderPage(req, res);
+  res.render('index', { initalContent });
 });
 
 // Serve the files on port 3000.
