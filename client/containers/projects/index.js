@@ -1,15 +1,39 @@
 import React, { Component } from 'react';
-import IssueCard from '../../components/Card/index.js';
-import issueData from './GET_ALL_ISSUES_REPO_SPECIFIC';
-import commentData from './GET_COMMENTS_FOR_SPECIFIC_ISSUE';
-
+import ProjLayout from './Layout';
+import ButtonBar from '../../components/ButtonBar/Button_Bar';
+import styles from './project_style.css';
 
 class Projects extends Component {
+    state = {
+      issuesButt: false,
+      readmeButt: true,
+      matrixButt: false,
+
+    };
+  whatStateToChange(prop) {
+    const keyArray = Object.keys(this.state);
+    this.setState({
+      issuesButt: false,
+      readmeButt: false,
+      matrixButt: false,
+    });
+    for (let i = 0; i < keyArray.length; i++) {
+      if(keyArray[i] === prop) {
+        this.setState({[prop]: true});
+      }
+    }
+
+  }
   render() {
     return (
       <div>
-        <IssueCard issues={issueData} repoName="Project_3" comments={commentData} />
+      <div className={styles.buttonBox}>
+        <ButtonBar clicker={this.whatStateToChange.bind(this)} />
       </div>
+      <div>
+        <ProjLayout state={this.state} />
+      </div>
+    </div>
     );
   }
 }

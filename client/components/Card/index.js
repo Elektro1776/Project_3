@@ -8,25 +8,25 @@ import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
 
 class IssueCard extends Component {
-  fetchIssue() {
-    //grabs issues for specific repos and passes them in as props
-  }
-  addComment() {
-    //this will be method that allows user to add a comment
-  }
-  closeIssue() {
-    //this will close an issue
-  }
-  addMatrix() {
-    //this will add an issue to matrix
-  }
+  // fetchIssue() {
+  //   //grabs issues for specific repos and passes them in as props
+  // }
+  // addComment() {
+  //   //this will be method that allows user to add a comment
+  // }
+  // closeIssue() {
+  //   //this will close an issue
+  // }
+  // addMatrix() {
+  //   //this will add an issue to matrix
+  // }
   render() {
     const assigneeData = this.props.issues.map((issue) => issue.assignees);
-    if (!this.props.issues) {
-      return (
-        <img src="./uTile_black_loader_50.gif" alt="loader" />
-      );
-    }
+    // if (!this.props.issues) {
+    //   return (
+    //     <img src="./uTile_black_loader_50.gif" alt="loader" />
+    //   );
+    // }
 
     return (
       <div className={styles.mainCont}>

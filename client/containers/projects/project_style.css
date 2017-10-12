@@ -1,0 +1,10 @@
+.buttonBox {
+  width:100%;
+  background-color: lightgray;
+}
+.layout {
+  width:90%;
+  margin:0 5% 0 5%;
+  border:2px solid black;
+  min-height: 500px;
+}
