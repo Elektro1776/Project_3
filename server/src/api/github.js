@@ -29,7 +29,7 @@ router.post('/api/github/getIssues', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues`,
+    url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues?filter=all&sort=updated`,
   }, (err, response, body) => {
     console.log(' WHAT IS THE BODY?', body);
   });
@@ -214,6 +214,21 @@ router.post('/api/github/removeCollaborator', (req, res) => {
     method: 'DELETE',
     json: true,
     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/collaborators/${req.body.username}?access_token=${req.user.github.token}`,
+  }, (err, response, body) => {
+    console.log(' WHAT IS THE BODY?', body);
+  });
+});
+
+// Get events feed
+router.post('/api/github/getEvents', (req, res) => {
+  request({
+    headers: {
+      Accept: 'application/vnd.github.v3.full+json',
+      'User-Agent': 'request',
+    },
+    method: 'GET',
+    json: true,
+    url: `https://api.github.com/users/${req.body.username}/events`,
   }, (err, response, body) => {
     console.log(' WHAT IS THE BODY?', body);
   });
