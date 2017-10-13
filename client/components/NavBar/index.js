@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import AppBar from 'react-toolbox/lib/app_bar';
 import Navigation from 'react-toolbox/lib/navigation';
 import Link from 'react-toolbox/lib/link';
-import RepoDrawer from "./Drawer";
+import RepoDrawer from './Drawer';
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -10,16 +10,14 @@ const GithubIcon = () => (
   </svg>
 );
 
-const AppBarTest = (props) => {
-  return (
-  <AppBar  rightIcon={<GithubIcon />}>
-    <Navigation type='horizontal'>
+const AppBarTest = (props) => (
+  <AppBar rightIcon={<GithubIcon />}>
+    <Navigation type="horizontal">
 
       <RepoDrawer />
 
     </Navigation>
   </AppBar>
 );
-}
 
 export default AppBarTest;

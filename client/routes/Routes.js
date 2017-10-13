@@ -7,13 +7,13 @@ import AppContainer from '../containers/AppContainer';
 import { connect } from 'react-redux';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  console.log(' WHAT IS THE RESTTTTT', rest);
-  return(
+  const { Dashboard } = RouteMap;
+  return (
     <Route
       {...rest}
       render={(props) => (
         rest.authorized ? (
-          <Component {...props} />
+          <Dashboard {...props} />
         ) : (
           <Redirect to={{
             pathname: '/',
@@ -25,6 +25,10 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
     />
   );
 };
+PrivateRoute.propTypes = {
+  // component: PropTypes.object.isRequired,
+  // location: PropTypes.object.isRequired,
+};
 class Routes extends Component {
   constructor(props) {
     super(props);
@@ -35,12 +39,11 @@ class Routes extends Component {
     };
   }
   componentWillReceiveProps(nextProps) {
-    console.log(' WHAT HAPPENS HERE ?', nextProps);
     const { isAuthenticated, loadingUser } = nextProps.auth;
     if (isAuthenticated !== this.props.auth.isAuthenticated) {
       this.setState({ userIsAuthorized: nextProps.auth.isAuthenticated, userNotFound: false });
     } else if (!nextProps.auth.isAuthenticated && !loadingUser) {
-      this.setState({ userNotFound: true, loadingUser: false })
+      this.setState({ userNotFound: true, loadingUser: false });
     }
   }
   shouldComponentUpdate(nextProps, nextState) {
@@ -48,8 +51,8 @@ class Routes extends Component {
   }
   render() {
     const { location } = this.props;
+    console.log(' WHAT IS THE LOCATION ?', location);
     const { userIsAuthorized, userNotFound, loadingUser } = this.state;
-    console.log(' WHAT IS THE STATE?', this.props);
     if (userNotFound && loadingUser) {
       return (
         <AppContainer>
@@ -62,12 +65,12 @@ class Routes extends Component {
         <div>
 
           <Route exact location={location} path="/" component={RouteMap.Signup} />
-          {/* <Route exact location={location} path="/login" component={RouteMap.Login} /> */}
+          <Route exact location={location} path="/login" component={RouteMap.Login} />
           <PrivateRoute exact path="/dashboard" component={RouteMap.Dashboard} authorized={userIsAuthorized} />
-          {/* <PrivateRoute path="/projects" component={RouteMap.Projects} authorized={userIsAuthorized} /> */}
+          <PrivateRoute path="/projects" component={RouteMap.Projects} authorized={userIsAuthorized} />
           {/* <PrivateRoute path="/settings" component={RouteMap.Settings} authorized={userIsAuthorized} /> */}
-          <PrivateRoute exact path="/about" component={RouteMap.About} authorized={userIsAuthorized} />
-          {/* <Route exact location={location} path="/about" component={RouteMap.About} /> */}
+          {/* <PrivateRoute exact path="/about" component={RouteMap.About} authorized={userIsAuthorized} /> */}
+          <Route exact location={location} path="/about" component={RouteMap.About} />
         </div>
       </AppContainer>
 
@@ -78,6 +81,7 @@ class Routes extends Component {
 
 Routes.propTypes = {
   location: PropTypes.object.isRequired,
+  auth: PropTypes.object.isRequired,
 };
 export default connect(
   (state) => ({
