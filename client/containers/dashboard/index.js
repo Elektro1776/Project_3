@@ -30,7 +30,7 @@ class Dashboard extends Component {
     return (
       <div
         className="container-fluid"
-        style={{ backgroundColor: 'blue' }}
+        style={{ backgroundColor: 'red' }}
       >
         <Button label='Hello World'/>
         <h1>{this.state.data}</h1>

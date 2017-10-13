@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import AppBar from 'react-toolbox/lib/app_bar';
 import Navigation from 'react-toolbox/lib/navigation';
-import Link from 'react-toolbox/lib/Link';
+import Link from 'react-toolbox/lib/link';
 import RepoDrawer from "./Drawer";
 
 const GithubIcon = () => (
