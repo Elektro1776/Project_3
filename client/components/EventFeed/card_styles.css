@@ -1,0 +1,12 @@
+.card {
+  width:70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  background-color: lightgray;
+  color:black;
+  min-height: 25px;
+  margin-bottom: 5px;
+}
+.commentText {
+  font-style: italic;
+}
