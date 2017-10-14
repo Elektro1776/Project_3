@@ -17,6 +17,7 @@ module.exports = {
   },
   plugins: ["react", "babel", "react", "jsx-a11y"],
   rules: {
+    "camelcase": ["off"],
     "no-underscore-dangle": ["off"],
     "import/prefer-default-export": ["off"],
     "import/first": ["off"],

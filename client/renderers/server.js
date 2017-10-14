@@ -60,6 +60,7 @@ function renderApp(url, req) {
   const ssr = () => {
     const store = configureServerStore(history, initalServerState);
     if (req.user) {
+      // console.log(' WE HAVE A REQ A USER!', req.user);
       store.dispatch({
         type: 'USER_TOKEN_SUCCESS',
         payload: req.user,
