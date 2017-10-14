@@ -4,42 +4,41 @@ import IssueCard from '../../components/Card/index';
 import issueData from './GET_ALL_ISSUES_REPO_SPECIFIC';
 import commentData from './GET_COMMENTS_FOR_SPECIFIC_ISSUE';
 import ReadMe from '../../components/Readme/Readme_Render';
+import Matrix from '../../components/Matrix/Matrix';
+
 
 class ProjLayout extends Component {
-  whatStateToUse(state) {
+  whatStateToUse = (state) => {
     if (state.issuesButt === true) {
       return (
         <div>
           <IssueCard issues={issueData} comments={commentData} />
         </div>
-      )
-    }
-    else if (state.readmeButt === true) {
-      return (
-        <div>
-        <ReadMe />
-      </div>
       );
-    }
-    else if (state.matrixButt === true) {
+    } else if (state.readmeButt === true) {
       return (
         <div>
-          Our Matrix
+          <ReadMe />
         </div>
       );
-    }
-    else {
+    } else if (state.matrixButt === true) {
       return (
-          <div>
-            Houston....We have a problem.
+        <div>
+          <Matrix />
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          Houston....We have a problem.
           </div>
-      )
+      );
     }
   }
   render() {
     return (
       <div className={styles.layout}>
-      {this.whatStateToUse(this.props.state)}
+        {this.whatStateToUse(this.props.state)}
       </div>
     );
   }

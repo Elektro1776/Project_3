@@ -1,0 +1,13 @@
+.container {
+  display: grid;
+  grid-template-columns: [leftBuffer] 4% [col1] 40% [midBuffer] 2% [col2] 40% [rightBuffer] 4%;
+  grid-template-rows: [topBuffer] 4% [row1] 40% [centerBuffer] 2% [row2] 40% [bottomBuffer] 4%;
+}
+
+.quadrant {
+  border: 2px black solid;
+  grid-column-start: col1;
+  grid-column-end: col1;
+  grid-row-start: row1;
+  grid-row-end: row1; 
+}
