@@ -10,32 +10,31 @@ class Projects extends Component {
       matrixButt: false,
 
     };
-  whatStateToChange(prop) {
-    const keyArray = Object.keys(this.state);
-    this.setState({
-      issuesButt: false,
-      readmeButt: false,
-      matrixButt: false,
-    });
-    for (let i = 0; i < keyArray.length; i++) {
-      if(keyArray[i] === prop) {
-        this.setState({[prop]: true});
-      }
+    whatStateToChange(prop) {
+      const keyArray = Object.keys(this.state);
+      this.setState({
+        issuesButt: false,
+        readmeButt: false,
+        matrixButt: false,
+      });
+      keyArray.map((key) => {
+        if (key === prop) {
+          this.setState({ [prop]: true });
+        }
+      });
     }
-
-  }
-  render() {
-    return (
-      <div>
-      <div className={styles.buttonBox}>
-        <ButtonBar clicker={this.whatStateToChange.bind(this)} />
-      </div>
-      <div>
-        <ProjLayout state={this.state} />
-      </div>
-    </div>
-    );
-  }
+    render() {
+      return (
+        <div>
+          <div className={styles.buttonBox}>
+            <ButtonBar clicker={this.whatStateToChange.bind(this)} />
+          </div>
+          <div>
+            <ProjLayout state={this.state} />
+          </div>
+        </div>
+      );
+    }
 }
 
 // function mapStateToProps (state) {

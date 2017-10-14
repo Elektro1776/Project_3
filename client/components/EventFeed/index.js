@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import EventGenerator from './Event_Generator';
 
-class EventHolder extends Component {
+class EventFeed extends Component {
 
   render() {
     return (
@@ -13,4 +13,4 @@ class EventHolder extends Component {
   }
 }
 
-export default EventHolder;
+export default EventFeed;

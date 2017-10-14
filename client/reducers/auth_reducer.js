@@ -12,7 +12,6 @@ export default function (state = initalState, action) {
     case USER_TOKEN:
       return Object.assign({}, state, { loadingUser: true });
     case USER_TOKEN_SUCCESS: {
-      console.log(' WHAT IS OUR PAYLOAD?'), action.payload;
       return Object.assign({}, state, { isAuthenticated: true, username: action.payload.username, loadingUser: false });
     }
     case USER_TOKEN_NOT_FOUND: {

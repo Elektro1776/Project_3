@@ -54,7 +54,6 @@ const verifyToken = ({ token, access_token }, cb) => {
       }
       return;
     }
-    // console.log(' WE HAVE A VERIFIED USER ALREADY', user);
     return cb(null, user, false);
   });
 };

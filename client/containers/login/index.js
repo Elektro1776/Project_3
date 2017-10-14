@@ -8,7 +8,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <AppBarTest />
+        {/* <AppBarTest /> */}
         <div className={styles.wrapper}>
           {/* <img src={require("../../components/LoginForm/utile.png")} className={styles.img}/> */}
           <div className={styles.box}>
