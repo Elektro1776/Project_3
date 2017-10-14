@@ -24,10 +24,10 @@ export const signupUser = (userData) => (dispatch) => {
       console.info(' WHAT IS OUR USER ????', user);
       if (user.token) {
         localStorage.setItem('jwt_token', user.token);
+        localStorage.setItem('access_token', user.access_token);
       }
       dispatch(successUserSignIn(user));
       dispatch(tokenCheckSuccess(user));
-
     })
     .catch((err) => {
       // console.log(' Do we hit an errr::???', err);

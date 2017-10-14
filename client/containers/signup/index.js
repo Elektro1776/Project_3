@@ -14,21 +14,18 @@ class Signup extends Component {
       password: '',
     };
   }
+  componentWillReceiveProps(nextProps) {
+    const { history } = this.props;
+    if (nextProps.isAuthenticated !== this.props.isAuthenticated && nextProps.isAuthenticated) {
+      history.replace('/dashboard');
+    }
+  }
   handleChange = (prop, value) => {
-    console.info(' WHAT IS OUR STATE?', this.props);
     this.setState({ [prop]: value });
   }
   handleSignup = (e) => {
     e.preventDefault();
     this.props.signupUser(this.state);
-  }
-  componentWillReceiveProps(nextProps) {
-    console.log(' WHAT ARE THE NEXTPROPS???', nextProps.isAuthenticated);
-    console.log(' WHAT ARE THIS PROPS?', this.props);
-    const { history } = this.props;
-    if (nextProps.isAuthenticated !== this.props.isAuthenticated && nextProps.isAuthenticated) {
-      history.replace('/dashboard')
-    }
   }
   render() {
     const userState = this.state;
@@ -50,7 +47,6 @@ Signup.propTypes = {
   isAuthenticated: PropTypes.object,
 };
 function mapStateToProps(state, ownProps) {
-  console.log(' WHAT IS OUR STATE in sign up ???', state);
     return {
       isAuthenticated: state.auth,
     }
