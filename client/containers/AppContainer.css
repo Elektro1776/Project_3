@@ -1,0 +1,22 @@
+.loadingWrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+  background-color: white;
+
+}
+
+.loadingText {
+  width: 400px;
+  height: 100px;
+  grid-column:  2/ 3;
+  grid-row: 1;
+}
+
+.loadingImage {
+  width: 400px;
+  height: 200px;
+  grid-column: 2 / 2;
+  grid-row: 2;
+}

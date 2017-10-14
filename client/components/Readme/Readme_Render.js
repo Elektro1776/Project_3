@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Markdown from 'react-remarkable';
 import newReadme from './convert_readme_links.js';
+import styles from './readme_style.css';
 
 class RenderMarkdown extends Component {
   render() {
-    console.log(newReadme)
     return (
-        <div>
+        <div className={styles.readmeBox}>
           <Markdown source={ newReadme } />
         </div>
     );

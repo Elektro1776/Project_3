@@ -34,7 +34,7 @@ class LoginForm extends Component {
           label="User Name"
           name="name"
           value={this.state.name}
-          onChange={this.handleChange.bind(this, 'name')} 
+          onChange={this.handleChange.bind(this, 'name')}
           maxLength={16}
 
         />
@@ -47,6 +47,8 @@ class LoginForm extends Component {
           onChange={this.handleChange.bind(this, 'password')}
           maxLength={16}
         />
+
+        <Button className={styles.button} onClick={this.handleLogin} label="Sign In" raised ripple primary />
 
       </form>
 

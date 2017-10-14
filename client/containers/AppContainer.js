@@ -13,7 +13,7 @@ class AppContainer extends Component {
   }
   componentDidMount() {
     this.props.loadUserFromToken();
-    console.log(' CAN I GET THE STORE HERE ?', this.props);
+    // console.log(' CAN I GET THE STORE HERE ?', this.props);
   }
   render() {
     return (
@@ -23,17 +23,31 @@ class AppContainer extends Component {
     );
   }
 }
-
-export default connect(null, (dispatch) => (
+const ConnectedAppContainer = connect(null, (dispatch) => (
   {
     loadUserFromToken: () => {
       console.log(' CHECKING FOR TOKEN!?');
       const token = localStorage.getItem('jwt_token');
+      const access_token = localStorage.getItem('access_token');
       if (!token || token === '') {
         console.info(' NO TOKEN FOUND!');
         return dispatch(userTokenNotFound());
       }
       console.info('FOUND A TOKEN!', token);
-      dispatch(checkUserToken(token));
+      dispatch(checkUserToken({ token, access_token }));
     },
   }))(AppContainer);
+export default ConnectedAppContainer
+// export default connect(null, (dispatch) => (
+//   {
+//     loadUserFromToken: () => {
+//       console.log(' CHECKING FOR TOKEN!?');
+//       const token = localStorage.getItem('jwt_token');
+//       if (!token || token === '') {
+//         console.info(' NO TOKEN FOUND!');
+//         return dispatch(userTokenNotFound());
+//       }
+//       console.info('FOUND A TOKEN!', token);
+//       dispatch(checkUserToken(token));
+//     },
+//   }))(AppContainer);
