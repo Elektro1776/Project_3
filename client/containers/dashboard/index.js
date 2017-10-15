@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom';
 import { Button } from 'react-toolbox/lib/button';
 import EventFeed from '../../components/EventFeed';
 import Chat from '../chat';
+import CodeEditor from '../../components/CodeEditor';
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -39,6 +40,8 @@ class Dashboard extends Component {
         </div>
         <div className='col-lg-6'>
           <Chat/>
+          <CodeEditor />
+
       </div>
       </div>
     );

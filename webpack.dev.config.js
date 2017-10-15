@@ -7,6 +7,8 @@ const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+const MonacoEditorSrc = path.join(__dirname,'node_modules/monaco-editor/min/vs');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: '!!raw-loader!./server/src/views/index.ejs',
@@ -17,7 +19,13 @@ const root = process.cwd();
 
 module.exports = {
   // devtool: 'source-map',
+  // target: 'web',
+  context: path.resolve(__dirname),
   resolve: {
+    extensions: ['*', '.js', '.jsx', '.json'],
+    // alias: {
+    //   'react-monaco-editor': MonacoEditorSrc,
+    // },
     modules: [path.resolve('./client'), path.resolve('./node_modules'), path.resolve(__dirname, 'client/node_modules')],
   },
   entry: {
@@ -30,6 +38,7 @@ module.exports = {
       'react-router',
       'redux',
       'redux-thunk',
+      'react-monaco-editor',
     ],
     app: [
       'react-hot-loader/patch',
@@ -65,6 +74,10 @@ module.exports = {
         },
       },
       {
+        test: /\.json$/,
+        loader: 'json-loader',
+      },
+      {
         test: /(\.css|\.scss)$/,
         loader: ExtractTextPlugin.extract({
           use: [
@@ -85,7 +98,7 @@ module.exports = {
   },
   plugins: [
     // HtmlWebpackPluginConfig,
-    new CleanWebpackPlugin(['public/dist']),
+    // new CleanWebpackPlugin(['public/dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),
     new ExtractTextPlugin({
@@ -97,7 +110,13 @@ module.exports = {
       name: 'vendor',
     }),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('development')
+      'process.env.NODE_ENV': JSON.stringify('development'),
     }),
+    new CopyWebpackPlugin([
+      {
+        from: 'node_modules/monaco-editor/min/vs',
+        to: 'vs',
+      },
+    ]),
   ],
 };
