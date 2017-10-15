@@ -1,0 +1,9 @@
+.readmeBox {
+  width:100%;
+  overflow: hidden;
+  display: flex;
+}
+img {
+  width:50%;
+  height: auto;
+}

@@ -7,7 +7,12 @@ import Routes from '../routes/Routes';
 
 const ConnectedContainer = ({ history }) => (
   <ConnectedRouter history={history} >
-    <Route render={({ location }) => (<Routes location={location} meowmix={'fuckthisshit'}/>)} />
+    <Route render={({ location }) => {
+      console.log(' WHAT IS OUR LOCATION', location);
+      return (
+      <Routes location={location} />
+    )}}
+    />
   </ConnectedRouter>
 );
 ConnectedContainer.propTypes = {

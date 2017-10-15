@@ -5,6 +5,8 @@ import axios from 'axios';
 // import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Button } from 'react-toolbox/lib/button';
+import EventFeed from '../../components/EventFeed';
+import Chat from '../chat';
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -32,11 +34,12 @@ class Dashboard extends Component {
         className="container-fluid"
         style={{ backgroundColor: 'red' }}
       >
-        <Button label='Hello World'/>
-        <h1>{this.state.data}</h1>
-        <Link to={'/about'}>
-         Rendering with React
-        </Link>
+        <div className='col-lg-6'>
+          <EventFeed />
+        </div>
+        <div className='col-lg-6'>
+          <Chat/>
+      </div>
       </div>
     );
   }

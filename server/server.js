@@ -1,20 +1,25 @@
+// Lets grab our ENVIRONMENT VARS
 require('dotenv').config();
 
+// This jazz here if so we can use all the fancy sass on server side renders... this was a pain
 import csshook from 'css-modules-require-hook/preset'; // import hook before routes
 
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
-import config from './config';
-import { renderPage } from '../client/renderers/server';
 import jsonwebtoken from 'jsonwebtoken';
 import jwt from 'express-jwt';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 
+import config from './config';
+
+import { renderPage } from '../client/renderers/server';
 // CUSTOM ROUTERS
 import authRouter from './src/auth/localAuth';
 import signupRouter from './src/api/routes/signup';
+// CUSTOM MIDDLEWARE
+import { isAuthenticated } from './src/middleware/isAuthenticated';
 
 const app = express();
 
@@ -22,19 +27,12 @@ const app = express();
 const DEV = process.env.NODE_ENV === 'development';
 mongoose.Promise = require('bluebird');
 
-// const options = {
-//   useMongoClient: true,
-//   promiseLibrary: require('bluebird'),
-// };
+const options = {
+  useMongoClient: true,
+  promiseLibrary: require('bluebird'),
+};
 if (DEV) {
-  mongoose.connect(process.env.MONGO_LOCAL_URI);
-  // .then((success) => {
-  //   console.info('Success connect to mongo!');
-  //   connection = success;
-  // })
-  // .catch((err) => {
-  //   console.info('Could not complete connection', err);
-  // });
+  mongoose.connect(process.env.MONGO_LOCAL_URI, options);
 }
 
 
@@ -45,43 +43,14 @@ app.set('views', path.join(__dirname, 'src/views'));
 // app.use();
 app.use(cookieParser());
 app.use(bodyParser.json());
-// middleware that checks if JWT token exists and verifies it if it does exist.
-// In all the future routes, this helps to know if the request is authenticated or not.
-app.use((req, res, next) => {
-  // check header or url parameters or post parameters for token
-  let token = req.headers.authorization;
-  if (!token) return next();
-  token = token.replace('Bearer ', '');
-
-
-  jsonwebtoken.verify(token, process.env.JWT_SECRET, (err, user) => {
-    if (err) {
-      return res.status(401).json({
-        success: false,
-        message: 'Please register Log in using a valid email to submit posts',
-      });
-    }
-    req.user = user;
-    // console.log(' WE SHOULD HAVE A USER???', user);
-    next();
-  });
-});
+// Runs our check on the tokens sent from client on every request
+app.use(isAuthenticated);
 app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
 app.use('/test', (req, res) => {
   res.send({ Hello: 'uTile is Served' });
 });
-// /**
-// NOTE: We have to place all middleware that will handle all api requests above our get('*')
-// There is probably a better way to do this but for now this will do
-// */
-// if (PROD) {
-//   app.get('/', async (req, res) => {
-//     const initalContent = renderPage(req);
-//     // console.log(' WHAT IS OUR INITAL CONTENT?', initalContent);
-//     res.render('index', { initalContent });
-//   });
-// }
+
 app.get('*', jwt({ secret: process.env.JWT_SECRET, credentialsRequired: false }), (req, res) => {
   const { initalContent } = renderPage(req, res);
   res.render('index', { initalContent });
