@@ -235,14 +235,15 @@ router.post('/api/github/removeCollaborator', (req, res) => {
   });
 });
 
-// Get Readme
-router.post('/api/github/removeCollaborator', (req, res) => {
+
+// Authorize a user on github
+router.post('/api/github/authorize', (req, res) => {
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
       'User-Agent': 'request',
     },
-    method: 'DELETE',
+    method: 'GET',
     json: true,
     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/readme`,
   }, (err, response, body) => {
@@ -253,6 +254,20 @@ router.post('/api/github/removeCollaborator', (req, res) => {
     // We will need to send to the component
     res.send(buf.toString());
   });
+});
+
+// Get Readme
+router.post('/api/github/readme', (req, res) => {
+  request({
+    headers: {
+      Accept: 'application/vnd.github.v3.full+json',
+      'User-Agent': 'request',
+    },
+    method: 'GET',
+    json: true,
+    url: `http://github.com/login/oauth/authorize`,
+  }, (err, response, body) => {
+    res.send(body);
 });
 
 module.exports = router;
