@@ -45,15 +45,6 @@ class EventGenerator extends Component {
           </div>
         );
         break;
-      case 'DeleteEvent':
-      return (
-        <div key={e.id}>
-          <Card className={styles.card}>
-            Delete Event
-          </Card>
-        </div>
-      );
-      break;
       case 'IssueCommentEvent':
         return (
           <div key={e.id}>
