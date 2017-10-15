@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ProjLayout from './Layout';
 import ButtonBar from '../../components/ButtonBar/Button_Bar';
 import styles from './project_style.css';
+import Code_Editor from '../../components/CodeEditor';
 
 class Projects extends Component {
     state = {
@@ -32,6 +33,7 @@ class Projects extends Component {
           <div>
             <ProjLayout state={this.state} />
           </div>
+          <CodeEditor />
         </div>
       );
     }
