@@ -7,8 +7,7 @@ import { Link } from 'react-router-dom';
 import EventFeed from '../../components/EventFeed';
 import Chat from '../chat';
 import ModalGitAuth from '../../components/Modal';
-
-
+import CodeEditor from '../../components/CodeEditor';
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -52,6 +51,8 @@ class Dashboard extends Component {
         </div>
         <div className='col-lg-6'>
           <Chat/>
+          <CodeEditor />
+
       </div>
       </div>
     );
