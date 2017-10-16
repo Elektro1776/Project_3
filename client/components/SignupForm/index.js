@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import Input from 'react-toolbox/lib/input';
 import { Button } from 'react-toolbox/lib/button';
 import PropTypes from 'prop-types';
 
-
-
 class SignupForm extends Component {
   render() {
-    const { username, email, password } = this.props.userInfo
+    const { username, email, password } = this.props.userInfo;
     return (
       <form>
         <Input
