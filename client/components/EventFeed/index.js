@@ -6,7 +6,6 @@ class EventFeed extends Component {
   render() {
     return (
         <div>
-          <h1>Your Recent Events:</h1>
           <EventGenerator />
         </div>
     );
