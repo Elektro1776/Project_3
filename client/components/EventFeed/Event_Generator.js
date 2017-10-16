@@ -9,7 +9,7 @@ class EventGenerator extends Component {
     const dateToConvert = Date.fromISO(date).toString().split(' ');
     const convertedTime = convertTime(dateToConvert[4].split(':'));
     function convertTime(time) {
-      if (time[0] < 12) {
+      if (time[0] < 13) {
         return `${time[0]}:${time[1]}:${time[2]} a.m.`;
       }
 
@@ -26,7 +26,7 @@ class EventGenerator extends Component {
 
     }
     switch (e.type) {
-      case 'PushEvent':
+      case 'PushEvent': {
       const branch = e.payload.ref.replace('refs/heads/', '');
         return (
           <div key={e.id}>
@@ -36,24 +36,67 @@ class EventGenerator extends Component {
           </div>
         );
         break;
-      case 'IssuesEvent':
+      }
+      case 'IssuesEvent': {
+        const labelCondenser = () => {
+          if (e.payload.issue.labels.length === 0) {
+            return 'Labels: None';
+          }
+          let cycles = e.payload.issue.labels.length;
+          let index = 0;
+          var labelsString = e.payload.issue.labels.length > 1 ? 'Labels: ' : 'Label: ';
+          function whatAreOurLabels() {
+            if (cycles !== 0) {
+              labelsString = `${labelsString}  ${e.payload.issue.labels[index].name}`;
+              cycles -= 1;
+              index += 1;
+              whatAreOurLabels();
+            }
+          }
+          whatAreOurLabels();
+          return labelsString;
+        };
+        const assigneeCondenser = () => {
+          if (e.payload.issue.assignees.length === 0) {
+            return 'Assignees: None';
+          }
+          let cycles = e.payload.issue.assignees.length;
+          let index = 0;
+          var assigneeString = e.payload.issue.assignees.length > 1 ? 'Assignees: ' : 'Assignee: ';
+          function whoAreOurAssignees() {
+            if (cycles !== 0) {
+              assigneeString = `${assigneeString}  ${e.payload.issue.assignees[index].login}`;
+              console.log('assignnee string', assigneeString);
+              cycles -= 1;
+              index += 1;
+              console.log('cycles', cycles, 'index', index);
+              whoAreOurAssignees();
+            }
+          }
+          whoAreOurAssignees();
+          return assigneeString;
+        };
+
+        const body = !e.payload.issue.body ? '': ` saying ${e.payload.issue.body}`;
         return (
           <div key={e.id}>
             <Card className={styles.card}>
-              <p>{`${this.convertDate(e.created_at)} ${e.actor.display_login} ${e.payload.action} issue #${e.payload.issue.number} titled `} <span className={styles.commentText}>{`${e.payload.issue.title} on ${repoName()}`}</span></p>
+              <p>{`${this.convertDate(e.created_at)} ${e.actor.display_login} ${e.payload.action} issue #${e.payload.issue.number} titled `} <span className={styles.commentText}>{`${e.payload.issue.title}${body}`}</span> {`on ${repoName()}, ${labelCondenser()}, ${assigneeCondenser()}`}</p>
             </Card>
           </div>
         );
         break;
-      case 'IssueCommentEvent':
+      }
+      case 'IssueCommentEvent': {
         return (
           <div key={e.id}>
             <Card className={styles.card}>
-              <p>{`${this.convertDate(e.created_at)} ${e.actor.display_login} commented on issue #${e.payload.issue.number} titled ${e.payload.issue.title} saying `} <span className={styles.commentText}>{`${e.payload.comment.body}`}</span>{` on ${repoName()}`}</p>
+              <p>{`${this.convertDate(e.created_at)} ${e.actor.display_login} commented on issue #${e.payload.issue.number} titled ${e.payload.issue.title} saying `} <span className={styles.commentText}>{`${e.payload.comment.body}`}</span>{` on the repository ${repoName()}`}</p>
             </Card>
           </div>
         );
         break;
+      }
       case 'CreateEvent': {
           if (e.payload.ref === null) {
             return (
@@ -86,7 +129,6 @@ class EventGenerator extends Component {
               );
               break;
             }
-
         }
         else {
           return (
@@ -109,11 +151,9 @@ class EventGenerator extends Component {
           var reviewerString = "";
           function whoAreOurReviewers() {
             if (cycles !== 0) {
-              reviewerString += `${reviewerString} ${e.payload.pull_request.requested_reviewers[index].login}`;
-              console.info('revieers are', reviewerString);
+              reviewerString = `${reviewerString} ${e.payload.pull_request.requested_reviewers[index].login}`;
               cycles -= 1;
               index += 1;
-              console.log('WHAT IS THE CYCLE', cycles, 'WHAT IS THE INDEX', index);
               whoAreOurReviewers();
             }
           }
@@ -130,11 +170,64 @@ class EventGenerator extends Component {
         );
       }
         break;
+        case 'DeleteEvent': {
+        return (
+        <div key={e.id}>
+          <Card className={styles.card}>
+            <p>{`${this.convertDate(e.created_at)} ${e.actor.display_login} deleted a ${e.payload.ref_type} titled ${e.payload.ref}`}</p>
+          </Card>
+        </div>
+      );
+      break;
+    }
+      case 'CommitCommentEvent': {
+        return (
+        <div key={e.id}>
+          <Card className={styles.card}>
+            <p>{`${this.convertDate(e.created_at)} ${e.actor.login} created a commit comment saying `}<span className={styles.commentText}>{`${e.payload.comment.body}`}</span>{` on commit id ${e.payload.comment.commit_id} on the repository named ${repoName()}`}</p>
+          </Card>
+        </div>
+      );
+      break;
+      }
+      case 'ForkEvent': {
+        return (
+        <div key={e.id}>
+          <Card className={styles.card}>
+            <p>{`${this.convertDate(e.created_at)} ${e.actor.login} forked a repository named ${repoName()}`}</p>
+          </Card>
+        </div>
+      );
+      break;
+      }
+      case 'WatchEvent': {
+        const action = e.payload.action === 'started' ? 'Starred' : 'Unstarred';
+        const repoNameVar = repoName();
+        const owner = e.repo.name.replace(`/${repoNameVar}`, '');
+        return (
+        <div key={e.id}>
+          <Card className={styles.card}>
+            <p>{`${this.convertDate(e.created_at)} ${e.actor.login} ${action} a repository named ${repoNameVar} owned by ${owner}`}</p>
+          </Card>
+        </div>
+      );
+      break;
+      }
+      case 'MemberEvent': {
+        return (
+        <div key={e.id}>
+          <Card className={styles.card}>
+            <p>{`${this.convertDate(e.created_at)} ${e.actor.login} ${e.payload.action} ${e.payload.member.login} as a collaborator on the repository ${repoName()}`}</p>
+          </Card>
+        </div>
+      );
+      break;
+      }
       default:
         return (
           <div>
             <Card className={styles.card}>
-          Unknown Event
+              I am sorry, this event type is not yet supported.
             </Card>
           </div>
         );
@@ -143,6 +236,7 @@ class EventGenerator extends Component {
   render() {
     return (
       <div>
+        <h1 className={styles.headerText}>Your Recent Events:</h1>
         {eventData.map((event) => (
           <div key={event.id}>
             {this.handleEvent(event)}
