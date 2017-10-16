@@ -97,7 +97,6 @@ module.exports = {
     ],
   },
   plugins: [
-    // HtmlWebpackPluginConfig,
     // new CleanWebpackPlugin(['public/dist']),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(),

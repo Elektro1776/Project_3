@@ -7,6 +7,7 @@ const minlength = [6, 'The value of path `{PATH}` (`{VALUE}`) is shorter than th
 const User = new Schema({
   username: 'String',
   email: 'String',
+  salt: 'String',
   password: {
     type: 'String',
     minlength,
