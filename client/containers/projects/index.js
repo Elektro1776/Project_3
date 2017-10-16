@@ -2,13 +2,14 @@ import React, { Component } from 'react';
 import ProjLayout from './Layout';
 import ButtonBar from '../../components/ButtonBar/Button_Bar';
 import styles from './project_style.css';
-import Code_Editor from '../../components/CodeEditor';
+import CollaboratorsBar from '../../components/Collaborators';
 
 class Projects extends Component {
     state = {
       issuesButt: false,
       readmeButt: true,
       matrixButt: false,
+      codeButt: false
 
     };
     whatStateToChange(prop) {
@@ -17,6 +18,7 @@ class Projects extends Component {
         issuesButt: false,
         readmeButt: false,
         matrixButt: false,
+        codeButt: false
       });
       keyArray.map((key) => {
         if (key === prop) {
@@ -27,13 +29,15 @@ class Projects extends Component {
     render() {
       return (
         <div>
+          <div>
+            <CollaboratorsBar />
+          </div>
           <div className={styles.buttonBox}>
             <ButtonBar clicker={this.whatStateToChange.bind(this)} />
           </div>
           <div>
             <ProjLayout state={this.state} />
           </div>
-          <CodeEditor />
         </div>
       );
     }
