@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-// import LangSelector from './Language_Dropdown';
+import LangSelector from './Language_Dropdown';
 import EditorField from './Code_Editor';
 
 
@@ -17,7 +17,7 @@ whatIsOurState(propVal) {
 render() {
   return (
     <div>
-    <LangSelector passState={this.whatIsOurState} />
+    {/* <LangSelector passState={this.whatIsOurState} /> */}
     <EditorField currentState={this.state.currentLanguage} />
     </div>
   );
