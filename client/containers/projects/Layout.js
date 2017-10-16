@@ -4,7 +4,7 @@ import IssueCard from '../../components/Card/index';
 import issueData from './GET_ALL_ISSUES_REPO_SPECIFIC';
 import commentData from './GET_COMMENTS_FOR_SPECIFIC_ISSUE';
 import ReadMe from '../../components/Readme/Readme_Render';
-import CodeEditor from '../../components/CodeEditor';
+import CodeEditorParent from '../../components/CodeEditor';
 
 class ProjLayout extends Component {
   whatStateToUse(state) {
@@ -32,7 +32,7 @@ class ProjLayout extends Component {
     else if (state.codeButt === true) {
       return (
         <div>
-          Our code editor
+          <CodeEditorParent />
         </div>
       );
     }

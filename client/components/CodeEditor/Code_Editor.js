@@ -9,11 +9,18 @@ class CodeEditor extends Component {
   }
 }
 editorDidMount(editor, monaco) {
-  console.log('editorDidMount', editor);
+  const retrievedObject = localStorage.getItem('CodeEditorPreviousState');
+  const previousCode = JSON.parse(retrievedObject);
+  this.setState({ code: previousCode })
   editor.focus();
 }
 onChange(newValue, e) {
   console.log('onChange', newValue, e);
+  function localStore (state) {
+    localStorage.setItem('CodeEditorPreviousState', JSON.stringify(state));
+
+};
+localStore(newValue);
 }
 render() {
   const requireConfig = {
@@ -26,13 +33,14 @@ render() {
   const options = {
     selectOnLineNumbers: true
   };
+  // console.log(this.props.currentLanguageState, 'should be language');
+  console.log(this.state.code, 'here is my code state');
   return (
     <div>
-      <div>Hello Editor</div>
       <MonacoEditor
         width="100%"
         height="600"
-        language={this.props.currentState}
+        language={this.props.currentLanguageState}
         theme="vs-dark"
         value={code}
         options={options}

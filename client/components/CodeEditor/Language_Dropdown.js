@@ -21,22 +21,20 @@ const languages = [
   { value: 'xml', label: 'XML' },
 ];
 
-
 class LanguageDropdown extends Component {
-  constructor(props) {
-    super(props);
     state = {
       value: 'javascript',
     };
-  }
+
   handleChange = (value) => {
     this.setState({ value });
-    this.props.whatIsOurState();
+    this.props.handleParentStateChange(value);
   };
   render() {
     return (
       <Dropdown
         auto
+        label={`Choose Your Language Below`}
         onChange={this.handleChange}
         source={languages}
         value={this.state.value}
