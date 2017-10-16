@@ -14,6 +14,9 @@ class Signup extends Component {
       password: '',
     };
   }
+  componentDidMount() {
+    if (this.props.isAuthenticated) this.props.history.replace('/dashboard');
+  }
   componentWillReceiveProps(nextProps) {
     const { history } = this.props;
     if (nextProps.isAuthenticated !== this.props.isAuthenticated && nextProps.isAuthenticated) {
@@ -44,12 +47,15 @@ class Signup extends Component {
 }
 Signup.propTypes = {
   signupUser: PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.object,
+  isAuthenticated: PropTypes.bool,
+};
+Signup.defaultProps = {
+  isAuthenticated: false,
 };
 function mapStateToProps(state, ownProps) {
-    return {
-      isAuthenticated: state.auth,
-    }
+  return {
+    isAuthenticated: state.auth.isAuthenticated,
+  };
 }
 
 function bindActions(dispatch) {
