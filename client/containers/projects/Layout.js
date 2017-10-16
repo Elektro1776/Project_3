@@ -28,6 +28,13 @@ class ProjLayout extends Component {
         </div>
       );
     }
+    else if (state.codeButt === true) {
+      return (
+        <div>
+          Our code editor
+        </div>
+      );
+    }
     else {
       return (
           <div>

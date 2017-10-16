@@ -6,7 +6,15 @@
   color:black;
   min-height: 25px;
   margin-bottom: 5px;
+  padding:10px;
 }
 .commentText {
   font-style: italic;
+}
+.headerText {
+  width:70%;
+  margin-left: 15%;
+  margin-right: 15%;
+  color:black;
+  margin-bottom: 5px;
 }

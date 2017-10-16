@@ -9,6 +9,7 @@ class Projects extends Component {
       issuesButt: false,
       readmeButt: true,
       matrixButt: false,
+      codeButt: false
 
     };
     whatStateToChange(prop) {
@@ -17,6 +18,7 @@ class Projects extends Component {
         issuesButt: false,
         readmeButt: false,
         matrixButt: false,
+        codeButt: false
       });
       keyArray.map((key) => {
         if (key === prop) {
