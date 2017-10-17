@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import Input from 'react-toolbox/lib/input';
 import { Button } from 'react-toolbox/lib/button';
 import PropTypes from 'prop-types';
+import styles from './SignUpForm.css';
 
 class SignupForm extends Component {
   render() {
     const { username, email, password } = this.props.userInfo;
     return (
-      <form>
+      <form className={styles.form}>
         <Input
           type="text"
           label="Name"
@@ -29,9 +30,8 @@ class SignupForm extends Component {
           label="Password"
           required
           onChange={(pass) => this.props.handleChange('password', pass)}
-          icon={<span>J</span>}
         />
-        <Button onClick={this.props.handleSignup} label="Sign Up" raised ripple primary />
+        <Button className={styles.button} onClick={this.props.handleSignup} label="Sign Up" raised ripple primary />
 
       </form>
     );

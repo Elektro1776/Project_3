@@ -36,7 +36,7 @@ class Login extends Component {
     return (
       <div>
         <div className={styles.wrapper}>
-          {/* <img src={require("../../components/LoginForm/utile.png")} className={styles.img}/> */}
+          <img src='./images/utile.gif' className={styles.logo} />
           <div className={styles.box}>
             <LoginForm
               email={email}
