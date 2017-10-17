@@ -13,6 +13,7 @@ import login from './login_reducer';
 import repos from './github/repos_reducer';
 import issues from './github/issues_reducer';
 import comments from './github/comments_reducer';
+import collabs from './github/collab_reducer';
 
 export default combineReducers({
   router: routerReducer,
@@ -23,4 +24,5 @@ export default combineReducers({
   repos,
   issues,
   comments,
+  collabs,
 });

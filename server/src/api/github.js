@@ -45,8 +45,8 @@ githubRouter.post('/getIssueComments', (req, res) => {
 });
 
 // Get Collaborators
-githubRouter.post('/api/github/getCollaborators', (req, res) => {
-  //  console.log(req.body);
+githubRouter.post('/getCollaborators', (req, res) => {
+  //  console.log(req.body, 'hitting Collab GitRouter');
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -54,9 +54,13 @@ githubRouter.post('/api/github/getCollaborators', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/collaborators?access_token=${req.user.github.token}`,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/collaborators?access_token=${req.body.token}`,
   }, (err, response, body) => {
-    console.log(' WHAT IS THE BODY?', body);
+    // console.log(' WHAT IS THE BODY?', body);
+    if (!err) {
+      return res.status(200).json({ collabs: body, err: null });
+    }
+    res.status(500).json({ err, collabs: null });
   });
 });
 
