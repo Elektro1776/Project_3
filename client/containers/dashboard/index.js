@@ -41,12 +41,11 @@ class Dashboard extends Component {
 
       <div
         className="container-fluid"
-        style={{ backgroundColor: 'red' }}
+        style={{ backgroundColor: 'black' }}
       >
 
         <div className='col-lg-6'>
           <ModalGitAuth authorized={this.state.github_authorized} authorizeMe = {this.handleGithubAuth} />
-
           <EventFeed />
         </div>
         <div className='col-lg-6'>

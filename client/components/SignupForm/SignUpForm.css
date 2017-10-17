@@ -1,13 +1,10 @@
 .form {
 
-  background-color: #59ffd8;
+  background-color: lightgray;
   border-radius: 20px;
   padding: 15px;
+  margin-top: 20px;
 
-}
-
-.input {
-  border-bottom: 1px solid black;
 }
 
 .button{
@@ -24,7 +21,6 @@ grid-template-columns: repeat(3, 1fr);
 grid-gap: 10px;
 grid-auto-rows: minmax(100px, auto);
 background-color: black;
-min-height: 100%
 
 }
 

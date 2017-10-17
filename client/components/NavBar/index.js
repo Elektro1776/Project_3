@@ -35,13 +35,13 @@ class PrivateNavBar extends Component {
   }
   render() {
     return (
-      <AppBar title="React Toolbox" leftIcon="menu" rightIcon={<GithubIcon />}>
+      <AppBar title="uTile" leftIcon="menu" rightIcon={<GithubIcon />}>
         <Navigation type="horizontal">
           <RepoDrawer active={this.state.active} handleDrawerToggle={this.handleDrawerToggle} />
           <NavLink to="/dashboard">Dashboard</NavLink>
           <NavLink to="/projects">Projects</NavLink>
         </Navigation>
-        <IconButton icon={<MenuTest />} accent />
+        {/* <IconButton icon={<MenuTest />} accent /> */}
       </AppBar>
     );
   }
