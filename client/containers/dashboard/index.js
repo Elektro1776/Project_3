@@ -15,7 +15,7 @@ class Dashboard extends Component {
       data: 'Fuck yea!!!',
       active: false,
       github_authorized: ""
-    };
+    }; 
     this.handleToggle = this.handleToggle.bind(this);
   }
   componentDidMount() {
