@@ -13,7 +13,7 @@ authRouter.get('/token', (req, res, next) => {
     user.access_token = res.locals.access_token;
     res.json(user);
   }
-  next();
+  // next();
 });
 
 export default authRouter;

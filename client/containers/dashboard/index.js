@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import EventFeed from '../../components/EventFeed';
 import Chat from '../chat';
 import ModalGitAuth from '../../components/Modal';
-import CodeEditor from '../../components/CodeEditor';
+
 class Dashboard extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +15,7 @@ class Dashboard extends Component {
       data: 'Fuck yea!!!',
       active: false,
       github_authorized: ""
-    }; 
+    };
     this.handleToggle = this.handleToggle.bind(this);
   }
   componentDidMount() {
@@ -50,9 +50,7 @@ class Dashboard extends Component {
           <EventFeed />
         </div>
         <div className='col-lg-6'>
-          <Chat/>
-          <CodeEditor />
-
+          <Chat />
       </div>
       </div>
     );
