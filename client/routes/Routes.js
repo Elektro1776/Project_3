@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import styles from '../containers/AppContainer.css';
 import PrivateNavBar from '../components/NavBar';
 import PrivateFooter from '../components/Footer/Footer';
+import AltNavBar from '../components/AltNav'
+import AltFooter from '../components/AltFooter'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { Dashboard } = RouteMap;
@@ -41,9 +43,11 @@ const PublicRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => (
         <div>
-          {/* <NavBar /> */}
+        <AltNavBar />
+
           <Component {...props} />
-          {/* <Footer /> */}
+
+        <AltFooter />
         </div>
       )}
     />
