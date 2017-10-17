@@ -47,10 +47,10 @@ class EventGenerator extends Component {
           function whoAreOurAssignees() {
             if (cycles !== 0) {
               assigneeString = `${assigneeString}  ${e.payload.issue.assignees[index].login}`;
-              console.log('assignnee string', assigneeString);
+              // console.log('assignnee string', assigneeString);
               cycles -= 1;
               index += 1;
-              console.log('cycles', cycles, 'index', index);
+              // console.log('cycles', cycles, 'index', index);
               whoAreOurAssignees();
             }
           }
