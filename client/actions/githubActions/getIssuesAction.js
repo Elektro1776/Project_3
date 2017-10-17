@@ -3,7 +3,7 @@ export const SUCCESS_GETTING_ISSUES = 'SUCCESS_GETTING_ISSUES';
 export const FAILURE_GETTING_ISSUES = 'FAILURE_GETTING_ISSUES';
 
 export const fetchUserIssues = (userId, repoName) => (dispatch) => {
-  console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
+  // console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
   dispatch(fetchingIssues());
   return fetch('/api/github/getIssues', {
     method: 'POST',

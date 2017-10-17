@@ -24,7 +24,6 @@ class IssueCard extends Component {
     //     <img src="./uTile_black_loader_50.gif" alt="loader" />
     //   );
     // }
-    
     return (
       <div className={styles.mainCont}>
 
@@ -40,7 +39,7 @@ class IssueCard extends Component {
               <CardTitle
                 subtitle={issue.body}
               />
-              <CardComments comments={this.props.comments} />
+              <CardComments />
               <h6>Assignees</h6>
 
               <CardAssignees assigneesData={assigneeData} indexValue={i} />

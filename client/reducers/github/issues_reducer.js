@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
     case FETCHING_ISSUES:
       return Object.assign({}, state, { fetchingIssues: true });
     case SUCCESS_GETTING_ISSUES:{
-      console.info('What are the reducers Issues', action.payload, )
+      // console.info('What are the reducers Issues', action.payload, )
       return Object.assign({}, state, { repoIssues: action.payload.issues, fetchedIssues: true });
     }
     case FAILURE_GETTING_ISSUES:

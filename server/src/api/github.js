@@ -25,8 +25,8 @@ githubRouter.post('/getRepos', (req, res) => {
 });
 
 // Get comments from a specific issue
-githubRouter.post('/api/github/getIssueComments', (req, res) => {
-  //  console.log(req.body);
+githubRouter.post('/getIssueComments', (req, res) => {
+  //  console.log("We are getting successful hit on gitrouter", req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -34,9 +34,13 @@ githubRouter.post('/api/github/getIssueComments', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues/${req.body.number}/comments`,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.num}/comments`,
   }, (err, response, body) => {
-    console.log(' WHAT IS THE BODY?', body);
+    // console.log(' WHAT IS THE BODY?', body);
+    if (!err) {
+      return res.status(200).json({ comments: body, err: null });
+    }
+    res.status(500).json({ err, repos: null });
   });
 });
 
@@ -195,7 +199,7 @@ githubRouter.post('/api/github/addAssignees', (req, res) => {
 
 // Get issues
 githubRouter.post('/getIssues', (req, res) => {
-  console.log(' SUCCESS POST TO GET Issues GIT ROUTER', req.body);
+  // console.log(' SUCCESS POST TO GET Issues GIT ROUTER', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -205,7 +209,7 @@ githubRouter.post('/getIssues', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues?filter=all&sort=updated`,
   }, (err, response, body) => {
-  console.log(' WHAT IS THE BODY?', body);
+  // console.log(' WHAT IS THE BODY?', body);
   if (!err) {
     return res.status(200).json({ issues: body, err: null });
   }
@@ -225,7 +229,7 @@ githubRouter.post('/api/github/getEvents', (req, res) => {
     json: true,
     url: `https://api.github.com/users/${req.body.username}/events`,
   }, (err, response, body) => {
-    console.log(' WHAT IS THE BODY?', body);
+    // console.log(' WHAT IS THE BODY?', body);
   });
 });
 

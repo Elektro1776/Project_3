@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './project_style.css';
 import IssueCard from '../../components/Card/index';
-import issueData from './GET_ALL_ISSUES_REPO_SPECIFIC';
 import commentData from './GET_COMMENTS_FOR_SPECIFIC_ISSUE';
 import ReadMe from '../../components/Readme/Readme_Render';
 import CodeEditorParent from '../../components/CodeEditor';
@@ -65,7 +64,7 @@ class ProjLayout extends Component {
     }
   }
   render() {
-    console.log('what is my state', this.state);
+    // console.log('what is my state', this.state);
     return (
       <div className={styles.layout}>
       {this.whatStateToUse(this.props.state)}
