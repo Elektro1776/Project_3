@@ -14,7 +14,7 @@ class CardComments extends Component {
   }
   componentDidMount() {
     console.log('Comments has mounted');
-    this.props.fetchUserComments("901david", 'Flashcard-Fun', '26');
+    this.props.fetchUserComments("901david", 'Flashcard-Fun', this.props.issueNumberToGet);
   }
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);

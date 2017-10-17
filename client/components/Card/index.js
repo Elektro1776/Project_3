@@ -19,11 +19,6 @@ class IssueCard extends Component {
   }
   render() {
     const assigneeData = this.props.issues.map((issue) => issue.assignees);
-    // if (!this.props.issues) {
-    //   return (
-    //     <img src="./uTile_black_loader_50.gif" alt="loader" />
-    //   );
-    // }
     return (
       <div className={styles.mainCont}>
 
@@ -39,7 +34,7 @@ class IssueCard extends Component {
               <CardTitle
                 subtitle={issue.body}
               />
-              <CardComments />
+              <CardComments issueNumberToGet={issue.number} />
               <h6>Assignees</h6>
 
               <CardAssignees assigneesData={assigneeData} indexValue={i} />

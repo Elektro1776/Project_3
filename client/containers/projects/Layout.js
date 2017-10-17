@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import styles from './project_style.css';
 import IssueCard from '../../components/Card/index';
-import commentData from './GET_COMMENTS_FOR_SPECIFIC_ISSUE';
 import ReadMe from '../../components/Readme/Readme_Render';
 import CodeEditorParent from '../../components/CodeEditor';
 import { fetchUserIssues } from '../../actions/githubActions/getIssuesAction';
@@ -30,7 +29,7 @@ class ProjLayout extends Component {
     if (state.issuesButt === true) {
       return (
         <div>
-          <IssueCard issues={this.state.issues} comments={commentData} />
+          <IssueCard issues={this.state.issues} />
         </div>
       )
     }
@@ -64,7 +63,7 @@ class ProjLayout extends Component {
     }
   }
   render() {
-    // console.log('what is my state', this.state);
+    // console.log('what is my state of my layout', this.state);
     return (
       <div className={styles.layout}>
       {this.whatStateToUse(this.props.state)}
