@@ -18,9 +18,9 @@ class RepoDrawer extends Component {
     this.props.fetchUserRepos('901david');
   }
   componentWillReceiveProps(nextProps) {
-    console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
+    // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
     const { userRepos } = nextProps;
-    console.log(' WHAT IS USER REPOS', userRepos);
+    // console.log(' WHAT IS USER REPOS', userRepos);
     if (userRepos.length !== 0) {
       this.setState({ repos: userRepos });
     }
@@ -31,7 +31,7 @@ class RepoDrawer extends Component {
 
   render() {
     const { repos } = this.state;
-    console.log(' WHAT IS THE STATE?????', repos);
+    // console.log(' WHAT IS THE STATE?????', repos);
     return (
       <div>
         <Button className={styles.repoButton} label="Repos" onClick={this.handleToggle} />

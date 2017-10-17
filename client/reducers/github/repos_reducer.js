@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
     case FETCHING_REPOS:
       return Object.assign({}, state, { fetchingRepos: true });
     case SUCCESS_GETTING_REPOS:{
-      console.info('What are the reducers repos', action.payload, )
+      // console.info('What are the reducers repos', action.payload, )
       return Object.assign({}, state, { userRepos: action.payload.repos, fetchedRepos: true });
     }
     case FAILURE_GETTING_REPOS:
