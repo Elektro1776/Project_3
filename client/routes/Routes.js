@@ -91,8 +91,13 @@ class Routes extends Component {
       );
     }
     return (
-      <AppContainer>
-        <div>
+      <AppContainer >
+
+        <div style={{minHeight: "100%",
+          display: "grid",
+          margin: 0,
+          gridTemplateRows: "1fr auto",}}>
+
           <PublicRoute exact path="/" component={RouteMap.Signup} />
           <PublicRoute exact path="/login" component={RouteMap.Login} />
           <PrivateRoute exact path="/dashboard" component={RouteMap.Dashboard} authorized={userIsAuthorized} />
