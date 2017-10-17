@@ -34,7 +34,6 @@ class Login extends Component {
   render() {
     const { email, password } = this.state;
     return (
-      <div>
         <div className={styles.wrapper}>
           {/* <img src={require("../../components/LoginForm/utile.png")} className={styles.img}/> */}
           <div className={styles.box}>
@@ -46,7 +45,6 @@ class Login extends Component {
             />
           </div>
         </div>
-      </div>
     );
   }
 }

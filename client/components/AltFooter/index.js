@@ -8,7 +8,7 @@ class AltFooter extends Component {
     super();
     this.state = {
     };
-  
+
   }
 
 
@@ -19,8 +19,10 @@ class AltFooter extends Component {
         width: '100vw',
         background: '#545454',
         height: '50px',
-        position: 'fixed',
         bottom: '0',
+        position: 'fixed',
+        gridRowStart: 2,
+        gridRowEnd: 3,
       },
       icons: {
         height: '10px',
@@ -30,6 +32,7 @@ class AltFooter extends Component {
         padding: '5px',
 
       },
+
     };
 
     return (

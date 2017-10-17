@@ -16,7 +16,10 @@ class AppContainer extends Component {
   }
   render() {
     return (
-      <div>
+      <div style={{minHeight: '100%',
+        display: "grid",
+        margin: 0,
+        gridTemplateRows: "1fr auto",}}>
         {this.props.children}
       </div>
     );
