@@ -7,7 +7,6 @@ import csshook from 'css-modules-require-hook/preset'; // import hook before rou
 import express from 'express';
 import path from 'path';
 import mongoose from 'mongoose';
-import jsonwebtoken from 'jsonwebtoken';
 import jwt from 'express-jwt';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
@@ -18,6 +17,9 @@ import { renderPage } from '../client/renderers/server';
 // CUSTOM ROUTERS
 import authRouter from './src/auth/localAuth';
 import signupRouter from './src/api/routes/signup';
+import loginRouter from './src/api/routes/login';
+import githubRouter from './src/api/github';
+
 // CUSTOM MIDDLEWARE
 import { isAuthenticated } from './src/middleware/isAuthenticated';
 
@@ -47,6 +49,8 @@ app.use(bodyParser.json());
 app.use(isAuthenticated);
 app.use('/auth', authRouter);
 app.use('/signup', signupRouter);
+app.use('/login', loginRouter);
+app.use('/api/github', githubRouter)
 app.use('/test', (req, res) => {
   res.send({ Hello: 'uTile is Served' });
 });

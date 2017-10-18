@@ -8,6 +8,8 @@ import { connect } from 'react-redux';
 import styles from '../containers/AppContainer.css';
 import PrivateNavBar from '../components/NavBar';
 import PrivateFooter from '../components/Footer/Footer';
+import AltNavBar from '../components/AltNav'
+import AltFooter from '../components/AltFooter'
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { Dashboard } = RouteMap;
@@ -41,9 +43,11 @@ const PublicRoute = ({ component: Component, ...rest }) => {
       {...rest}
       render={(props) => (
         <div>
-          {/* <NavBar /> */}
+        <AltNavBar />
+
           <Component {...props} />
-          {/* <Footer /> */}
+
+        <AltFooter />
         </div>
       )}
     />
@@ -87,8 +91,13 @@ class Routes extends Component {
       );
     }
     return (
-      <AppContainer>
-        <div>
+      <AppContainer >
+
+        <div style={{minHeight: "100%",
+          display: "grid",
+          margin: 0,
+          gridTemplateRows: "1fr auto",}}>
+
           <PublicRoute exact path="/" component={RouteMap.Signup} />
           <PublicRoute exact path="/login" component={RouteMap.Login} />
           <PrivateRoute exact path="/dashboard" component={RouteMap.Dashboard} authorized={userIsAuthorized} />

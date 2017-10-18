@@ -18,7 +18,6 @@ export default function (state = initalState, action) {
       return Object.assign({}, state, { isAuthenticated: false, loadingUser: false });
     }
     case USER_TOKEN_FAILURE: {
-      // console.log(' WHAT IS THE ERROR MESSAGE?', action.payload);
       return Object.assign({}, state, { isAuthenticated: false, loadingUser: false, message: action.payload.message });
     }
     default:

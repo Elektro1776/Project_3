@@ -7,6 +7,7 @@ const ButtonBar = (props) => {
       <Button className={styles.buttonChoice} onClick={()=>props.clicker('readmeButt')} label='Readme' />
       <Button className={styles.buttonChoice} onClick={()=>props.clicker('issuesButt')} label='Issues' />
       <Button className={styles.buttonChoice} onClick={()=>props.clicker('matrixButt')} label='Matrix' />
+      <Button className={styles.buttonChoice} onClick={()=>props.clicker('codeButt')} label='Code Editor' />
     </div>
   );
 }
