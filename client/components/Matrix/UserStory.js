@@ -3,32 +3,53 @@ import PropTypes from 'prop-types';
 import styles from './matrix.css';
 
 class UserStory extends Component {
-  state = {}
+  state = {
+    isChecked: false,
+  }
+
+  toggleCheckboxChange = () => {
+    const { title, handleCheckBoxChange } = this.props;
+
+    this.setState(({ isChecked }) => (
+      {
+        isChecked: !isChecked,
+      }
+    ));
+
+    handleCheckBoxChange(title);
+  }
+
   render() {
-    console.log(this.props);
+    const { title, date } = this.props;
+    const { isChecked } = this.state;
     return (
-      <div>
+      <div className={styles.userStory}>
         <input
+          className={styles.checkbox}
           type="checkbox"
-          value={label}
           checked={isChecked}
           onChange={this.toggleCheckboxChange}
         />
-        {this.props.data.title}
-        {this.props.data.date}
+        <span className={styles.title} >
+          {title}
+        </span>
+        <span className={styles.date} >
+          {date}
+        </span>
       </div>
     );
   }
 }
 
-UserStory.propTypes = {
-  data: PropTypes.object.isRequired,
+UserStory.PropTypes = {
+  title: PropTypes.string.isRequired,
+  date: PropTypes.string.isRequired,
+  handleCheckboxChange: PropTypes.func.isRequired,
 };
 
 UserStory.defaultProps = {
-  data: {
-    title: ['Working as expected']
-  },
+  title: 'No tasks',
+  date: '',
 };
 
 export default UserStory;

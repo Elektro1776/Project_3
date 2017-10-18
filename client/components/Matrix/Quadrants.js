@@ -6,6 +6,11 @@ import styles from './matrix.css';
 
 class Quadrants extends Component {
   state = {}
+
+  toggleCheckbox = (title) => {
+    console.log(title);
+  }
+
   render() {
     return (
       <div className={styles.container}>
@@ -16,8 +21,13 @@ class Quadrants extends Component {
           <div className={styles.quadrant}>
             {this.props.userStories.q1.map((i) => {
               return (
-                <div key={i.key}>
-                  <UserStory data={i} />
+                <div key={i.title}>
+                  <UserStory
+                    title={i.title}
+                    date={i.date}
+                    comments={i.comments}
+                    handleCheckBoxChange={this.toggleCheckbox}
+                  />
                 </div>
               );
             })}
@@ -30,8 +40,13 @@ class Quadrants extends Component {
           <div className={styles.quadrant}>
             {this.props.userStories.q2.map((i) => {
               return (
-                <div key={i.key}>
-                  <UserStory data={i} />
+                <div key={i.title}>
+                  <UserStory
+                    title={i.title}
+                    date={i.date}
+                    comments={i.comments}
+                    handleCheckBoxChange={this.toggleCheckbox}
+                  />
                 </div>
               );
             })}
@@ -44,8 +59,13 @@ class Quadrants extends Component {
           <div className={styles.quadrant}>
             {this.props.userStories.q3.map((i) => {
               return (
-                <div key={i.key}>
-                  <UserStory data={i} />
+                <div key={i.title}>
+                  <UserStory
+                    title={i.title}
+                    date={i.date}
+                    comments={i.comments}
+                    handleCheckBoxChange={this.toggleCheckbox}
+                  />
                 </div>
               );
             })}
@@ -58,8 +78,13 @@ class Quadrants extends Component {
           <div className={styles.quadrant}>
             {this.props.userStories.q4.map((i) => {
               return (
-                <div key={i.key}>
-                  <UserStory data={i} />
+                <div key={i.title}>
+                  <UserStory
+                    title={i.title}
+                    date={i.date}
+                    comments={i.comments}
+                    handleCheckBoxChange={this.toggleCheckbox}
+                  />
                 </div>
               );
             })}
@@ -72,30 +97,60 @@ class Quadrants extends Component {
 }
 
 Quadrants.propTypes = {
-  userStories: PropTypes.array.isRequired,
+  userStories: PropTypes.object.isRequired,
 };
 
 Quadrants.defaultProps = {
   userStories: {
     q1: [{
-      title: 'Testing here',
+      title: 'Testing here1',
       date: 'June 07',
       comments: [],
     }],
     q2: [
       {
-        title: 'Testing here more',
+        title: 'Testing here m3ore',
         date: 'August 07',
         comments: [],
       },
       {
-        title: 'Testing here very much',
+        title: 'Testing he4re very much',
         date: 'December 07',
         comments: ['Comments'],
       },
       {
-        title: 'Testing here tons',
+        title: 'Testi5ng here tons',
         date: 'June 07',
+        comments: [],
+      },
+      {
+        title: 'Tes11ting here more',
+        date: 'August 07',
+        comments: [],
+      },
+      {
+        title: 'Test123ing he very much',
+        date: 'December 07',
+        comments: ['Comments'],
+      },
+      {
+        title: 'Testing 123here tons',
+        date: 'June 07',
+        comments: [],
+      },
+      {
+        title: 'Testing h4ere more',
+        date: 'August 07',
+        comments: [],
+      },
+      {
+        title: 'Testing 4here more',
+        date: 'August 07',
+        comments: [],
+      },
+      {
+        title: 'Testing 111here more',
+        date: 'August 07',
         comments: [],
       },
     ],
