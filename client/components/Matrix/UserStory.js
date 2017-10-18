@@ -5,18 +5,30 @@ import styles from './matrix.css';
 class UserStory extends Component {
   state = {}
   render() {
+    console.log(this.props);
     return (
-      
+      <div>
+        <input
+          type="checkbox"
+          value={label}
+          checked={isChecked}
+          onChange={this.toggleCheckboxChange}
+        />
+        {this.props.data.title}
+        {this.props.data.date}
+      </div>
     );
   }
 }
 
 UserStory.propTypes = {
-  userStory: PropTypes.object.isRequired,
+  data: PropTypes.object.isRequired,
 };
 
 UserStory.defaultProps = {
-  userStories: { "Default": ['Working as expected'] },
+  data: {
+    title: ['Working as expected']
+  },
 };
 
 export default UserStory;
