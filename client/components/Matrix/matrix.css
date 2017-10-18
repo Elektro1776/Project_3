@@ -1,0 +1,109 @@
+.container {
+  color: #333;
+  display: grid;
+  height: 70vh;
+  padding-top: 15px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    "q1 q2"
+    "q3 q4"; 
+}
+
+.userStory {
+  height: 20px;
+  max-height: 20px;
+}
+
+.title {
+  overflow: none;
+  border: 1px solid black;
+}
+
+.date {
+  float: right;
+}
+
+.checkbox {
+}
+
+.quadrant {
+  padding: 5px 5px 0 5px;
+  overflow: auto;
+}
+
+.banner1 {
+  border-radius: 10px 10px 0 0;
+  padding-left: 5px;
+  color: #fff;
+  height: 24px;
+  width: 100%;
+  background: #fb9191;
+}
+
+.banner2 {
+  border-radius: 10px 10px 0 0;
+  padding-left: 5px;
+  color: #fff;
+  height: 24px;
+  width: 100%;
+  background: #97e387;
+}
+
+.banner3 {
+  border-radius: 10px 10px 0 0;
+  padding-left: 5px;
+  color: #fff;
+  height: 24px;
+  width: 100%;
+  background: #7bc2f8;
+}
+
+.banner4 {
+  border-radius: 10px 10px 0 0;
+  padding-left: 5px;
+  color: #fff;
+  height: 24px;
+  width: 100%;
+  background: #b4b4b4;
+}
+
+.q1 {
+  min-height: 50px;
+  margin: 8px;
+  border: 2px solid #fb9191;
+  background: #f6cdcd;
+  border-radius: 10px;
+  grid-area: q1;
+  overflow: auto;
+}
+
+.q2 {
+  min-height: 50px;
+  margin: 8px;
+  border: 2px solid #97e387;
+  background: #cce7c7;
+  border-radius: 10px;
+  grid-area: q2;
+  overflow: auto;
+}
+
+.q3 {
+  min-height: 50px;
+  margin: 8px;
+  border: 2px solid #7bc2f8;
+  background: #a4c8e5;
+  border-radius: 10px;
+  grid-area: q3;
+  overflow: auto;
+}
+
+.q4 {
+  min-height: 50px;
+  margin: 8px;
+  border: 2px solid #b4b4b4;
+  background: #ececec;
+  border-radius: 10px;
+  grid-area: q4;
+  overflow: auto;
+}
