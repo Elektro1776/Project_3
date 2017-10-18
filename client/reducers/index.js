@@ -14,7 +14,7 @@ import repos from './github/repos_reducer';
 import issues from './github/issues_reducer';
 import comments from './github/comments_reducer';
 import collabs from './github/collab_reducer';
-
+import readme from './github/readme_reducer';
 export default combineReducers({
   router: routerReducer,
   auth,
@@ -25,4 +25,5 @@ export default combineReducers({
   issues,
   comments,
   collabs,
+  readme,
 });

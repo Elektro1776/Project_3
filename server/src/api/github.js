@@ -214,12 +214,11 @@ githubRouter.post('/getIssues', (req, res) => {
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues?filter=all&sort=updated`,
   }, (err, response, body) => {
   // console.log(' WHAT IS THE BODY?', body);
-  if (!err) {
-    return res.status(200).json({ issues: body, err: null });
-  }
-  res.status(500).json({ err, issues: null });
-});
-
+    if (!err) {
+      return res.status(200).json({ issues: body, err: null });
+    }
+    res.status(500).json({ err, issues: null });
+  });
 });
 
 // Get events feed
@@ -255,7 +254,7 @@ githubRouter.post('/api/github/getEvents', (req, res) => {
 
 
 // Authorize a user on github
-//TODO MOVE THIS TO GITHUB AUTH ROUTER
+// TODO MOVE THIS TO GITHUB AUTH ROUTER
 githubRouter.post('/api/github/authorize', (req, res) => {
   request({
     headers: {
@@ -264,7 +263,7 @@ githubRouter.post('/api/github/authorize', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/readme`,
+    url: `http://github.com/login/oauth/authorize`,
   }, (err, response, body) => {
     // console.log(' WHAT IS THE BODY?', body);
     // // Tested in node
@@ -276,7 +275,8 @@ githubRouter.post('/api/github/authorize', (req, res) => {
 });
 
 // Get Readme
-githubRouter.post('/api/github/readme', (req, res) => {
+githubRouter.post('/readme', (req, res) => {
+  // console.log("Hitting github router for readme!!", req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -284,9 +284,19 @@ githubRouter.post('/api/github/readme', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `http://github.com/login/oauth/authorize`,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/readme`,
   }, (err, response, body) => {
-    res.send(body);
+    console.log('WTF IS MY README BODY', body);
+    if (!err) {
+      const b64string = body.content;
+      const buf = Buffer.from(b64string, 'base64');
+      const readme = buf.toString();
+      return res.status(200).json({ readme: readme, err: null });
+    }
+    res.status(500).json({ err, issues: null });
   });
+  // // We will need to send to the component
+  // res.send(buf.toString());
 });
+
 export default githubRouter;
