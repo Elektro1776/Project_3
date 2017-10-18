@@ -1,11 +1,10 @@
-import axios from 'axios';
 
 export const FETCHING_REPOS = 'FETCHING_REPOS';
 export const SUCCESS_GETTING_REPOS = 'SUCCESS_GETTING_REPOS';
 export const FAILURE_GETTING_REPOS = 'FAILURE_GETTING_REPOS';
 
 export const fetchUserRepos = (userId) => (dispatch) => {
-  console.log(' WHAT IS OUR USER ID TO SEND?', userId);
+  // console.log(' WHAT IS OUR USER ID TO SEND?', userId);
   dispatch(fetchingRepos());
   return fetch('/api/github/getRepos', {
     method: 'POST',
@@ -19,7 +18,7 @@ export const fetchUserRepos = (userId) => (dispatch) => {
       dispatch(receivedRepos(repos));
     })
     .catch((err) => {
-      console.info(' WHAT IS OUR ERR RESPONSE', err.response);
+      // console.info(' WHAT IS OUR ERR RESPONSE', err.response);
       dispatch(failedFetchRepos(err));
     });
 };
