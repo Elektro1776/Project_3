@@ -7,6 +7,7 @@ import styles from './issueCards.css';
 import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
 import token from '../../../gittoke';
+import { fetchUserIssues } from '../../actions/githubActions/getIssuesAction';
 
 class IssueCard extends Component {
   componentDidMount() {
@@ -24,9 +25,7 @@ class IssueCard extends Component {
       .then((response) => {
         // console.log('Close completed');
         // console.log(response.status);
-        if(response.status === 200) {
-          this.props.stateChangeFunc('issuesButt');
-        }
+        fetchUserIssues('901david', 'Flashcard-Fun');
       })
       .catch((err) => {
         // console.info(' WHAT IS OUR ERR RESPONSE', err.response);
