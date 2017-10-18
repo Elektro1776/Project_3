@@ -7,7 +7,12 @@ class UserStory extends Component {
     isChecked: false,
   }
 
+  toggleCheck() {
+    this.setState({ isChecked: !this.state.isChecked });
+  }
+
   toggleCheckboxChange = () => {
+    console.log(this.state);
     const { title, handleCheckBoxChange } = this.props;
 
     this.setState(({ isChecked }) => (
@@ -20,16 +25,20 @@ class UserStory extends Component {
   }
 
   render() {
-    const { title, date } = this.props;
+    const { title, date, key } = this.props;
     const { isChecked } = this.state;
     return (
       <div className={styles.userStory}>
-        <input
-          className={styles.checkbox}
-          type="checkbox"
-          checked={isChecked}
-          onChange={this.toggleCheckboxChange}
-        />
+        <span className={styles.regularcheckbox}>
+          <input
+            id={key}
+            onClick={this.toggleCheck}
+            type="checkbox"
+            checked={isChecked}
+            onChange={this.toggleCheckboxChange}
+          />
+          <span />
+        </span>
         <span className={styles.title} >
           {title}
         </span>
