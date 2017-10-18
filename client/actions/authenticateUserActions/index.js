@@ -7,7 +7,6 @@ export const USER_TOKEN_NOT_FOUND = 'USER_TOKEN_NOT_FOUND';
 // console.log(' ROOT URL ????', ROOT_URL);
 import axios from 'axios';
 import tokenHelper from '../../util/tokenHelper';
-console.log(' TOKEN HELPER ???', tokenHelper);
 export const checkUserToken = ({ token, access_token }) => {
   return (dispatch) => {
     axios({
@@ -21,7 +20,7 @@ export const checkUserToken = ({ token, access_token }) => {
         console.info('IS THIS FIRING ?', user);
         const { token: magicToken, access_token: access_token_magic } = user.data;
         tokenHelper.setTokens(magicToken, access_token_magic);
-        dispatch(tokenCheckSuccess(user.data))
+        dispatch(tokenCheckSuccess(user.data));
       })
       .catch((err, other) => {
         // console.info(' WE HAVE AN ERROR HUSTON', err.response);

@@ -1,0 +1,12 @@
+.authImage {
+  width:8%;
+  height: auto;
+}
+button {
+  width:35%;
+  margin-left: 8%;
+  margin-right: 5%;
+}
+.modalText {
+  text-align: center;
+}

@@ -2,7 +2,7 @@ import express from 'express';
 
 const authRouter = express.Router();
 
-import User from '../schema/User';
+// import User from '../schema/User';
 
 
 authRouter.get('/token', (req, res, next) => {
@@ -13,6 +13,7 @@ authRouter.get('/token', (req, res, next) => {
     user.access_token = res.locals.access_token;
     res.json(user);
   }
+  // next();
 });
 
 export default authRouter;

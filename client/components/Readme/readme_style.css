@@ -3,7 +3,7 @@
   overflow: hidden;
   display: flex;
 }
-img {
+.readmeBox img {
   width:50%;
   height: auto;
 }

@@ -2,6 +2,7 @@ import express from 'express';
 import jsonwebtoken from 'jsonwebtoken';
 // import jwt from 'express-jwt';
 import User from '../../schema/User';
+import { passwordHelper } from '../../util/password_validation';
 
 const signupRouter = express.Router();
 
@@ -11,7 +12,8 @@ signupRouter.post('/', (req, res) => {
   User.findOne({ username })
     .then((user) => {
       if (!user) {
-        const newUser = new User({ username, email });
+        const { salt, hash } = passwordHelper.saltHashPassword({ password });
+        const newUser = new User({ username, email, salt, password: hash });
         newUser.save()
           .then((success) => {
             const access_token = jsonwebtoken.sign({
@@ -39,6 +41,8 @@ signupRouter.post('/', (req, res) => {
           .catch((err) => {
             console.info('ERR saving user', err);
           });
+      } else {
+
       }
     });
 });

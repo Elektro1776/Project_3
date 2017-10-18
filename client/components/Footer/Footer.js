@@ -26,12 +26,12 @@ class Footer extends Component {
       basic: {
         width: '100vw',
         background: '#35b',
-        height: '80px',
+        height: '50px',
         position: 'fixed',
         bottom: '0',
       },
       icons: {
-        height: '80px',
+        height: '50px',
         fontSize: 25,
         color: '#ddd',
       },
