@@ -6,7 +6,7 @@ import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
-import token from '../../../token';
+import token from '../../../gittoke';
 
 class IssueCard extends Component {
   componentDidMount() {
@@ -21,8 +21,12 @@ class IssueCard extends Component {
       body: JSON.stringify({ id: '901david', repoName: 'Flashcard-Fun', issueNum: '35', token }),
       // body: JSON.stringify({ id: issue.user.login, repoName: this.props.repoName, issueNum: issue.number, token }),
     })
-      .then(() => {
-        console.log('Close completed');
+      .then((response) => {
+        // console.log('Close completed');
+        // console.log(response.status);
+        if(response.status === 200) {
+          this.props.stateChangeFunc('issuesButt');
+        }
       })
       .catch((err) => {
         // console.info(' WHAT IS OUR ERR RESPONSE', err.response);

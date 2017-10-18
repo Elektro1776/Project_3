@@ -168,24 +168,25 @@ githubRouter.post('/api/github/addAssignees', (req, res) => {
 // });
 
 // Create comment on issue
-// githubRouter.post('/api/github/createIssueComment', (req, res) => {
-//   request({
-//     headers: {
-//       Accept: 'application/vnd.github.v3.full+json',
-//       'User-Agent': 'request',
-//     },
-//     method: 'POST',
-//     json: true,
-//     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues/${req.body.number}/comments?access_token=${req.user.github.token}`,
-//     body: { body: req.body.body },
-//   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY?', body);
-//   });
-// });
+githubRouter.post('/createIssueComment', (req, res) => {
+  console.log('HITTING CREATE ISUE COMMENT ROUTER');
+  // request({
+  //   headers: {
+  //     Accept: 'application/vnd.github.v3.full+json',
+  //     'User-Agent': 'request',
+  //   },
+  //   method: 'POST',
+  //   json: true,
+  //   url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues/${req.body.number}/comments?access_token=${req.user.github.token}`,
+  //   body: { body: req.body.body },
+  // }, (err, response, body) => {
+  //   console.log(' WHAT IS THE BODY?', body);
+  // });
+});
 
 // Close an issue
 githubRouter.post('/closeIssue', (req, res) => {
-  console.log('WHAT IS OUR ISSUE CLOSE BODY', req.body);
+  // console.log('WHAT IS OUR ISSUE CLOSE BODY', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -198,10 +199,9 @@ githubRouter.post('/closeIssue', (req, res) => {
       state: 'closed',
     },
   }, (err, response, body) => {
-    console.log(' WHAT IS THE BODY?', body);
+    // console.log(' WHAT IS THE BODY?', body);
     if(!err) {
-      res.status(200);
-      
+      return res.status(200);
     }
   });
 });
@@ -296,7 +296,7 @@ githubRouter.post('/readme', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/readme`,
   }, (err, response, body) => {
-    console.log('WTF IS MY README BODY', body);
+    // console.log('WTF IS MY README BODY', body);
     if (!err) {
       const b64string = body.content;
       const buf = Buffer.from(b64string, 'base64');

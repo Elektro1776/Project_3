@@ -37,7 +37,7 @@ class Projects extends Component {
             <ButtonBar clicker={this.whatStateToChange.bind(this)} />
           </div>
           <div>
-            <ProjLayout state={this.state} />
+            <ProjLayout state={this.state} stateChangeFunc={this.whatStateToChange.bind(this)} />
           </div>
         </div>
       );

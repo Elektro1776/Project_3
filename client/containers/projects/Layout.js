@@ -29,7 +29,7 @@ class ProjLayout extends Component {
     if (state.issuesButt === true) {
       return (
         <div>
-          <IssueCard issues={this.state.issues} />
+          <IssueCard issues={this.state.issues} stateChangeFunc={this.props.stateChangeFunc} />
         </div>
       );
     } else if (state.readmeButt === true) {
