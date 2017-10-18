@@ -183,23 +183,24 @@ githubRouter.post('/api/github/addAssignees', (req, res) => {
 //   });
 // });
 
-// Edit an issue
-// githubRouter.post('/api/github/editIssue', (req, res) => {
-//   request({
-//     headers: {
-//       Accept: 'application/vnd.github.v3.full+json',
-//       'User-Agent': 'request',
-//     },
-//     method: 'PATCH',
-//     json: true,
-//     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues/${req.body.number}?access_token=${req.user.github.token}`,
-//     body: { title: req.body.title,
-//       body: req.body.body,
-//       assignees: req.body.assignees },
-//   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY?', body);
-//   });
-// });
+// Close an issue
+githubRouter.post('/closeIssue', (req, res) => {
+  console.log('WHAT IS OUR ISSUE CLOSE BODY', req.body);
+  request({
+    headers: {
+      Accept: 'application/vnd.github.v3.full+json',
+      'User-Agent': 'request',
+    },
+    method: 'PATCH',
+    json: true,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.issueNum}?state=closed&access_token=${req.body.token}`,
+  }, (err, response, body) => {
+    console.log(' WHAT IS THE BODY?', body);
+    if(!err) {
+      res.status(200);
+    }
+  });
+});
 
 // Get issues
 githubRouter.post('/getIssues', (req, res) => {
@@ -286,7 +287,7 @@ githubRouter.post('/readme', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/readme`,
   }, (err, response, body) => {
-    console.log('WTF IS MY README BODY', body);
+    // console.log('WTF IS MY README BODY', body);
     if (!err) {
       const b64string = body.content;
       const buf = Buffer.from(b64string, 'base64');

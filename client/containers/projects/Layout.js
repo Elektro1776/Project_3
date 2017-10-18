@@ -59,7 +59,7 @@ class ProjLayout extends Component {
     );
   }
   render() {
-    console.log('what is my state of my layout', this.state);
+    // console.log('what is my state of my layout', this.state);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.state)}

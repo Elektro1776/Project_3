@@ -25,7 +25,7 @@ class CardComments extends Component {
     }
   }
   render() {
-    console.log(this.state.issueComments, ' here are our comments');
+    console.log(this.props.issueNumberToGet, ' here are our issue number');
     return (
       <div>
         { this.state.issueComments.map((comment, i) => (

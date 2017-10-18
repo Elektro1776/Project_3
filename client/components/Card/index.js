@@ -6,18 +6,30 @@ import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
+import token from '../../../token';
 
 class IssueCard extends Component {
-  addComment() {
-    //this will be method that allows user to add a comment
+  componentDidMount() {
+    console.log('ISSUE CARD OFFICIALLY HAS MOUNTED');
   }
-  closeIssue() {
-    //this will close an issue
-  }
-  addMatrix() {
-    //this will add an issue to matrix
-  }
+  handleCloseIssue = () => {
+    fetch('api/github/closeIssue', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify({ id: '901david', repoName: 'Flashcard-Fun', issueNum: '35', token }),
+      // body: JSON.stringify({ id: issue.user.login, repoName: this.props.repoName, issueNum: issue.number, token }),
+    })
+      .then(() => {
+        console.log('Close completed');
+      })
+      .catch((err) => {
+        // console.info(' WHAT IS OUR ERR RESPONSE', err.response);
+      });
+  };
   render() {
+    console.log(token, 'here is my tokenn');
     const assigneeData = this.props.issues.map((issue) => issue.assignees);
     return (
       <div className={styles.mainCont}>
@@ -41,7 +53,7 @@ class IssueCard extends Component {
 
               <CardActions>
                 <Button label="Comment" />
-                <Button label="Close Issue" />
+                <Button label="Close Issue" onClick={this.handleCloseIssue.bind(this)} />
                 <Button label="Add to Matrix" />
               </CardActions>
             </Card>
