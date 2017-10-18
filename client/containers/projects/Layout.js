@@ -12,8 +12,7 @@ class ProjLayout extends Component {
     super(props);
     this.state = {
       issues: [],
-    }
-
+    };
   }
   componentDidMount() {
     this.props.fetchUserIssues('901david', 'Flashcard-Fun');
@@ -42,48 +41,44 @@ class ProjLayout extends Component {
   //   }
   //
   // }
-  whatStateToUse(state) {
+  whatStateToUse = (state) => {
     if (state.issuesButt === true) {
       return (
         <div>
           <IssueCard issues={this.state.issues} />
         </div>
-      )
-    }
-    else if (state.readmeButt === true) {
-      return (
-        <div>
-        <ReadMe repoName='Flashcard-Fun' userName='901david' />
-      </div>
       );
-    }
-    else if (state.matrixButt === true) {
+    } else if (state.readmeButt === true) {
       return (
         <div>
-          Our Matrix
+          <ReadMe repoName="Flashcard-Fun" userName="901david" />
         </div>
       );
-    }
-    else if (state.codeButt === true) {
+    } else if (state.matrixButt === true) {
+      return (
+        <div>
+          <Matrix />
+        </div>
+      );
+    } else if (state.codeButt === true) {
       return (
         <div>
           <CodeEditorParent />
         </div>
       );
     }
-    else {
-      return (
-          <div>
+
+    return (
+      <div>
             Houston....We have a problem.
-          </div>
-      )
-    }
+      </div>
+    );
   }
   render() {
     console.log('what is my state of my layout', this.state);
     return (
       <div className={styles.layout}>
-      {this.whatStateToUse(this.props.state)}
+        {this.whatStateToUse(this.props.state)}
       </div>
     );
   }
