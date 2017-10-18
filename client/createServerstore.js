@@ -29,5 +29,5 @@ export default function configureStore(history, initalState) {
       store.replaceReducer(rootReducer);
     });
   }
-  return store;
+   return store;
 }

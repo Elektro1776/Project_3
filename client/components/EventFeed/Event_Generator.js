@@ -5,10 +5,10 @@ import styles from './card_styles.css';
 import { convertDate, repoName } from './logical_solutions';
 
 class EventGenerator extends Component {
-  handleEvent(e) {
+  handleEvent = (e) => {
     switch (e.type) {
       case 'PushEvent': {
-      const branch = e.payload.ref.replace('refs/heads/', '');
+        const branch = e.payload.ref.replace('refs/heads/', '');
         return (
           <div key={e.id}>
             <Card className={styles.card}>
@@ -25,7 +25,7 @@ class EventGenerator extends Component {
           }
           let cycles = e.payload.issue.labels.length;
           let index = 0;
-          var labelsString = e.payload.issue.labels.length > 1 ? 'Labels: ' : 'Label: ';
+          let labelsString = e.payload.issue.labels.length > 1 ? 'Labels: ' : 'Label: ';
           function whatAreOurLabels() {
             if (cycles !== 0) {
               labelsString = `${labelsString}  ${e.payload.issue.labels[index].name}`;
@@ -43,7 +43,7 @@ class EventGenerator extends Component {
           }
           let cycles = e.payload.issue.assignees.length;
           let index = 0;
-          var assigneeString = e.payload.issue.assignees.length > 1 ? 'Assignees: ' : 'Assignee: ';
+          let assigneeString = e.payload.issue.assignees.length > 1 ? 'Assignees: ' : 'Assignee: ';
           function whoAreOurAssignees() {
             if (cycles !== 0) {
               assigneeString = `${assigneeString}  ${e.payload.issue.assignees[index].login}`;
@@ -58,7 +58,7 @@ class EventGenerator extends Component {
           return assigneeString;
         };
 
-        const body = !e.payload.issue.body ? '': ` saying ${e.payload.issue.body}`;
+        const body = !e.payload.issue.body ? '' : ` saying ${e.payload.issue.body}`;
         return (
           <div key={e.id}>
             <Card className={styles.card}>
@@ -79,49 +79,48 @@ class EventGenerator extends Component {
         break;
       }
       case 'CreateEvent': {
-          if (e.payload.ref === null) {
+        if (e.payload.ref === null) {
+          return (
+            <div key={e.id}>
+              <Card className={styles.card}>
+                <p>{`${convertDate(e.created_at)} ${e.actor.display_login} created a repository.`}</p>
+              </Card>
+            </div>
+          );
+          break;
+        }
+        if (e.payload.ref === 'master') {
+          if (e.payload.description === null) {
             return (
               <div key={e.id}>
                 <Card className={styles.card}>
-                  <p>{`${convertDate(e.created_at)} ${e.actor.display_login} created a repository.`}</p>
+                  <p>{`${convertDate(e.created_at)} ${e.actor.display_login} created a repository titled ${repoName(e.repo.name)}`}</p>
                 </Card>
               </div>
             );
             break;
           }
-          if (e.payload.ref === 'master') {
-            if (e.payload.description === null) {
-              return (
-                <div key={e.id}>
-                  <Card className={styles.card}>
-                    <p>{`${convertDate(e.created_at)} ${e.actor.display_login} created a repository titled ${repoName(e.repo.name)}`}</p>
-                  </Card>
-                </div>
-              );
-              break;
-            }
-            else {
-              return (
-                <div key={e.id}>
-                  <Card className={styles.card}>
-                    <p>{`${convertDate(e.created_at)} ${e.actor.display_login} created a repository titled ${repoName(e.repo.name)} described as `}<span className={styles.commentText}>{`${e.payload.description}`}</span></p>
-                  </Card>
-                </div>
-              );
-              break;
-            }
-        }
-        else {
+
           return (
+            <div key={e.id}>
+              <Card className={styles.card}>
+                <p>{`${convertDate(e.created_at)} ${e.actor.display_login} created a repository titled ${repoName(e.repo.name)} described as `}<span className={styles.commentText}>{`${e.payload.description}`}</span></p>
+              </Card>
+            </div>
+          );
+          break;
+        }
+
+        return (
           <div key={e.id}>
             <Card className={styles.card}>
               <p>{`${convertDate(e.created_at)} ${e.actor.display_login} created a ${e.payload.ref_type} titled ${e.payload.ref}`}</p>
             </Card>
           </div>
         );
-      }
+
         break;
-        }
+      }
       case 'PullRequestEvent': {
         const reviewers = () => {
           if (e.payload.pull_request.requested_reviewers.length === 0) {
@@ -129,7 +128,7 @@ class EventGenerator extends Component {
           }
           let cycles = e.payload.pull_request.requested_reviewers.length;
           let index = 0;
-          var reviewerString = "";
+          let reviewerString = '';
           function whoAreOurReviewers() {
             if (cycles !== 0) {
               reviewerString = `${reviewerString} ${e.payload.pull_request.requested_reviewers[index].login}`;
@@ -151,58 +150,58 @@ class EventGenerator extends Component {
         );
       }
         break;
-        case 'DeleteEvent': {
+      case 'DeleteEvent': {
         return (
-        <div key={e.id}>
-          <Card className={styles.card}>
-            <p>{`${convertDate(e.created_at)} ${e.actor.display_login} deleted a ${e.payload.ref_type} titled ${e.payload.ref}`}</p>
-          </Card>
-        </div>
-      );
-      break;
-    }
+          <div key={e.id}>
+            <Card className={styles.card}>
+              <p>{`${convertDate(e.created_at)} ${e.actor.display_login} deleted a ${e.payload.ref_type} titled ${e.payload.ref}`}</p>
+            </Card>
+          </div>
+        );
+        break;
+      }
       case 'CommitCommentEvent': {
         return (
-        <div key={e.id}>
-          <Card className={styles.card}>
-            <p>{`${convertDate(e.created_at)} ${e.actor.login} created a commit comment saying `}<span className={styles.commentText}>{`${e.payload.comment.body}`}</span>{` on commit id ${e.payload.comment.commit_id} on the repository named ${repoName(e.repo.name)}`}</p>
-          </Card>
-        </div>
-      );
-      break;
+          <div key={e.id}>
+            <Card className={styles.card}>
+              <p>{`${convertDate(e.created_at)} ${e.actor.login} created a commit comment saying `}<span className={styles.commentText}>{`${e.payload.comment.body}`}</span>{` on commit id ${e.payload.comment.commit_id} on the repository named ${repoName(e.repo.name)}`}</p>
+            </Card>
+          </div>
+        );
+        break;
       }
       case 'ForkEvent': {
         return (
-        <div key={e.id}>
-          <Card className={styles.card}>
-            <p>{`${convertDate(e.created_at)} ${e.actor.login} forked a repository named ${repoName(e.repo.name)}`}</p>
-          </Card>
-        </div>
-      );
-      break;
+          <div key={e.id}>
+            <Card className={styles.card}>
+              <p>{`${convertDate(e.created_at)} ${e.actor.login} forked a repository named ${repoName(e.repo.name)}`}</p>
+            </Card>
+          </div>
+        );
+        break;
       }
       case 'WatchEvent': {
         const action = e.payload.action === 'started' ? 'Starred' : 'Unstarred';
         const repoNameVar = repoName(e.repo.name);
         const owner = e.repo.name.replace(`/${repoNameVar}`, '');
         return (
-        <div key={e.id}>
-          <Card className={styles.card}>
-            <p>{`${convertDate(e.created_at)} ${e.actor.login} ${action} a repository named ${repoNameVar} owned by ${owner}`}</p>
-          </Card>
-        </div>
-      );
-      break;
+          <div key={e.id}>
+            <Card className={styles.card}>
+              <p>{`${convertDate(e.created_at)} ${e.actor.login} ${action} a repository named ${repoNameVar} owned by ${owner}`}</p>
+            </Card>
+          </div>
+        );
+        break;
       }
       case 'MemberEvent': {
         return (
-        <div key={e.id}>
-          <Card className={styles.card}>
-            <p>{`${convertDate(e.created_at)} ${e.actor.login} ${e.payload.action} ${e.payload.member.login} as a collaborator on the repository ${repoName(e.repo.name)}`}</p>
-          </Card>
-        </div>
-      );
-      break;
+          <div key={e.id}>
+            <Card className={styles.card}>
+              <p>{`${convertDate(e.created_at)} ${e.actor.login} ${e.payload.action} ${e.payload.member.login} as a collaborator on the repository ${repoName(e.repo.name)}`}</p>
+            </Card>
+          </div>
+        );
+        break;
       }
       default:
         return (
@@ -218,7 +217,7 @@ class EventGenerator extends Component {
     return (
       <div>
         <h1 className={styles.headerText}>Your Recent Events:</h1>
-        {eventData.map((event) => (
+        {this.props.eventData.map((event) => (
           <div key={event.id}>
             {this.handleEvent(event)}
           </div>
