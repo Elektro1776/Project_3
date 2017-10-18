@@ -4,6 +4,7 @@ import ButtonBar from '../../components/ButtonBar/Button_Bar';
 import styles from './project_style.css';
 import CollaboratorsBar from '../../components/Collaborators';
 
+
 class Projects extends Component {
     state = {
       issuesButt: false,
@@ -36,18 +37,11 @@ class Projects extends Component {
             <ButtonBar clicker={this.whatStateToChange.bind(this)} />
           </div>
           <div>
-            <ProjLayout state={this.state} />
+            <ProjLayout state={this.state} stateChangeFunc={this.whatStateToChange.bind(this)} />
           </div>
         </div>
       );
     }
 }
-
-// function mapStateToProps (state) {
-//  issueData:
-// }
-
-// export default connect(mapStateToProps, { fetchIssues })(Projects);
-
 
 export default Projects;
