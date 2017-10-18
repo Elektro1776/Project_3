@@ -4,12 +4,9 @@ import IssueCard from '../../components/Card/index';
 import issueData from './GET_ALL_ISSUES_REPO_SPECIFIC';
 import commentData from './GET_COMMENTS_FOR_SPECIFIC_ISSUE';
 import ReadMe from '../../components/Readme/Readme_Render';
-<<<<<<< HEAD
 import Matrix from '../../components/Matrix/Matrix';
 
-=======
 import CodeEditorParent from '../../components/CodeEditor';
->>>>>>> 84096232a28b9108989ed099c1b877d9e88bea29
 
 class ProjLayout extends Component {
   whatStateToUse = (state) => {
@@ -31,9 +28,6 @@ class ProjLayout extends Component {
           <Matrix />
         </div>
       );
-<<<<<<< HEAD
-    } else {
-=======
     }
     else if (state.codeButt === true) {
       return (
@@ -43,7 +37,6 @@ class ProjLayout extends Component {
       );
     }
     else {
->>>>>>> 84096232a28b9108989ed099c1b877d9e88bea29
       return (
         <div>
           Houston....We have a problem.

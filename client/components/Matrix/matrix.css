@@ -1,13 +1,75 @@
 .container {
+  color: #333;
   display: grid;
-  grid-template-columns: [leftBuffer] 4% [col1] 40% [midBuffer] 2% [col2] 40% [rightBuffer] 4%;
-  grid-template-rows: [topBuffer] 4% [row1] 40% [centerBuffer] 2% [row2] 40% [bottomBuffer] 4%;
+  height: 70vh;
+  padding-top: 15px;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  grid-template-areas:
+    "q1 q2"
+    "q3 q4"; 
 }
 
-.quadrant {
-  border: 2px black solid;
-  grid-column-start: col1;
-  grid-column-end: col1;
-  grid-row-start: row1;
-  grid-row-end: row1; 
+.banner1 {
+  padding-left: 5px;
+  color: #fff;
+  height: 24px;
+  width: 100%;
+  background: #fb9191;
+}
+
+.banner2 {
+  padding-left: 5px;
+  color: #fff;
+  height: 24px;
+  width: 100%;
+  background: #97e387;
+}
+
+.banner3 {
+  padding-left: 5px;
+  color: #fff;
+  height: 24px;
+  width: 100%;
+  background: #7bc2f8;
+}
+
+.banner4 {
+  padding-left: 5px;
+  color: #fff;
+  height: 24px;
+  width: 100%;
+  background: #b4b4b4;
+}
+
+.q1 {
+  margin: 8px;
+  border: 2px solid #fb9191;
+  background: #f6cdcd;
+  border-radius: 10px;
+  grid-area: q1;
+}
+
+.q2 {
+  margin: 8px;
+  border: 2px solid #97e387;
+  background: #cce7c7;
+  border-radius: 10px;
+  grid-area: q2;
+}
+
+.q3 {
+  margin: 8px;
+  border: 2px solid #7bc2f8;
+  background: #a4c8e5;
+  border-radius: 10px;
+  grid-area: q3;
+}
+
+.q4 {
+  margin: 8px;
+  border: 2px solid #b4b4b4;
+  background: #ececec;
+  border-radius: 10px;
+  grid-area: q4;
 }

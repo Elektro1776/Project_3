@@ -1,18 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import Quadrant from './Quadrant.js';
+import Quadrants from './Quadrants';
 import styles from './matrix.css';
 
 class Matrix extends Component {
   state = {}
   render() {
     return (
-      <div className={"container"}>
-        {this.props.userStories}
-        <Quadrant title={'Important & Urgent'} />
-        {/* {<Quadrant title={'Important & Not Urgent'} />
-        <Quadrant title={'Not Important & Urgent'} />
-        <Quadrant title={'Not Important & Not Urgent'} />} */}
+      <div>
+        <Quadrants />
       </div>
     );
   }
@@ -23,7 +19,7 @@ Matrix.propTypes = {
 };
 
 Matrix.defaultProps = {
-  userStories: ['Working as expected'],
+  userStories: ['You have no tasks'],
 };
 
 export default Matrix;
