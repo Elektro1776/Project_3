@@ -193,11 +193,15 @@ githubRouter.post('/closeIssue', (req, res) => {
     },
     method: 'PATCH',
     json: true,
-    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.issueNum}?state=closed&access_token=${req.body.token}`,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.issueNum}?access_token=${req.body.token}`,
+    body: {
+      state: 'closed',
+    },
   }, (err, response, body) => {
     console.log(' WHAT IS THE BODY?', body);
     if(!err) {
       res.status(200);
+      
     }
   });
 });
@@ -223,7 +227,8 @@ githubRouter.post('/getIssues', (req, res) => {
 });
 
 // Get events feed
-githubRouter.post('/api/github/getEvents', (req, res) => {
+githubRouter.post('/getEvents', (req, res) => {
+  // console.log('HIITING EVENTS ROUTE');
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -231,9 +236,13 @@ githubRouter.post('/api/github/getEvents', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `https://api.github.com/users/${req.body.username}/events`,
+    url: `https://api.github.com/users/${req.body.id}/events`,
   }, (err, response, body) => {
-    // console.log(' WHAT IS THE BODY?', body);
+    // console.log(' WHAT IS THE BODY? OF EVENTS', body);
+    if (!err) {
+      return res.status(200).json({ events: body, err: null });
+    }
+    res.status(500).json({ err, events: null });
   });
 });
 
@@ -287,7 +296,7 @@ githubRouter.post('/readme', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/readme`,
   }, (err, response, body) => {
-    // console.log('WTF IS MY README BODY', body);
+    console.log('WTF IS MY README BODY', body);
     if (!err) {
       const b64string = body.content;
       const buf = Buffer.from(b64string, 'base64');
