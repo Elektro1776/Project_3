@@ -5,7 +5,7 @@ import IssueCard from '../../components/Card/index';
 import ReadMe from '../../components/Readme/Readme_Render';
 import CodeEditorParent from '../../components/CodeEditor';
 import { fetchUserIssues } from '../../actions/githubActions/getIssuesAction';
-// import { fetchUserReadme } from '../../actions/githubActions/getReadmeAction';
+import Matrix from '../../components/Matrix/Matrix';
 
 class ProjLayout extends Component {
   constructor(props) {
@@ -25,22 +25,6 @@ class ProjLayout extends Component {
       this.setState({ issues: userIssues });
     }
   }
-  // componentDidMount() {
-  //   this.props.fetchUserReadme('901david', 'Flashcard-Fun');
-  //   this.props.fetchUserIssues('901david', 'Flashcard-Fun');
-  // }
-  // componentWillReceiveProps(nextProps) {
-  //   // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
-  //   const { userIssues, readme } = nextProps;
-  //   // console.log(' WHAT IS USER REPOS', userRepos);
-  //   if (userIssues.length !== 0) {
-  //     this.setState({ issues: userIssues });
-  //   }
-  //   if (readme.length !== 0) {
-  //     this.setState({ readme });
-  //   }
-  //
-  // }
   whatStateToUse = (state) => {
     if (state.issuesButt === true) {
       return (
@@ -90,11 +74,3 @@ export default connect((state, ownProps) => ({
 }), (dispatch) => ({
   fetchUserIssues: (userId, repoName) => dispatch(fetchUserIssues(userId, repoName)),
 }))(ProjLayout);
-
-// export default connect((state, ownProps) => ({
-//   userIssues: state.issues.repoIssues,
-//   readme: state.readme.readme,
-// }), (dispatch) => ({
-//   fetchUserIssues: (userId, repoName) => dispatch(fetchUserIssues(userId, repoName)),
-//   fetchUserReadme: (userId, repoName) =>  dispatch(fetchUserReadme(userId, repoName)),
-// }))(ProjLayout);
