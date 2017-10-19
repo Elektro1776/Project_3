@@ -25,3 +25,8 @@
   margin-bottom: 10px;
   text-align: center;
 }
+
+.displayMore {
+  border: aqua solid 2px;
+  margin-bottom: 100px;
+}

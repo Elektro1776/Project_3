@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Chip from './Collab_Chip';
 import styles from './collab.css';
 import { fetchCollaborators } from '../../actions/githubActions/getCollabAction';
-import { token } from '../../../token';
+import { token } from '../../../gittoke';
 
 class Collaborators extends Component {
   constructor(props) {
@@ -27,12 +27,12 @@ class Collaborators extends Component {
   }
   render() {
     console.log('Here is my collab state', this.state);
-  return (
-    <div>
-      <Chip collabs={this.state.collabs} />
-    </div>
-  );
-}
+    return (
+      <div>
+        <Chip collabs={this.state.collabs} />
+      </div>
+    );
+  }
 };
 
 export default connect((state, ownProps) => ({
