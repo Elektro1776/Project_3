@@ -7,12 +7,18 @@ class UserStory extends Component {
     isChecked: false,
   }
 
-  toggleCheck() {
-    this.setState({ isChecked: !this.state.isChecked });
+  truncateText = (text) => {
+    if (text.length > 20) {
+      return `${text.substring(0, 20)}...`;
+    }
+    return text;
+  }
+
+  displayStoryDetails = () => {
+    // do story stuff here with sidebar
   }
 
   toggleCheckboxChange = () => {
-    console.log(this.state);
     const { title, handleCheckBoxChange } = this.props;
 
     this.setState(({ isChecked }) => (
@@ -29,22 +35,22 @@ class UserStory extends Component {
     const { isChecked } = this.state;
     return (
       <div className={styles.userStory}>
-        <span className={styles.regularcheckbox}>
+        <div className={styles.regularcheckbox}>
           <input
+            className={styles.checkBox}
             id={key}
-            onClick={this.toggleCheck}
+            onClick={this.toggleCheckboxChange}
             type="checkbox"
             checked={isChecked}
-            onChange={this.toggleCheckboxChange}
           />
-          <span />
-        </span>
-        <span className={styles.title} >
-          {title}
-        </span>
-        <span className={styles.date} >
-          {date}
-        </span>
+        </div>
+        <div className={styles.title} >
+          {this.truncateText(title)}
+          <div className={styles.date} >
+            {date}
+          </div>
+        </div>
+
       </div>
     );
   }
@@ -53,6 +59,7 @@ class UserStory extends Component {
 UserStory.PropTypes = {
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired,
   handleCheckboxChange: PropTypes.func.isRequired,
 };
 
