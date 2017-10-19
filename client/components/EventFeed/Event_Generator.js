@@ -13,6 +13,21 @@ class EventGenerator extends Component {
     this.setState({ displayed: this.state.displayed + 5 });
   }
 
+  buttonDisplay = () => {
+    if (this.state.displayed < 29) {
+      return (
+        <div className={`row`}>
+          <button className={`${styles.displayMore} btn col-xs-4 col-xs-offset-4`} onClick={this.displayMore}> Click for More </button>
+        </div>
+      );
+    }
+    return (
+      <div className={`row`}>
+        <button className={`${styles.displayMore} btn col-xs-4 col-xs-offset-4`}> No More Events </button>
+      </div>
+    );
+  }
+
   handleEvent = (e) => {
     switch (e.type) {
       case 'PushEvent': {
@@ -234,9 +249,7 @@ class EventGenerator extends Component {
             );
           }
         })}
-        <div className={`row`}>
-          <button className={`${styles.displayMore} btn col-xs-4 col-xs-offset-4`} onClick={this.displayMore}> Click for More </button>
-        </div>
+        {this.buttonDisplay()}
       </div>
     );
   }
