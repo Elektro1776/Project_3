@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import Chip from './Collab_Chip';
 import styles from './collab.css';
 import { fetchCollaborators } from '../../actions/githubActions/getCollabAction';
-import token from '../../../gittoken';
 
 class Collaborators extends Component {
   constructor(props) {
@@ -39,6 +38,7 @@ class Collaborators extends Component {
     </div>
   );
 }
+
 };
 
 export default connect((state, ownProps) => ({

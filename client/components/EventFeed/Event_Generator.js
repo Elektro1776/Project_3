@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import eventData from './EVENT_FEED3';
-import { Card } from 'react-toolbox/lib/card';
+import { Card, Button } from 'react-toolbox/lib/card';
 import styles from './card_styles.css';
 import { convertDate, repoName } from './logical_solutions';
 
 class EventGenerator extends Component {
+  state = {
+    displayed: 4,
+  }
+
+  displayMore = () => {
+    this.setState({ displayed: this.state.displayed + 5 });
+  }
+
   handleEvent = (e) => {
     switch (e.type) {
       case 'PushEvent': {
@@ -217,11 +225,18 @@ class EventGenerator extends Component {
     return (
       <div>
         <h1 className={styles.headerText}>Your Recent Events:</h1>
-        {this.props.eventData.map((event) => (
-          <div key={event.id}>
-            {this.handleEvent(event)}
-          </div>
-        ))}
+        {this.props.eventData.map((event, i) => {
+          if (i <= this.state.displayed) {
+            return (
+              <div key={event.id}>
+                {this.handleEvent(event)}
+              </div>
+            );
+          }
+        })}
+        <div className={`row`}>
+          <button className={`${styles.displayMore} btn col-xs-4 col-xs-offset-4`} onClick={this.displayMore}> Click for More </button>
+        </div>
       </div>
     );
   }
