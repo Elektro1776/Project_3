@@ -11,8 +11,18 @@ class UserStory extends Component {
     this.setState({ isChecked: !this.state.isChecked });
   }
 
+  truncateText = (text) => {
+    if (text.length > 20) {
+      return `${text.substring(0, 20)}...`;
+    }
+    return text;
+  }
+
+  displayStoryDetails = () => {
+    // do story stuff here with sidebar
+  }
+
   toggleCheckboxChange = () => {
-    console.log(this.state);
     const { title, handleCheckBoxChange } = this.props;
 
     this.setState(({ isChecked }) => (
@@ -20,6 +30,10 @@ class UserStory extends Component {
         isChecked: !isChecked,
       }
     ));
+
+    if (this.state.isChecked) {
+      this.displayStoryDetails();
+    }
 
     handleCheckBoxChange(title);
   }
@@ -40,7 +54,7 @@ class UserStory extends Component {
           <span />
         </span>
         <span className={styles.title} >
-          {title}
+          {this.truncateText(title)}
         </span>
         <span className={styles.date} >
           {date}
@@ -53,6 +67,7 @@ class UserStory extends Component {
 UserStory.PropTypes = {
   title: PropTypes.string.isRequired,
   date: PropTypes.string.isRequired,
+  key: PropTypes.string.isRequired,
   handleCheckboxChange: PropTypes.func.isRequired,
 };
 
