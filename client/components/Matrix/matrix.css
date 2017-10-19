@@ -10,27 +10,39 @@
     "q3 q4"; 
 }
 
+.checkBox {
+  float: left;
+}
+
 .userStory {
-  height: 20px;
-  max-height: 40px;
+  width: 100%;
+  max-height: 25px;
 }
 
 .title {
+  float: left;
+  width: 93%;
   margin-left: 3px;
-  overflow: none;
+  overflow: hidden;
+  max-height: 25px;
 }
 
 .date {
+  overflow: hidden;
+  max-height: 25px;
+  width: 35%;
   float: right;
 }
 
 
 .quadrant {
+  height: 72%;
   padding: 5px 5px 0 5px;
-  overflow: auto;
+  overflow-y: auto;
 }
 
 .banner1 {
+  overflow: hidden;
   border-radius: 9px 8px 0 0;
   padding-left: 5px;
   color: #fff;
@@ -40,6 +52,7 @@
 }
 
 .banner2 {
+  overflow: hidden;
   border-radius: 8px 8px 0 0;
   padding-left: 5px;
   color: #fff;
@@ -49,6 +62,7 @@
 }
 
 .banner3 {
+  overflow: hidden;
   border-radius: 8px 8px 0 0;
   padding-left: 5px;
   color: #fff;
@@ -58,6 +72,7 @@
 }
 
 .banner4 {
+  overflow: hidden;
   border-radius: 8px 8px 0 0;
   padding-left: 5px;
   color: #fff;
@@ -73,7 +88,6 @@
   background: #f6cdcd;
   border-radius: 10px;
   grid-area: q1;
-  overflow: auto;
 }
 
 .q2 {
@@ -83,7 +97,6 @@
   background: #cce7c7;
   border-radius: 10px;
   grid-area: q2;
-  overflow: auto;
 }
 
 .q3 {
@@ -93,7 +106,6 @@
   background: #deedf8;
   border-radius: 10px;
   grid-area: q3;
-  overflow: auto;
 }
 
 .q4 {
@@ -103,5 +115,4 @@
   background: #ececec;
   border-radius: 10px;
   grid-area: q4;
-  overflow: auto;
 }
