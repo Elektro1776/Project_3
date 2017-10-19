@@ -25,7 +25,8 @@ class ProjLayout extends Component {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
     const { userIssues, readme } = nextProps;
     // console.log(' WHAT IS USER REPOS', userRepos);
-    if (userIssues.length !== 0) {
+    if (userIssues.length !== 0 && userIssues.length !== this.props.userIssues.length) {
+      console.log(' RE SET STATE:::::', userIssues.length);
       this.setState({ issues: userIssues });
       if (readme.length !== 0) {
         this.setState({ readme });

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import { Button } from 'react-toolbox/lib/button';
 import CardComments from './Card_Comments';
@@ -7,30 +8,12 @@ import styles from './issueCards.css';
 import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
 import token from '../../../gittoke';
-import { fetchUserIssues } from '../../actions/githubActions/getIssuesAction';
+import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 
 class IssueCard extends Component {
   componentDidMount() {
     console.log('ISSUE CARD OFFICIALLY HAS MOUNTED');
   }
-  handleCloseIssue = () => {
-    fetch('api/github/closeIssue', {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify({ id: '901david', repoName: 'Flashcard-Fun', issueNum: '35', token }),
-      // body: JSON.stringify({ id: issue.user.login, repoName: this.props.repoName, issueNum: issue.number, token }),
-    })
-      .then((response) => {
-        // console.log('Close completed');
-        // console.log(response.status);
-        fetchUserIssues('901david', 'Flashcard-Fun');
-      })
-      .catch((err) => {
-        // console.info(' WHAT IS OUR ERR RESPONSE', err.response);
-      });
-  };
   render() {
     console.log(token, 'here is my tokenn');
     const assigneeData = this.props.issues.map((issue) => issue.assignees);
@@ -39,7 +22,7 @@ class IssueCard extends Component {
 
         { this.props.issues.map((issue, i) => (
           <div key={issue.id}>
-            <Collapsible lazyRender={true} trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
+            <Collapsible trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
             <Card className={styles.child}>
               <CardTitle
                 avatar={issue.user.avatar_url}
@@ -56,7 +39,10 @@ class IssueCard extends Component {
 
               <CardActions>
                 <Button label="Comment" />
-                <Button label="Close Issue" onClick={this.handleCloseIssue.bind(this)} />
+                <Button
+                  label="Close Issue"
+                  onClick={() => this.props.closeUserIssue('901david', 'Flashcard-Fun', '35', token)}
+                />
                 <Button label="Add to Matrix" />
               </CardActions>
             </Card>
@@ -72,4 +58,10 @@ class IssueCard extends Component {
   }
 }
 
-export default IssueCard;
+// export default IssueCard;
+
+export default connect((state, ownProps) => ({
+  closedIssData: state.issue,
+}), (dispatch) => ({
+  closeUserIssue: (userId, repoName, issueNum, token) => dispatch(closeUserIssue(userId, repoName, issueNum, token)),
+}))(IssueCard);
