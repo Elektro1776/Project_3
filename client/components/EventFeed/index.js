@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EventGenerator from './Event_Generator';
 import { fetchUserEvents } from '../../actions/githubActions/getEventAction';
+import token from '../../../gittoken';
 
 class EventFeed extends Component {
   constructor(props) {
@@ -11,7 +12,7 @@ class EventFeed extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchUserEvents('901david');
+    this.props.fetchUserEvents('901david', token);
   }
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
@@ -34,5 +35,5 @@ class EventFeed extends Component {
 export default connect((state, ownProps) => ({
   events: state.events.events,
 }), (dispatch) => ({
-  fetchUserEvents: (userId) => dispatch(fetchUserEvents(userId)),
+  fetchUserEvents: (userId, token) => dispatch(fetchUserEvents(userId, token)),
 }))(EventFeed);

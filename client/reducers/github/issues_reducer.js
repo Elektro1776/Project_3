@@ -13,23 +13,14 @@ const initialState = {
 };
 function updateItemInArray(array, issueId) {
     const updatedItems = array.filter(issue => {
-      console.log(' WHAT ARE THE ISSUES IN MAP????', issue.number, issueId);
+      // console.log(' WHAT ARE THE ISSUES IN MAP????', issue.number, issueId);
         if(issue.number !== issueId) {
             // Since we only want to update one item, preserve all others as they are now
             return issue;
         }
-
-        // Use the provided callback to create an updated item
-        // const updatedItem = updateItemCallback(issue);
-        // return updatedItem;
     });
 
     return updatedItems;
-}
-function updateObject(oldObject, newValues) {
-    // Encapsulate the idea of passing a new object as the first parameter
-    // to Object.assign to ensure we correctly copy data instead of mutating
-    return Object.assign({}, oldObject, newValues);
 }
 export default function (state = initialState, action) {
   switch (action.type) {

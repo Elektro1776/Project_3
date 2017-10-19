@@ -5,6 +5,8 @@ import Drawer from 'react-toolbox/lib/drawer';
 import styles from '../NavBar/NavBar.css';
 // import repoData from './repodata';
 import { fetchUserRepos } from '../../actions/githubActions/getRepoActions';
+import { loadCurrentProject } from '../../actions/githubActions/goToProjectAction';
+import token from '../../../gittoken';
 
 class RepoDrawer extends Component {
   constructor(props) {
@@ -12,33 +14,38 @@ class RepoDrawer extends Component {
     this.state = {
       active: false,
       repos: [],
+      currentProject: {},
     };
   }
   componentDidMount() {
-    this.props.fetchUserRepos('901david');
+    this.props.fetchUserRepos('901david', token);
   }
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
-    const { userRepos } = nextProps;
-    // console.log(' WHAT IS USER REPOS', userRepos);
+    const { userRepos, currentProject } = nextProps;
+    console.log(' WHAT IS USER cuurent proj from drawer', currentProject);
     if (userRepos.length !== 0) {
-      this.setState({ repos: userRepos });
+      this.setState({ repos: userRepos, currentProject });
     }
   }
   handleToggle = () => {
     this.setState({ active: !this.state.active });
   };
-
+  handleProjectClick = (id) => {
+  this.props.loadCurrentProject(id);
+  this.handleToggle();
+  }
   render() {
     const { repos } = this.state;
-    // console.log(' WHAT IS THE STATE?????', repos);
+    // console.log(' WHAT IS THE CURRENT PROJ', this.state.currentProject);
     return (
       <div>
         <Button className={styles.repoButton} label="Repos" onClick={this.handleToggle} />
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
           {repos.map((repo) => (
             <div key={repo.id}>
-              <Button className={styles.button} label={repo.name} raised ripple primary />
+              <Button className={styles.button} label={repo.name} raised ripple primary
+                 onClick={() =>this.handleProjectClick(repo.id)}  />
             </div>
           ))}
         </Drawer>
@@ -49,6 +56,8 @@ class RepoDrawer extends Component {
 
 export default connect((state, ownProps) => ({
   userRepos: state.repos.userRepos,
+  currentProject: state.repos.currentProject,
 }), (dispatch) => ({
-  fetchUserRepos: (userId) => dispatch(fetchUserRepos(userId)),
+  fetchUserRepos: (userId, token) => dispatch(fetchUserRepos(userId, token)),
+  loadCurrentProject: (projectId) =>dispatch(loadCurrentProject(projectId)),
 }))(RepoDrawer);
