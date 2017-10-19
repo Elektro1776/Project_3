@@ -7,46 +7,48 @@ import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
-import token from '../../../gittoke';
+import token from '../../../gittoken';
 import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 
 class IssueCard extends Component {
-  componentDidMount() {
-    console.log('ISSUE CARD OFFICIALLY HAS MOUNTED');
-  }
+  state = {
+   isShowingModal: false,
+ }
+ handleClick = () => this.setState({isShowingModal: true})
+ handleClose = () => this.setState({isShowingModal: false})
   render() {
-    console.log(token, 'here is my tokenn');
-    const assigneeData = this.props.issues.map((issue) => issue.assignees);
+    // console.log(this.props.issues[0].number, 'here are my issue number');
+    // console.log(this.props.issues[0].user.login, this.props.repoName, this.props.issues[0].number, token, 'send this');
+    const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
     return (
       <div className={styles.mainCont}>
-
         { this.props.issues.map((issue, i) => (
           <div key={issue.id}>
             <Collapsible trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
-            <Card className={styles.child}>
-              <CardTitle
-                avatar={issue.user.avatar_url}
-                title={issue.user.login}
-                subtitle={this.props.repoName}
-              />
-              <CardTitle
-                subtitle={issue.body}
-              />
-              <CardComments issueNumberToGet={issue.number} />
-              <h6>Assignees</h6>
-
-              <CardAssignees assigneesData={assigneeData} indexValue={i} />
-
-              <CardActions>
-                <Button label="Comment" />
-                <Button
-                  label="Close Issue"
-                  onClick={() => this.props.closeUserIssue('901david', 'Flashcard-Fun', '35', token)}
+              <Card className={styles.child}>
+                <CardTitle
+                  avatar={issue.user.avatar_url}
+                  title={issue.user.login}
+                  subtitle={this.props.repoName}
                 />
-                <Button label="Add to Matrix" />
-              </CardActions>
-            </Card>
-          </Collapsible>
+                <CardTitle
+                  subtitle={issue.body}
+                />
+                <CardComments issueNumberToGet={issue.number} handleClick={this.handleClick} handleClose={this.handleClose} state={this.state} />
+                <h6>Assignees</h6>
+
+                <CardAssignees assigneesData={assigneeData} indexValue={i} />
+
+                <CardActions>
+                  <Button label="Comment" onClick={this.handleClick} />
+                  <Button
+                    label="Close Issue"
+                    onClick={() => this.props.closeUserIssue(issue.user.login, this.props.repoName, issue.number, token)}
+                  />
+                  <Button label="Add to Matrix" />
+                </CardActions>
+              </Card>
+            </Collapsible>
           </div>
         ),
 

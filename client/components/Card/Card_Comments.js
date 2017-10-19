@@ -4,30 +4,40 @@ import { CardText } from 'react-toolbox/lib/card';
 import styles from './cardComments.css';
 import { convertDate } from '../EventFeed/logical_solutions';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
+import { addUserComment } from '../../actions/githubActions/addCommentAction';
+import ModalIssueComment from '../Modal/comment_modal';
+import token from '../../../gittoken';
 
 class CardComments extends Component {
   constructor(props) {
     super(props);
     this.state = {
       issueComments: [],
+      newComment: [],
     };
   }
   componentDidMount() {
-    console.log('Comments has mounted');
-    this.props.fetchUserComments("901david", 'Flashcard-Fun', this.props.issueNumberToGet);
+    console.log(this.state.issueComments, 'hopefully an array of comments');
+    this.props.fetchUserComments("901david", 'funRepoCreatedByPostMan', this.props.issueNumberToGet, token);
   }
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
-    const { issueComments } = nextProps;
+    const { issueComments, newComment } = nextProps;
     // console.log(' WHAT IS USER REPOS', userRepos);
     if (issueComments.length !== 0) {
+
       this.setState({ issueComments: issueComments });
     }
+    // if (newComment.length !== 0) {
+    //
+    //   this.setState({ newComment: comment });
+    // }
   }
   render() {
     console.log(this.props.issueNumberToGet, ' here are our issue number');
     return (
       <div>
+        <ModalIssueComment handleClick={this.props.handleClick} handleClose={this.props.handleClose} state={this.props.state} handleAddComment={this.props.addUserComment} />
         { this.state.issueComments.map((comment, i) => (
           <div key={comment.id}>
             <CardText>
@@ -47,5 +57,6 @@ class CardComments extends Component {
 export default connect((state, ownProps) => ({
   issueComments: state.comments.issueComments,
 }), (dispatch) => ({
-  fetchUserComments: (userId, repoName, issueNum) => dispatch(fetchUserComments(userId, repoName, issueNum)),
+  fetchUserComments: (userId, repoName, issueNum, token) => dispatch(fetchUserComments(userId, repoName, issueNum, token)),
+  addUserComment: (userName, repoName, issueNum, body, token) => dispatch(addUserComment(userName, repoName, issueNum, body, token)),
 }))(CardComments);
