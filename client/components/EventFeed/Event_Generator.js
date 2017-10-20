@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import eventData from './EVENT_FEED3';
 import { Card, Button } from 'react-toolbox/lib/card';
 import styles from './card_styles.css';
 import { convertDate, repoName } from './logical_solutions';
