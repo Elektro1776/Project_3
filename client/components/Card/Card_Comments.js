@@ -17,8 +17,8 @@ class CardComments extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.state.issueComments, 'hopefully an array of comments');
-    this.props.fetchUserComments("901david", 'funRepoCreatedByPostMan', this.props.issueNumberToGet, token);
+    console.log('dat used to fetch comments!!!!!!!!!!!!!!!!!', this.props.repoOwner, this.props.repoName, this.props.issueNumberToGet, token);
+    this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, this.props.issueNumberToGet, token);
   }
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
@@ -34,10 +34,10 @@ class CardComments extends Component {
     // }
   }
   render() {
-    console.log(this.props.issueNumberToGet, ' here are our issue number');
+    console.log(this.state.issueComments, ' here are our issue comments');
     return (
       <div>
-        <ModalIssueComment handleClick={this.props.handleClick} handleClose={this.props.handleClose} state={this.props.state} handleAddComment={this.props.addUserComment} />
+        {/* <ModalIssueComment handleClick={this.props.handleClick} handleClose={this.props.handleClose} state={this.props.state} handleAddComment={this.props.addUserComment} /> */}
 
         {/* { this.state.issueComments.map((comment, i) => (
           <div key={comment.id}>

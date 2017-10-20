@@ -10,7 +10,7 @@ export const fetchUserComments = (userId, repoName, issueNum, token) => (dispatc
     headers: {
       'content-type': 'application/json',
     },
-    body: JSON.stringify({ id: userId, repoName: repoName, num: issueNum, token }),
+    body: JSON.stringify({ id: userId, repoName, num: issueNum, token }),
   })
     .then((response) => response.json())
     .then((comments) => {

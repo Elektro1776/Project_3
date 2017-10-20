@@ -35,6 +35,7 @@ class Projects extends Component {
     }
     render() {
       const { currentProject } = this.state;
+      console.log(currentProject, 'currne tproj');
       if (currentProject !== null) {
         return (
           <div>
@@ -45,7 +46,7 @@ class Projects extends Component {
               <ButtonBar clicker={this.whatStateToChange.bind(this)} />
             </div>
             <div>
-              <ProjLayout currentScreen={this.state.currentScreen} repoName={currentProject.name} currentUser={currentProject.owner.login} />
+              <ProjLayout currentScreen={this.state.currentScreen}  repoName={currentProject.name} currentUser={currentProject.owner.login} />
             </div>
           </div>
         );

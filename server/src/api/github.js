@@ -27,7 +27,7 @@ githubRouter.post('/getRepos', (req, res) => {
 
 // Get comments from a specific issue
 githubRouter.post('/getIssueComments', (req, res) => {
-  //  console.log("We are getting successful hit on gitrouter", req.body);
+   console.log("We are getting successful hit on gitrouter comments", req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',

@@ -34,7 +34,7 @@ class IssueCard extends Component {
    return true;
  }
   render() {
-    console.log('RENDERING CARD COMPONENT', this.props.issues.length);
+    console.log('CURRENT PROJ ISSUE CARD %%%%%%%%%', this.state.currentProject);
     // console.log(this.props.issues[0].user.login, this.props.repoName, this.props.issues[0].number, token, 'send this');
     const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
     return (
@@ -53,7 +53,7 @@ class IssueCard extends Component {
                 <CardTitle
                   subtitle={issue.body}
                 />
-                <CardComments issueNumberToGet={issue.number} handleClick={this.handleClick} handleClose={this.handleClose} state={this.state} />
+                <CardComments issueNumberToGet={issue.number} repoName={this.props.repoName} userName={issue.user.login} repoOwner={this.props.repoOwner} handleClick={this.handleClick} handleClose={this.handleClose} />
                 <h6>Assignees</h6>
 
                 <CardAssignees assigneesData={assigneeData} indexValue={i} />

@@ -63,7 +63,7 @@ class ProjLayout extends Component {
       case 'issuesButt':
         return (
           <div>
-            <IssueCard issues={this.state.issues} repoName={this.state.repoName} />
+            <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.props.currentUser} />
           </div>
         );
       case 'matrixButt':
