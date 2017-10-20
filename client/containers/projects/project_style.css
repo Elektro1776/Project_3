@@ -8,3 +8,18 @@
   margin-left: 2%;
   margin-right: 2%;
 }
+.loaderContainerTwo {
+  min-height:800px;
+  background-color: black;
+}
+.loaderImageTwo {
+  position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+.loaderTextTwo{
+  text-align: center;
+}

@@ -25,6 +25,7 @@ grid-gap: 10px;
 grid-auto-rows: minmax(100px, auto);
 background-color: black;
 height: 100%;
+min-height: 100%
 
 }
 
