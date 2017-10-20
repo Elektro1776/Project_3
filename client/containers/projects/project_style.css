@@ -8,14 +8,3 @@
   margin-left: 2%;
   margin-right: 2%;
 }
-.loaderDiv {
-  height:100%;
-  width:100%;
-  background-color: black;
-}
-.loaderImage {
-  margin-left: 50%;
-  margin-right: -50%;
-  height:auto;
-  width:200%;
-}

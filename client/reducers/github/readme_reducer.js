@@ -3,7 +3,7 @@ import { FETCHING_README, SUCCESS_GETTING_README, FAILURE_GETTING_README } from 
 const initialState = {
   fetchingReadme: false,
   fetchedReadme: false,
-  readme: [],
+  readme: null,
   errorMessage: '',
 };
 
@@ -12,7 +12,7 @@ export default function (state = initialState, action) {
     case FETCHING_README:
       return Object.assign({}, state, { fetchingReadme: true });
     case SUCCESS_GETTING_README:{
-      // console.info('What are the reducers Issues', action.payload, )
+      // console.info('What are the reducers Issues', action.payload.readme, )
       return Object.assign({}, state, { readme: action.payload.readme, fetchedReadme: true });
     }
     case FAILURE_GETTING_README:
