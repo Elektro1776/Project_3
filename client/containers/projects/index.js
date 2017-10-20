@@ -55,7 +55,7 @@ class Projects extends Component {
         <div>
           <div className={styles.loaderContainerTwo}>
             <img className={`center-block ${styles.loaderImageTwo}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
-            <h1 className={styles.loaderTextTwo}>Loading...</h1>
+            <h1 className={styles.loaderTextTwo} style={{color:'white'}}>Loading...</h1>
           </div>
         </div>
       );

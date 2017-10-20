@@ -28,7 +28,7 @@ class EventFeed extends Component {
       return (
         <div>
           <div className={`row`}>
-            <button className={`${styles.refreshButt} btn center-block`} onClick={()=>this.props.fetchUserEvents('901david', token)}><i className="material-icons pull-right" style={{color: 'black', 'font-size': 20}}>refresh</i></button>
+            <button className={`${styles.refreshButt} btn center-block`} onClick={()=>this.props.fetchUserEvents('901david', token)}><i className="material-icons pull-right" style={{color: 'black'}}>refresh</i></button>
           </div>
           <EventGenerator eventData={this.state.events} />
         </div>
@@ -38,7 +38,7 @@ class EventFeed extends Component {
       <div>
         <div className={styles.loaderContainer}>
           <img className={`center-block ${styles.loaderImage}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
-          <h1 className={styles.loaderText}>Loading...</h1>
+          <h1 className={styles.loaderText} style={{color:'white'}}>Loading...</h1>
         </div>
       </div>
     );
