@@ -2,7 +2,7 @@ export const FETCHING_EVENTS = 'FETCHING_EVENTS';
 export const SUCCESS_GETTING_EVENTS = 'SUCCESS_GETTING_EVENTS';
 export const FAILURE_GETTING_EVENTS = 'FAILURE_GETTING_EVENTS';
 
-export const fetchUserEvents = (userId) => (dispatch) => {
+export const fetchUserEvents = (userId, token) => (dispatch) => {
   // console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
   dispatch(fetchingEvents());
   return fetch('/api/github/getEvents', {
@@ -10,7 +10,7 @@ export const fetchUserEvents = (userId) => (dispatch) => {
     headers: {
       'content-type': 'application/json',
     },
-    body: JSON.stringify({ id: userId }),
+    body: JSON.stringify({ id: userId, token }),
   })
     .then((response) => response.json())
     .then((events) => {

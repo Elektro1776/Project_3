@@ -2,7 +2,7 @@ export const FETCHING_ISSUES = 'FETCHING_ISSUES';
 export const SUCCESS_GETTING_ISSUES = 'SUCCESS_GETTING_ISSUES';
 export const FAILURE_GETTING_ISSUES = 'FAILURE_GETTING_ISSUES';
 
-export const fetchUserIssues = (userId, repoName) => (dispatch) => {
+export const fetchUserIssues = (userId, repoName, token) => (dispatch) => {
   // console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
   dispatch(fetchingIssues());
   return fetch('/api/github/getIssues', {
@@ -10,7 +10,7 @@ export const fetchUserIssues = (userId, repoName) => (dispatch) => {
     headers: {
       'content-type': 'application/json',
     },
-    body: JSON.stringify({ id: userId, repoName }),
+    body: JSON.stringify({ id: userId, repoName, token }),
   })
     .then((response) => response.json())
     .then((issues) => {

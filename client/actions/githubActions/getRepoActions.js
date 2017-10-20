@@ -3,7 +3,7 @@ export const FETCHING_REPOS = 'FETCHING_REPOS';
 export const SUCCESS_GETTING_REPOS = 'SUCCESS_GETTING_REPOS';
 export const FAILURE_GETTING_REPOS = 'FAILURE_GETTING_REPOS';
 
-export const fetchUserRepos = (userId) => (dispatch) => {
+export const fetchUserRepos = (userId, token) => (dispatch) => {
   // console.log(' WHAT IS OUR USER ID TO SEND?', userId);
   dispatch(fetchingRepos());
   return fetch('/api/github/getRepos', {
@@ -11,7 +11,7 @@ export const fetchUserRepos = (userId) => (dispatch) => {
     headers: {
       'content-type': 'application/json',
     },
-    body: JSON.stringify({ id: userId }),
+    body: JSON.stringify({ id: userId, token }),
   })
     .then((response) => response.json())
     .then((repos) => {
