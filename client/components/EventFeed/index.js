@@ -38,6 +38,7 @@ class EventFeed extends Component {
       <div>
         <div className={styles.loaderContainer}>
           <img className={`center-block ${styles.loaderImage}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
+          <h1 className={styles.loaderText}>Loading...</h1>
         </div>
       </div>
     );
