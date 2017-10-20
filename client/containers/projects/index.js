@@ -53,7 +53,10 @@ class Projects extends Component {
       }
       return (
         <div>
-          <h1>LOADING.........</h1>
+          <div className={styles.loaderContainerTwo}>
+            <img className={`center-block ${styles.loaderImageTwo}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
+            <h1 className={styles.loaderTextTwo}>Loading...</h1>
+          </div>
         </div>
       );
     }
