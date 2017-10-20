@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Card, CardTitle, CardText, CardActions } from 'react-toolbox/lib/card';
 import { Button } from 'react-toolbox/lib/button';
 import CardComments from './Card_Comments';
@@ -6,34 +7,22 @@ import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
+import token from '../../../gittoke';
+import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 
 class IssueCard extends Component {
-  // fetchIssue() {
-  //   //grabs issues for specific repos and passes them in as props
-  // }
-  // addComment() {
-  //   //this will be method that allows user to add a comment
-  // }
-  // closeIssue() {
-  //   //this will close an issue
-  // }
-  // addMatrix() {
-  //   //this will add an issue to matrix
-  // }
+  componentDidMount() {
+    console.log('ISSUE CARD OFFICIALLY HAS MOUNTED');
+  }
   render() {
+    console.log(token, 'here is my tokenn');
     const assigneeData = this.props.issues.map((issue) => issue.assignees);
-    // if (!this.props.issues) {
-    //   return (
-    //     <img src="./uTile_black_loader_50.gif" alt="loader" />
-    //   );
-    // }
-
     return (
       <div className={styles.mainCont}>
 
         { this.props.issues.map((issue, i) => (
           <div key={issue.id}>
-            <Collapsible lazyRender={true} trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
+            <Collapsible trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
             <Card className={styles.child}>
               <CardTitle
                 avatar={issue.user.avatar_url}
@@ -43,14 +32,17 @@ class IssueCard extends Component {
               <CardTitle
                 subtitle={issue.body}
               />
-              <CardComments comments={this.props.comments} />
+              <CardComments issueNumberToGet={issue.number} />
               <h6>Assignees</h6>
 
               <CardAssignees assigneesData={assigneeData} indexValue={i} />
 
               <CardActions>
                 <Button label="Comment" />
-                <Button label="Close Issue" />
+                <Button
+                  label="Close Issue"
+                  onClick={() => this.props.closeUserIssue('901david', 'Flashcard-Fun', '35', token)}
+                />
                 <Button label="Add to Matrix" />
               </CardActions>
             </Card>
@@ -66,4 +58,10 @@ class IssueCard extends Component {
   }
 }
 
-export default IssueCard;
+// export default IssueCard;
+
+export default connect((state, ownProps) => ({
+  closedIssData: state.issue,
+}), (dispatch) => ({
+  closeUserIssue: (userId, repoName, issueNum, token) => dispatch(closeUserIssue(userId, repoName, issueNum, token)),
+}))(IssueCard);
