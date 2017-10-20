@@ -42,6 +42,12 @@
     right: 0;
     margin: auto;
 }
+
+.refreshButt {
+  border: aqua solid 2px;
+  width:50px;
+  margin-top: 5px;
+}
 .loaderText {
   text-align: center;
 }
