@@ -9,9 +9,11 @@ const initalState = {
 
 export default function (state = initalState, action) {
   switch (action.type) {
-    case USER_TOKEN:
+    case USER_TOKEN: {
       return Object.assign({}, state, { loadingUser: true });
+    }
     case USER_TOKEN_SUCCESS: {
+      // console.log("When does this fire off????", action.payload)
       return Object.assign({}, state, { isAuthenticated: true, username: action.payload.username, loadingUser: false });
     }
     case USER_TOKEN_NOT_FOUND: {
@@ -19,6 +21,9 @@ export default function (state = initalState, action) {
     }
     case USER_TOKEN_FAILURE: {
       return Object.assign({}, state, { isAuthenticated: false, loadingUser: false, message: action.payload.message });
+    }
+    case 'GITHUB_TOKEN_SUCCESS': {
+      return Object.assign({}, state, { githubAuthentication: true, github_token: action.payload.token });
     }
     default:
       return { ...state };

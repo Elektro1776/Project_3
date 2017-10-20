@@ -17,9 +17,9 @@ export const checkUserToken = ({ token, access_token }) => {
       },
     })
       .then((user) => {
-        console.info('IS THIS FIRING ?', user);
-        const { token: magicToken, access_token: access_token_magic } = user.data;
-        tokenHelper.setTokens(magicToken, access_token_magic);
+        console.info('CHECK USER TOKEN SUCCESSSSSSSSSS?', user);
+        const { token: magicToken, access_token: access_token_magic, github_token: git_token } = user.data;
+        tokenHelper.setTokens(magicToken, access_token_magic, git_token);
         dispatch(tokenCheckSuccess(user.data));
       })
       .catch((err, other) => {

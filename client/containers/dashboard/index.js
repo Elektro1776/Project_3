@@ -25,16 +25,21 @@ class Dashboard extends Component {
   handleToggle() {
     this.setState({ active: !this.state.active });
   }
-  handleGithubAuth () {
+  handleGithubAuth = () => {
     console.log('send of AUth');
-    // axios.get('/authorize')
-    //   .then((result) => {
-    //     console.info('What is our response', result);
-    //     this.setState({ github_authorized: true });
-    //   }).catch((err) => {
-    //     console.info('Error Huston!', err);
-    //   });
+    fetch('/auth/github')
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(' ARE WE GETTING A RESPONSE?', data);
+        const { url } = JSON.parse(data);
+        console.log(' WHAT IS OUR URL?', typeof url);
+        window.location.assign(url);
+        console.log(' WHAT IS THE WINDOW LOCATION?', window.location);
 
+      })
+      .catch((err) => {
+        console.info("We have an errr huston on github", err);
+      })
   }
   render() {
     return (
@@ -45,7 +50,9 @@ class Dashboard extends Component {
       >
 
         <div className='col-lg-6'>
-          <ModalGitAuth authorized={this.state.github_authorized} authorizeMe = {this.handleGithubAuth} />
+          <ModalGitAuth
+            authorized={this.state.github_authorized}
+            authorizeMe={this.handleGithubAuth} />
           <EventFeed />
         </div>
         <div className='col-lg-6'>

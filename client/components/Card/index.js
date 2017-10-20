@@ -7,7 +7,7 @@ import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
-import token from '../../../gittoke';
+// import token from '../../../gittoke';
 import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 
 class IssueCard extends Component {

@@ -6,14 +6,18 @@ const authRouter = express.Router();
 
 
 authRouter.get('/token', (req, res, next) => {
-  // console.info(' WE HAVE A USER  FROM AUTH ROUTERRRRRR!!!', req.user, res.locals);
+
   if (req.user) {
     const user = req.user;
+    if (req.session.github_token) {
+      console.info(' WE HAVE A USER  FROM AUTH ROUTERRRRRR!!!', req.session);
+      user.github_token = req.session.github_token.access_token;
+    }
     user.token = res.locals.token;
     user.access_token = res.locals.access_token;
+    // console.log(' WHAT IS OUR USER HERE??', user, res.locals);
     res.json(user);
   }
-  // next();
 });
 
 export default authRouter;
