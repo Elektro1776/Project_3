@@ -1,6 +1,6 @@
 import express from 'express';
 import request from 'request';
-import token from '../../../gittoke';
+const token = '7f5251da32735c81d95f9188116996cae5701561';
 
 const githubRouter = express.Router();
 

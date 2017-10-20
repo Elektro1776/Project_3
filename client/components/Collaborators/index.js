@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Chip from './Collab_Chip';
 import styles from './collab.css';
 import { fetchCollaborators } from '../../actions/githubActions/getCollabAction';
-import { token } from '../../../gittoke';
+// import { token } from '../../../gittoke';
 
 class Collaborators extends Component {
   constructor(props) {
