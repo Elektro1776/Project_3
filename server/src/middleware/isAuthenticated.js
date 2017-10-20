@@ -2,7 +2,6 @@ import jsonwebtoken from 'jsonwebtoken';
 let count = 0;
 
 export const isAuthenticated = (req, res, next) => {
-  console.log(' WHAT IS OUR REQ URL AS WE GO', req.session );
   count += 1;
   // check header or url parameters or post parameters for token
   let token = req.headers.authorization;
