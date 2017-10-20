@@ -3,8 +3,10 @@ import ProjLayout from './Layout';
 import ButtonBar from '../../components/ButtonBar/Button_Bar';
 import styles from './project_style.css';
 import CollaboratorsBar from '../../components/Collaborators';
+
 const repoName = 'funRepoCreatedByPostMan';
 import { connect } from 'react-redux';
+
 const currentUser = '901david';
 
 class Projects extends Component {
@@ -29,7 +31,7 @@ class Projects extends Component {
         issuesButt: false,
         readmeButt: false,
         matrixButt: false,
-        codeButt: false
+        codeButt: false,
       });
       keyArray.map((key) => {
         if (key === prop) {
@@ -58,13 +60,14 @@ class Projects extends Component {
       return (
         <div>
           <div className={styles.loaderContainerTwo}>
-          <img className={`center-block ${styles.loaderImageTwo}`} src='./images/uTile_black_loader_100.gif' alt='loader' />
-        </div>
+            <img className={`center-block ${styles.loaderImageTwo}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
+            <h1 className={styles.loaderTextTwo}>Loading...</h1>
+          </div>
         </div>
       );
     }
 }
 
-export default connect((state)=>({
+export default connect((state) => ({
   currentProject: state.repos.currentProject,
 }), null)(Projects);
