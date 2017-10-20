@@ -52,15 +52,21 @@ const routes = [
 ];
 let counter = 0;
 
-function renderApp(url, req) {
+function renderApp(url, req, res) {
   // console.info("We should be rendering the app???", url, window.location)
   const context = {};
   const history = createHistory();
   const initalServerState = {};
   const ssr = () => {
     const store = configureServerStore(history, initalServerState);
+    // if (res.locals.github_token) {
+    //
+    //   store.dispatch({
+    //     type: 'GITHUB_TOKEN_SUCCESS',
+    //     payload: { token: res.locals.github_token.access_token },
+    //   });
+    // }
     if (req.user) {
-      // console.log(' WE HAVE A REQ A USER!', req.user);
       store.dispatch({
         type: 'USER_TOKEN_SUCCESS',
         payload: req.user,
@@ -74,6 +80,7 @@ function renderApp(url, req) {
       </Provider>,
     );
     const initalState = store.getState();
+    // console.log(' WHAT IS THE STORE STATE???', initalState);
     return {
       initalContent,
       initalState,
@@ -94,7 +101,7 @@ export const renderPage = function serveIt(req, res) {
   //   'utf-8'
   // );
   if (match !== null) {
-    return renderApp(match, req);
+    return renderApp(match, req, res);
   }
 };
 export default renderPage;

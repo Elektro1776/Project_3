@@ -7,7 +7,6 @@ import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 import Collapsible from 'react-collapsible';
 import DropdownTrigger from './Dropdown_Card';
-import token from '../../../gittoken';
 import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
 import ModalIssueComment from '../Modal/comment_modal';
