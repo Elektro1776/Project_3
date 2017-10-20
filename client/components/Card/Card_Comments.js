@@ -17,13 +17,13 @@ class CardComments extends Component {
     };
   }
   componentDidMount() {
-    console.log('dat used to fetch comments!!!!!!!!!!!!!!!!!', this.props.repoOwner, this.props.repoName, this.props.issueNumberToGet, token);
+    // console.log('dat used to fetch comments!!!!!!!!!!!!!!!!!', this.props.repoOwner, this.props.repoName, this.props.issueNumberToGet, token);
     this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, this.props.issueNumberToGet, token);
   }
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
     const { issueComments, newComment } = nextProps;
-    console.log(' WHAT IS USER REPOS', issueComments);
+    // console.log(' WHAT IS USER REPOS', issueComments);
     if (issueComments.length !== 0) {
 
       this.setState({ issueComments: issueComments });

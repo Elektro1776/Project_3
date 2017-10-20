@@ -39,7 +39,7 @@ githubRouter.post('/getIssueComments', (req, res) => {
   }, (err, response, body) => {
     console.log(' WHAT IS THE BODY? returned', body);
     if (!err) {
-      return res.status(200).json({ comments: body, err: null });
+      return res.status(200).json({ comment: body, err: null });
     }
     res.status(500).json({ err, repos: null });
   });

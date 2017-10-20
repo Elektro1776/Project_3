@@ -17,7 +17,8 @@ export default function (state = initialState, action) {
     case FETCHING_COMMENTS:
       return Object.assign({}, state, { fetchingComments: true });
     case SUCCESS_GETTING_COMMENTS: {
-      const newComments = [...state, [action.payload.comments]];
+      // const newComments = [...state.issueComments, [action.payload.comment]];
+      const newComments = state.issueComments.concat(action.payload.comment)
       console.log(' WHAT ARE THE NEW COMMENTS FROM REDUCER', newComments );
       return Object.assign({}, state, { issueComments: newComments, fetchedComments: true });
     }
