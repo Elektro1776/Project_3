@@ -13,8 +13,8 @@ export const fetchUserComments = (userId, repoName, issueNum, token) => (dispatc
     body: JSON.stringify({ id: userId, repoName, num: issueNum, token }),
   })
     .then((response) => response.json())
-    .then((comments) => {
-      dispatch(receivedComments(comments));
+    .then((comment) => {
+      dispatch(receivedComments(comment));
     })
     .catch((err) => {
       // console.info(' WHAT IS OUR ERR RESPONSE', err.response);
@@ -25,9 +25,9 @@ const fetchingComments = () => ({
   type: FETCHING_COMMENTS,
 });
 
-const receivedComments = (comments) => ({
+const receivedComments = (comment) => ({
   type: SUCCESS_GETTING_COMMENTS,
-  payload: comments,
+  payload: comment,
 });
 
 const failedFetchComments = (err) => ({
