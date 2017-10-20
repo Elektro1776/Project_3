@@ -5,7 +5,6 @@ export const FAILURE_ADD_COMMENT = 'FAILURE_ADD_COMMENT';
 
 
 export const addUserComment = (userName, repoName, issueNum, body, token) => (dispatch) => {
-  // console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
   dispatch(addComment());
   return fetch('api/github/createIssueComment', {
     method: 'POST',
@@ -15,8 +14,8 @@ export const addUserComment = (userName, repoName, issueNum, body, token) => (di
     body: JSON.stringify({ id: userName, repoName, issueNum, comment: body, token })
   })
     .then((response) => response.json())
-    .then((issue) => {
-      dispatch(receivedNewComment(comment));
+    .then((comment) => {
+      dispatch(receivedNewComment(comment, issueNum));
     })
     .catch((err) => {
       // console.info(' WHAT IS OUR ERR RESPONSE', err.response);
@@ -27,9 +26,9 @@ const addComment = () => ({
   type: ADDING_COMMENT,
 });
 
-const receivedNewComment = (comment) => ({
+const receivedNewComment = (comment, issueNum) => ({
   type: RECEIVED_COMMENT,
-  payload: comment,
+  payload: { comment, issueNum },
 });
 
 const failedAddComment = (err) => ({

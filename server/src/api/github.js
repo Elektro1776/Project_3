@@ -170,19 +170,22 @@ githubRouter.post('/getCollaborators', (req, res) => {
 
 // Create comment on issue
 githubRouter.post('/createIssueComment', (req, res) => {
-  console.log('HITTING CREATE ISUE COMMENT ROUTER');
-  // request({
-  //   headers: {
-  //     Accept: 'application/vnd.github.v3.full+json',
-  //     'User-Agent': 'request',
-  //   },
-  //   method: 'POST',
-  //   json: true,
-  //   url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues/${req.body.number}/comments?access_token=${req.user.github.token}`,
-  //   body: { body: req.body.body },
-  // }, (err, response, body) => {
-  //   console.log(' WHAT IS THE BODY?', body);
-  // });
+  console.log('HITTING CREATE ISUE COMMENT ROUTER', req.body);
+  request({
+    headers: {
+      Accept: 'application/vnd.github.v3.full+json',
+      'User-Agent': 'request',
+    },
+    method: 'POST',
+    json: true,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.issueNum}/comments?access_token=${req.body.token}`,
+    body: { body: req.body.comment },
+  }, (err, response, body) => {
+    console.log(' WHAT IS THE BODY?', body);
+    if(!err) {
+      return res.status(200).json({ newComment: body, err: null });
+    }
+  });
 });
 
 // Close an issue

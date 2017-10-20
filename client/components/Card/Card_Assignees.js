@@ -4,7 +4,7 @@ import styles from './cardAssignees.css';
 
 const CardAssignees = (props) => {
   if (props.assigneesData[props.indexValue].length === 0) {
-    return <div>None Currently</div>;
+    return <div style={{'marginLeft': 15}}>None Currently</div>;
   }
   return (
     <div className={styles.mainCont} >
