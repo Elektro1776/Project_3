@@ -56,8 +56,12 @@ class Projects extends Component {
         );
       }
       return (
-        <div>Loading....</div>
-      )
+        <div>
+          <div className={styles.loaderContainerTwo}>
+          <img className={`center-block ${styles.loaderImageTwo}`} src='./images/uTile_black_loader_100.gif' alt='loader' />
+        </div>
+        </div>
+      );
     }
 }
 

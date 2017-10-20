@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import EventGenerator from './Event_Generator';
 import { fetchUserEvents } from '../../actions/githubActions/getEventAction';
 import token from '../../../gittoken';
+import styles from './card_styles.css';
 
 class EventFeed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      events: [],
+      events: null,
     };
   }
   componentDidMount() {
@@ -23,11 +24,19 @@ class EventFeed extends Component {
     }
   }
   render() {
-    console.log('what is our event state', this.state);
-    return (
+    if (this.state.events !== null) {
+      return (
         <div>
           <EventGenerator eventData={this.state.events} />
         </div>
+      );
+    }
+    return (
+      <div>
+        <div className={styles.loaderContainer}>
+          <img className={`center-block ${styles.loaderImage}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
+        </div>
+      </div>
     );
   }
 }
