@@ -23,7 +23,7 @@ class CardComments extends Component {
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
     const { issueComments, newComment } = nextProps;
-    // console.log(' WHAT IS USER REPOS', userRepos);
+    console.log(' WHAT IS USER REPOS', issueComments);
     if (issueComments.length !== 0) {
 
       this.setState({ issueComments: issueComments });
@@ -38,7 +38,8 @@ class CardComments extends Component {
     return (
       <div>
         <ModalIssueComment handleClick={this.props.handleClick} handleClose={this.props.handleClose} state={this.props.state} handleAddComment={this.props.addUserComment} />
-        { this.state.issueComments.map((comment, i) => (
+
+        {/* { this.state.issueComments.map((comment, i) => (
           <div key={comment.id}>
             <CardText>
               <h6 className={styles.byWho}>{ `Comment by ${comment.user.login}${convertDate(comment.created_at)}` }</h6>
@@ -48,7 +49,7 @@ class CardComments extends Component {
         ),
 
         )
-        }
+        } */}
       </div>
     );
   }

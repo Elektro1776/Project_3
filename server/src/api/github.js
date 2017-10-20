@@ -37,7 +37,7 @@ githubRouter.post('/getIssueComments', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.num}/comments?access_token=${req.body.token}`,
   }, (err, response, body) => {
-    // console.log(' WHAT IS THE BODY?', body);
+    console.log(' WHAT IS THE BODY? returned', body);
     if (!err) {
       return res.status(200).json({ comments: body, err: null });
     }

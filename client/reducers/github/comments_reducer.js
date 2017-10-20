@@ -16,17 +16,18 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case FETCHING_COMMENTS:
       return Object.assign({}, state, { fetchingComments: true });
-    case SUCCESS_GETTING_COMMENTS:{
-      // console.info('What are the reducers Comments', action.payload, )
-      return Object.assign({}, state, { issueComments: state.issueComments.push(action.payload.comments), fetchedComments: true });
+    case SUCCESS_GETTING_COMMENTS: {
+      const newComments = [...state, [action.payload.comments]];
+      console.log(' WHAT ARE THE NEW COMMENTS FROM REDUCER', newComments );
+      return Object.assign({}, state, { issueComments: newComments, fetchedComments: true });
     }
-    case FAILURE_GETTING_COMMENTS:{
+    case FAILURE_GETTING_COMMENTS: {
       return Object.assign({}, state, { errorMessage: action.payload.err });
     }
-      case ADDING_COMMENT:{
+      case ADDING_COMMENT: {
         return Object.assign({}, state, { fetchingComments: true });
       }
-      case RECEIVED_COMMENT:{
+      case RECEIVED_COMMENT: {
         // console.info('What are the reducers Comments', action.payload, )
         // const newState = state.issueComments.push(action.payload.comment);
         // return Object.assign({}, state, { newComment: comment issueComments: newState, fetchedNewComment: true });

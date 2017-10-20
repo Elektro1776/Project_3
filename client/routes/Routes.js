@@ -14,7 +14,7 @@ import AltFooter from '../components/AltFooter'
 const PrivateRoute = ({ component: Component, ...rest }) => {
   const { Dashboard } = RouteMap;
   const { path, exact, authorized } = { ...rest };
-  console.log(' IS THIS FIRNG?', {...rest});
+  // console.log(' IS THIS FIRNG?', {...rest});
   return (
     <Route
       exact
