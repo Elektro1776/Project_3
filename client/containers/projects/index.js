@@ -51,8 +51,8 @@ class Projects extends Component {
         );
       }
       return (
-        <div className={styles.loaderDiv}>
-          <img src='https://raw.githubusercontent.com/Elektro1776/Project_3/development/client/components/Card/uTile_black_loader_50.gif' alt='loader' className={styles.loaderImage} />
+        <div>
+          <h1>LOADING.........</h1>
         </div>
       );
     }
