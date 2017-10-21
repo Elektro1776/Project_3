@@ -11,6 +11,7 @@ import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
 import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
+import token from '../../../gittoken';
 
 class IssueCard extends Component {
   state = {
@@ -108,7 +109,12 @@ class IssueCard extends Component {
      );
    }
    return (
-     <div>Loading you shizzzz</div>
+     <div>
+       <div className={styles.loaderContainerThree}>
+         <img className={`center-block ${styles.loaderImageThree}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
+         <h1 className={styles.loaderTextThree} style={{color:'white'}}>Loading...</h1>
+       </div>
+     </div>
    );
  }
 }

@@ -5,7 +5,6 @@ import axios from 'axios';
 // import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import EventFeed from '../../components/EventFeed';
-import Chat from '../chat';
 import ModalGitAuth from '../../components/Modal';
 
 class Dashboard extends Component {
@@ -49,15 +48,12 @@ class Dashboard extends Component {
         style={{ backgroundColor: 'black' }}
       >
 
-        <div className='col-lg-6'>
+        <div className='col-lg-12'>
           <ModalGitAuth
             authorized={this.state.github_authorized}
             authorizeMe={this.handleGithubAuth} />
           <EventFeed />
         </div>
-        <div className='col-lg-6'>
-          <Chat />
-      </div>
       </div>
     );
   }
