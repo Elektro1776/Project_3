@@ -20,7 +20,7 @@ class ProjLayout extends Component {
   }
   componentDidMount() {
     // console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.git_profile, this.props.git_token);
-    this.props.fetchUserReadme(this.props.git_profile.login, this.props.repoName, this.props.git_token);
+    this.props.fetchUserReadme(this.props.currentUser, this.props.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.props.git_profile.login, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
