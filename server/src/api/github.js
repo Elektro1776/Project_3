@@ -3,11 +3,26 @@ import request from 'request';
 
 
 const githubRouter = express.Router();
-
+githubRouter.post('/user_profile', (req, res) => {
+  const { token } = req.body
+  request(`https://api.github.com/user?access_token=${token}`, {
+    method: 'GET',
+    headers: {
+      'User-Agent': 'uTileDevs',
+    },
+  }, (err, response, body) => {
+    const { login, id } = JSON.parse(body);
+    const profile = Object.assign({}, { login, id });
+    req.session.git_profile = profile;
+    // next();
+    // res.redirect(301, '/');
+    const userProfile = JSON.parse(body);
+    res.status(200).json(userProfile);
+  });
+})
 // Get repos for a user
 githubRouter.post('/getRepos', (req, res) => {
   //  console.log(req.body);
-  // console.log(' SUCCESS POST TO GET REPOS GIT ROUTER', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -27,7 +42,6 @@ githubRouter.post('/getRepos', (req, res) => {
 
 // Get comments from a specific issue
 githubRouter.post('/getIssueComments', (req, res) => {
-   console.log("We are getting successful hit on gitrouter comments", req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -37,7 +51,6 @@ githubRouter.post('/getIssueComments', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.num}/comments?access_token=${req.body.token}`,
   }, (err, response, body) => {
-    console.log(' WHAT IS THE BODY? returned', body);
     if (!err) {
       return res.status(200).json({ comment: body, err: null });
     }
@@ -47,7 +60,7 @@ githubRouter.post('/getIssueComments', (req, res) => {
 
 // Get Collaborators
 githubRouter.post('/getCollaborators', (req, res) => {
-  //  console.log(req.body, 'hitting Collab GitRouter');
+   console.log(req.body, 'hitting Collab GitRouter', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -57,7 +70,7 @@ githubRouter.post('/getCollaborators', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/collaborators?access_token=${req.body.token}`,
   }, (err, response, body) => {
-    // console.log(' WHAT IS THE BODY?', body);
+    console.log(' WHAT IS THE BODY?', body);
     if (!err) {
       return res.status(200).json({ collabs: body, err: null });
     }
@@ -170,7 +183,7 @@ githubRouter.post('/getCollaborators', (req, res) => {
 
 // Create comment on issue
 githubRouter.post('/createIssueComment', (req, res) => {
-  console.log('HITTING CREATE ISUE COMMENT ROUTER', req.body);
+  console.log(' WHAT IS OUR REQ BODY ON CREATE ISSUE COMMENT', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -190,7 +203,7 @@ githubRouter.post('/createIssueComment', (req, res) => {
 
 // Close an issue
 githubRouter.post('/closeIssue', (req, res) => {
-  console.log('WHAT IS OUR ISSUE CLOSE BODY', req.body);
+  console.log(' TRYING TO CLOSE AN ISSSUEEE', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -203,7 +216,7 @@ githubRouter.post('/closeIssue', (req, res) => {
       state: 'closed',
     },
   }, (err, response, body) => {
-    console.log(' WHAT IS THE BODY?', body);
+    console.log(' WHAT IS GOING OIN IN CLOSE ISSUE BODY?', body);
     if(!err) {
       return res.status(200).json({ closedIssue: body, err: null });
     }

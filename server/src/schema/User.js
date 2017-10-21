@@ -12,6 +12,10 @@ const User = new Schema({
     type: 'String',
     minlength,
   },
+  git_profile: {
+    login: 'String',
+    id: 'String',
+  },
 });
 
 // User.plugin();

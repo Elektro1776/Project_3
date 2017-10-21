@@ -30,12 +30,11 @@ githubAuthRouter.get('/auth/github', (req, res, next) => {
 
   // res.redirect(`https://github.com/login/oauth/authorize?scope=user:email&client_id=${client_id}`)
   // next()
-  res.json(JSON.stringify({ url: `https://github.com/login/oauth/authorize?scope=user:email&client_id=${client_id}` }))
+  res.json(JSON.stringify({ url: `https://github.com/login/oauth/authorize?client_id=${client_id}&scope=repo&user` }))
   // request(`https://github.com/login/oauth/authorize?scope=user:email&client_id=${client_id}`);
 });
 
 githubAuthRouter.get('/auth/github/callback', (req, res, next) => {
-  // console.log(' WHAT ARE THE KEYS ON THE REQ NOW ???', req.query);
   const oauth = {
     client_id,
     client_secret
@@ -49,12 +48,11 @@ githubAuthRouter.get('/auth/github/callback', (req, res, next) => {
       // Authorization: `Bearer ${secrets}`,
     },
   }, (err, response, body) => {
-    // console.log(' DO WE GET ANYTHING???????:::::::::', response.statusMessage);
     // console.log('ERRRRR', err);
     // console.log('RESPONSEEEE', Object.keys(response));
     // console.log('BODYYYYYY', qs.parse(body));
     // const what = body;
-    // console.log(' WHAT IS THE BODY??', body.toJSON());
+    console.log(' WHAT IS THE BODY??', body);
 
     // console.log(' DO WE HAVE A REQ USER HER????', req.user);
     // res.locals.github_token = body
@@ -62,9 +60,21 @@ githubAuthRouter.get('/auth/github/callback', (req, res, next) => {
     // next();
     access_token = qs.parse(body);
     req.session.github_token = access_token;
+
+    request(`https://api.github.com/user?access_token=${access_token.access_token}`, {
+      method: 'GET',
+      headers: {
+        'User-Agent': 'uTileDevs',
+      },
+    }, (err, response, body) => {
+      const { login, id } = JSON.parse(body);
+      const profile = Object.assign({}, { login, id });
+      req.session.git_profile = profile;
+      // next();
+      console.log(' DO WE HAVE A REQ USER HERE ???', req.user);
+      res.redirect(301, '/');
+    });
     // res.sendStatus(200);
-    next();
-    res.redirect(301, '/');
   });
 });
 

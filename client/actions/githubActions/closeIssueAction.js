@@ -5,7 +5,7 @@ export const FAILURE_CLOSING_ISSUE = 'FAILURE_CLOSING_ISSUE';
 
 
 export const closeUserIssue = (userName, repoName, issueNum, token) => (dispatch) => {
-  // console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
+  console.log(' WHAT IS OUR stuff to send TO SEND?', userName, repoName, issueNum, token);
   dispatch(closeIssue());
   return fetch('api/github/closeIssue', {
     method: 'POST',
@@ -16,6 +16,7 @@ export const closeUserIssue = (userName, repoName, issueNum, token) => (dispatch
   })
     .then((response) => response.json())
     .then((issue) => {
+      console.log(' Do we get a payload back?????', issue);
       dispatch(receivedClosedIssue(issue));
     })
     .catch((err) => {

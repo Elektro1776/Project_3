@@ -31,10 +31,11 @@ const ConnectedAppContainer = connect(null, (dispatch) => (
     loadUserFromToken: () => {
       const token = localStorage.getItem('jwt_token');
       const access_token = localStorage.getItem('access_token');
+      const github_token = localStorage.getItem('github_token');
       if (!token || token === '') {
         return dispatch(userTokenNotFound());
       }
-      dispatch(checkUserToken({ token, access_token }));
+      dispatch(checkUserToken({ token, access_token, github_token }));
     },
   }))(AppContainer);
 export default ConnectedAppContainer;

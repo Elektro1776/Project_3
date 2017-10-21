@@ -31,6 +31,7 @@ signupRouter.post('/', (req, res) => {
               expiresIn: '1m', // expires in 1 day
             });
             console.info(' WE GOT A TOKEN!', token);
+            req.session.user = username;
             res.json({
               username,
               email,

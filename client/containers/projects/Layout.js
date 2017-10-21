@@ -7,7 +7,6 @@ import CodeEditorParent from '../../components/CodeEditor';
 import { fetchUserIssues } from '../../actions/githubActions/getIssuesAction';
 import { fetchUserReadme } from '../../actions/githubActions/getReadmeAction';
 import Matrix from '../../components/Matrix/Matrix';
-import token from '../../../gittoken';
 
 class ProjLayout extends Component {
   constructor(props) {
@@ -20,23 +19,23 @@ class ProjLayout extends Component {
     };
   }
   componentDidMount() {
-    console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.currentUser, this.props.repoName);
-    this.props.fetchUserReadme(this.props.currentUser, this.props.repoName, token);
-    this.props.fetchUserIssues(this.props.currentUser, this.props.repoName, token);
+    // console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.git_profile, this.props.git_token);
+    this.props.fetchUserReadme(this.props.git_profile.login, this.props.repoName, this.props.git_token);
+    this.props.fetchUserIssues(this.props.git_profile.login, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
-    const { userIssues, readme, repoName, currentUser } = nextProps;
-    console.log(' WHAT ARE THE NEXT PROPS/??', repoName);
+    const { userIssues, readme, repoName, git_profile } = nextProps;
+    console.log(' WHAT ARE THE NEXT PROPS/??', git_profile);
     // this.setState({ issues: userIssues });
     if (readme.length !== 0) {
       // console.log(' IS THIS README CHECK FIRING ?????');
-      this.setState({ readme, repoName, currentUser });
+      this.setState({ readme, repoName, currentUser: git_profile.login });
     }
     if (repoName) {
       if (repoName !== this.props.repoName) {
         console.log(' FIRING FETCH README!!!!!!::::::::::');
-        this.props.fetchUserReadme(currentUser, repoName, token);
-        this.props.fetchUserIssues(currentUser, repoName, token);
+        this.props.fetchUserReadme(git_profile.login, repoName, this.props.git_token);
+        this.props.fetchUserIssues(git_profile.login, repoName, this.props.git_token);
       }
     }
     if (readme !== null) {
@@ -63,7 +62,7 @@ class ProjLayout extends Component {
       case 'issuesButt':
         return (
           <div>
-            <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.props.currentUser} />
+            <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.props.git_profile.login} />
           </div>
         );
       case 'matrixButt':
@@ -88,7 +87,6 @@ class ProjLayout extends Component {
   }
   render() {
     // console.log('what is my state of my layout', this.props.currentScreen);
-    console.log(' WHAT is my state????????', this.state);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
@@ -101,6 +99,8 @@ class ProjLayout extends Component {
 export default connect((state, ownProps) => ({
   userIssues: state.issues.repoIssues,
   readme: state.readme.readme,
+  git_profile: state.auth.git_profile,
+  git_token: state.auth.github_token,
 }), (dispatch) => ({
   fetchUserIssues: (userId, repoName, token) => dispatch(fetchUserIssues(userId, repoName, token)),
   fetchUserReadme: (userId, repoName, token) => dispatch(fetchUserReadme(userId, repoName, token)),
