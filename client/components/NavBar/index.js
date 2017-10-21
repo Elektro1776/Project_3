@@ -26,7 +26,7 @@ class PrivateNavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      acitve: false,
+      active: false,
     };
     this.handleDrawerToggle = this.handleDrawerToggle.bind(this);
   }

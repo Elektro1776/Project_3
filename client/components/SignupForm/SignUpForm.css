@@ -40,3 +40,8 @@ background-color: black;
   margin: auto;
 
 }
+
+a:hover {
+  color: aqua;
+  text-decoration: none;
+}
