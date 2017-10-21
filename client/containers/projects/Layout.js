@@ -86,7 +86,6 @@ class ProjLayout extends Component {
     }
   }
   render() {
-    // console.log('what is my state of my layout', this.props.currentScreen);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
