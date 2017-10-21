@@ -15,6 +15,11 @@ const initialState = {
 function updateItemInObj(old, newObj) {
   return Object.assign({}, old, newObj);
 }
+function updateSpecificCommentArray(old, newArray, key) {
+  const updatedArray= old[key].concat(newArray);
+  console.log(updatedArray);
+  return updatedArray;
+}
 export default function (state = initialState, action) {
   switch (action.type) {
     case FETCHING_COMMENTS:
@@ -37,13 +42,17 @@ export default function (state = initialState, action) {
     }
     case RECEIVED_COMMENT: {
       const { comment, issueNum } = action.payload;
-      console.log(comment.newComment, 'comment in reducer');
-      const updatedObj = updateItemInObj(state.issueComments, { [issueNum]: comment.newComment });
-      const finalIssues = updateItemInObj(state, { issueComments: updatedObj, fetchedNewComment: true, newComment: comment });
-      // console.log('test object &&&&&&&&', updatedObj);
-      // console.log(' WHAT IS OUR FINAL OBJ', finalIssues);
-      // console.log(' WHAT IS STATE AS WE GO???', state);
-      return finalIssues;
+      console.log('this is previous state', state, 'issue number to change', issueNum);
+      const updatedObj = updateSpecificCommentArray(state.issueComments, comment.newComment, issueNum);
+      console.log('WAZAAAAAAAAAAAAAAAAAM', updatedObj);
+      const prevState = state.issueComments;
+      console.log('KEY VALUE TO PASS', { [issueNum]: updatedObj });
+      Object.assign({}, prevState[issueNum], { [issueNum]: updatedObj });
+      console.log('FINALLLL STATE REDUCER', prevState);
+      // const finalComments = updateItemInObj(state, updatedObj);
+      // console.log('THIS SHOULD BE NEW STATE', finalComments);
+      // const finalComments = updateItemInObj(state, { issueComments: updatedObj, fetchedNewComment: true, newComment: comment });
+      // return finalComments;
     }
     case FAILURE_ADD_COMMENT: {
       return Object.assign({}, state, { errorCommMessage: action.payload.err });

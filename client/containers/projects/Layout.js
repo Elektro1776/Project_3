@@ -20,13 +20,12 @@ class ProjLayout extends Component {
     };
   }
   componentDidMount() {
-    console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.currentUser, this.props.repoName);
     this.props.fetchUserReadme(this.props.currentUser, this.props.repoName, token);
     this.props.fetchUserIssues(this.props.currentUser, this.props.repoName, token);
   }
   componentWillReceiveProps(nextProps) {
     const { userIssues, readme, repoName, currentUser } = nextProps;
-    console.log(' WHAT ARE THE NEXT PROPS/??', repoName);
+    // console.log(' WHAT ARE THE NEXT PROPS/??', repoName);
     // this.setState({ issues: userIssues });
     if (readme.length !== 0) {
       // console.log(' IS THIS README CHECK FIRING ?????');
@@ -34,7 +33,7 @@ class ProjLayout extends Component {
     }
     if (repoName) {
       if (repoName !== this.props.repoName) {
-        console.log(' FIRING FETCH README!!!!!!::::::::::');
+        // console.log(' FIRING FETCH README!!!!!!::::::::::');
         this.props.fetchUserReadme(currentUser, repoName, token);
         this.props.fetchUserIssues(currentUser, repoName, token);
       }
@@ -88,7 +87,7 @@ class ProjLayout extends Component {
   }
   render() {
     // console.log('what is my state of my layout', this.props.currentScreen);
-    console.log(' WHAT is my state????????', this.state);
+    // console.log(' WHAT is my state????????', this.state);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}

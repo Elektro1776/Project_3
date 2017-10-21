@@ -35,7 +35,7 @@ class Projects extends Component {
     }
     render() {
       const { currentProject } = this.state;
-      console.log(currentProject, 'currne tproj');
+      // console.log(currentProject, 'currne tproj');
       if (currentProject !== null) {
         return (
           <div>

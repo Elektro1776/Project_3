@@ -23,7 +23,7 @@ class RepoDrawer extends Component {
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
     const { userRepos, currentProject } = nextProps;
-    console.log(' WHAT IS USER cuurent proj from drawer', currentProject);
+    // console.log(' WHAT IS USER cuurent proj from drawer', currentProject);
     if (userRepos.length !== 0) {
       this.setState({ repos: userRepos, currentProject });
     }

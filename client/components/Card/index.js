@@ -62,7 +62,7 @@ class IssueCard extends Component {
    return true;
  }
  render() {
-   console.log(this.state.currentIssueNumber, 'MY CURRENT ISSUE IN REDNER&*&*^*&&*^*&^*&^');
+  //  console.log(this.state.issueComments, 'my state of issue comments');
    const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
    const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
    if (issuesLoaded && commentsLoaded) {
