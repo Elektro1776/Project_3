@@ -39,10 +39,9 @@ class Projects extends Component {
     }
     render() {
       const { currentProject } = this.state;
-      console.log(currentProject, 'RENDERING CURRENT PROJECT ', this.props.currentProject);
       if (currentProject !== null) {
         return (
-          <div>
+          <div style={{backgroundColor: 'white'}}>
             <div>
               <CollaboratorsBar repoName={currentProject.name} currentUser={currentProject.owner.login} />
             </div>

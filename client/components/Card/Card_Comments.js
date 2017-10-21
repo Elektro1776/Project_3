@@ -8,7 +8,7 @@ class CardComments extends Component {
     return (
       <div>
         {this.props.issueComments.map((comment, i) => {
-          console.log('WHAT IS OUR COMMENT IN MAP??', comment);
+          // console.log('WHAT IS OUR COMMENT IN MAP??', comment);
           return (
             <div key={comment.id}>
               <CardText>
