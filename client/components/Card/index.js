@@ -51,6 +51,7 @@ class IssueCard extends Component {
     console.log('HERE AR ENEW CMMENT PARAMS', this.props.repoOwner, this.props.repoName, issueNum, this.state.newCommentText, token);
     this.props.addUserComment(this.props.repoOwner, this.props.repoName, issueNum, this.state.newCommentText, token);
     this.handleClose();
+    this.setState({ newCommentText: '' });
   }
  handleClick = (currIssNum) => this.setState({ isShowingModal: true, currentIssueNumber: currIssNum })
  handleClose = () => this.setState({ isShowingModal: false })
