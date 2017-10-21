@@ -3,7 +3,7 @@ export const SUCCESS_GETTING_README = 'SUCCESS_GETTING_README';
 export const FAILURE_GETTING_README = 'FAILURE_GETTING_README';
 
 export const fetchUserReadme = (userId, repoName, token) => (dispatch) => {
-  // console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
+  // console.log(' WHAT IS OUR stuff to send TO SEND for READ MEEEE?', userId, repoName, token);
   dispatch(fetchingReadme());
   return fetch('/api/github/readme', {
     method: 'POST',

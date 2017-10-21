@@ -8,7 +8,7 @@ import Routes from '../routes/Routes';
 const ConnectedContainer = ({ history }) => (
   <ConnectedRouter history={history} >
     <Route render={({ location }) => {
-      console.log(' WHAT IS OUR LOCATION', location);
+      // console.log(' WHAT IS OUR LOCATION', location);
       return (
       <Routes location={location} />
     )}}

@@ -16,10 +16,7 @@ class AppContainer extends Component {
   }
   render() {
     return (
-      <div style={{minHeight: '100%',
-        display: "grid",
-        margin: 0,
-        gridTemplateRows: "1fr auto",}}>
+      <div style={{backgroundColor: "black", height: '100%'}}>
         {this.props.children}
       </div>
     );
@@ -34,10 +31,11 @@ const ConnectedAppContainer = connect(null, (dispatch) => (
     loadUserFromToken: () => {
       const token = localStorage.getItem('jwt_token');
       const access_token = localStorage.getItem('access_token');
+      const github_token = localStorage.getItem('github_token');
       if (!token || token === '') {
         return dispatch(userTokenNotFound());
       }
-      dispatch(checkUserToken({ token, access_token }));
+      dispatch(checkUserToken({ token, access_token, github_token }));
     },
   }))(AppContainer);
 export default ConnectedAppContainer;

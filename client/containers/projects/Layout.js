@@ -7,82 +7,89 @@ import CodeEditorParent from '../../components/CodeEditor';
 import { fetchUserIssues } from '../../actions/githubActions/getIssuesAction';
 import { fetchUserReadme } from '../../actions/githubActions/getReadmeAction';
 import Matrix from '../../components/Matrix/Matrix';
-import token from '../../../gittoken';
 
 class ProjLayout extends Component {
   constructor(props) {
     super(props);
     this.state = {
       issues: [],
-      readme: [],
+      readme: null,
       repoName: '',
       currentUser: '',
     };
   }
   componentDidMount() {
-    // console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.state);
-    this.props.fetchUserReadme(this.props.currentUser, this.props.repoName, token);
-    this.props.fetchUserIssues(this.props.currentUser, this.props.repoName, token);
+    // console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.git_profile, this.props.git_token);
+    this.props.fetchUserReadme(this.props.git_profile.login, this.props.repoName, this.props.git_token);
+    this.props.fetchUserIssues(this.props.git_profile.login, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
-    const { userIssues, readme, repoName, currentUser } = nextProps;
-    // console.info(' WHAT ARE THE NEXT PROPS,', repoName);
-    console.log('Do we ever get a read me ???????:::::', readme);
-    // console.log(' WHAT IS USER REPOS', userRepos);
-    if (userIssues.length !== 0 && userIssues.length !== this.props.userIssues.length) {
-      // console.log(' RE SET STATE:::::', userIssues.length);
-      // this.setState({ issues: userIssues });
-        this.setState({ issues: userIssues });
-    }
+    const { userIssues, readme, repoName, git_profile } = nextProps;
+    console.log(' WHAT ARE THE NEXT PROPS/??', git_profile);
+    // this.setState({ issues: userIssues });
     if (readme.length !== 0) {
-      this.setState({ readme, repoName, currentUser });
+      // console.log(' IS THIS README CHECK FIRING ?????');
+      this.setState({ readme, repoName, currentUser: git_profile.login });
     }
     if (repoName) {
       if (repoName !== this.props.repoName) {
         console.log(' FIRING FETCH README!!!!!!::::::::::');
-        this.props.fetchUserReadme(currentUser, repoName, token);
-        this.props.fetchUserIssues(currentUser, repoName, token);
+        this.props.fetchUserReadme(git_profile.login, repoName, this.props.git_token);
+        this.props.fetchUserIssues(git_profile.login, repoName, this.props.git_token);
       }
     }
-  }
-  whatStateToUse = (state) => {
-    if (state.issuesButt === true) {
-      return (
-        <div>
-          <IssueCard issues={this.state.issues} />
-        </div>
-      );
-    } else if (state.readmeButt === true) {
-      return (
-        <div>
-          <ReadMe repoName={this.state.repoName} userName={this.state.currentUser} readme={this.state.readme} />
-        </div>
-      );
-    } else if (state.matrixButt === true) {
-      return (
-        <div>
-          <Matrix />
-        </div>
-      );
-    } else if (state.codeButt === true) {
-      return (
-        <div>
-          <CodeEditorParent />
-        </div>
-      );
+    if (readme !== null) {
+      // console.log(' WE SHOULD BE SETTING THE READ ME');
+      // this.setState({ readme });
     }
-
-    return (
-      <div>
-            Houston....We have a problem.
-      </div>
-    );
+    if (userIssues !== null) {
+      // console.log(' WHAT IS OUR READ ME ?????', readme);
+      this.setState({ issues: userIssues, readme });
+    }
+  }
+  whatStateToUse = (screen) => {
+    switch (screen) {
+      case 'readmeButt':
+        return (
+          <div>
+            <ReadMe
+              repoName={this.state.repoName}
+              userName={this.state.currentUser}
+              readme={this.state.readme === null ? '' : this.state.readme}
+            />
+          </div>
+        );
+      case 'issuesButt':
+        return (
+          <div>
+            <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.props.git_profile.login} />
+          </div>
+        );
+      case 'matrixButt':
+        return (
+          <div>
+            <Matrix />
+          </div>
+        );
+      case 'codeButt':
+        return (
+          <div>
+            <CodeEditorParent />
+          </div>
+        );
+      default:
+        return (
+          <div>
+              Houston....We have a problem.
+          </div>
+        );
+    }
   }
   render() {
-    // console.log('what is my state of my layout', this.state);
+    // console.log('what is my state of my layout', this.props.currentScreen);
     return (
       <div className={styles.layout}>
-        {this.whatStateToUse(this.props.state)}
+        {this.whatStateToUse(this.props.currentScreen)}
       </div>
     );
   }
@@ -92,7 +99,9 @@ class ProjLayout extends Component {
 export default connect((state, ownProps) => ({
   userIssues: state.issues.repoIssues,
   readme: state.readme.readme,
+  git_profile: state.auth.git_profile,
+  git_token: state.auth.github_token,
 }), (dispatch) => ({
   fetchUserIssues: (userId, repoName, token) => dispatch(fetchUserIssues(userId, repoName, token)),
-  fetchUserReadme: (userId, repoName, token) =>  dispatch(fetchUserReadme(userId, repoName, token)),
+  fetchUserReadme: (userId, repoName, token) => dispatch(fetchUserReadme(userId, repoName, token)),
 }))(ProjLayout);

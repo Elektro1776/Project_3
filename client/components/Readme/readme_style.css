@@ -1,7 +1,9 @@
+
 .readmeBox {
   width:100%;
   overflow: hidden;
   display: flex;
+  background-color: white;
 }
 .readmeBox img {
   width:50%;

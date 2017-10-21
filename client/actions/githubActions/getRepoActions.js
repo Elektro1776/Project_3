@@ -4,7 +4,7 @@ export const SUCCESS_GETTING_REPOS = 'SUCCESS_GETTING_REPOS';
 export const FAILURE_GETTING_REPOS = 'FAILURE_GETTING_REPOS';
 
 export const fetchUserRepos = (userId, token) => (dispatch) => {
-  // console.log(' WHAT IS OUR USER ID TO SEND?', userId);
+  console.log(' WHAT IS OUR USER ID TO SEND?', userId, token);
   dispatch(fetchingRepos());
   return fetch('/api/github/getRepos', {
     method: 'POST',

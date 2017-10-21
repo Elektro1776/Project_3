@@ -20,7 +20,7 @@ render() {
           <ModalDialog onClose={this.handleClose}>
             <h1 className={styles.modalText}>Github Authorization</h1>
             <p className={styles.modalText}>To get the full uTile experience you need to authorize us on GitHub.</p>
-            <a href="https://github.com/login/oauth/authorize?scope=user:email&client_id=2844a39a5f2a7df1d0cb">
+            <a href="https://github.com/login/oauth/authorize?client_id=2844a39a5f2a7df1d0cb&scope=repo&user">
               <button
                 className="btn btn-lg btn-success"
                 type="reset"

@@ -3,7 +3,6 @@ export const SUCCESS_GETTING_COLLABORATORS = 'SUCCESS_GETTING_COLLABORATORS';
 export const FAILURE_GETTING_COLLABORATORS = 'FAILURE_GETTING_COLLABORATORS';
 
 export const fetchCollaborators = (userId, repoName, token) => (dispatch) => {
-  // console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
   dispatch(fetchingCollaborators());
   return fetch('/api/github/getCollaborators', {
     method: 'POST',

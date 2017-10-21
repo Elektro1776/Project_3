@@ -6,7 +6,6 @@ import styles from '../NavBar/NavBar.css';
 // import repoData from './repodata';
 import { fetchUserRepos } from '../../actions/githubActions/getRepoActions';
 import { loadCurrentProject } from '../../actions/githubActions/goToProjectAction';
-import token from '../../../gittoken';
 
 class RepoDrawer extends Component {
   constructor(props) {
@@ -18,12 +17,19 @@ class RepoDrawer extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchUserRepos('901david', token);
+    if (this.props.git_profile.login) {
+      const { login } = this.props.git_profile;
+      this.props.fetchUserRepos(login, this.props.git_token);
+
+    }
+    console.log(' WHAT IS OUR LOGIN AND TOKEN ON MOUNT OF DRAWER???', this.props.git_profile, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
-    // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
-    const { userRepos, currentProject } = nextProps;
-    console.log(' WHAT IS USER cuurent proj from drawer', currentProject);
+    if (nextProps.git_profile.login && (nextProps.git_profile.login !== this.props.git_profile.login)) {
+      const { login } = nextProps.git_profile;
+      this.props.fetchUserRepos(login, nextProps.git_token);
+    }
+    const { userRepos, currentProject, fetchingRepos } = nextProps;
     if (userRepos.length !== 0) {
       this.setState({ repos: userRepos, currentProject });
     }
@@ -32,20 +38,25 @@ class RepoDrawer extends Component {
     this.setState({ active: !this.state.active });
   };
   handleProjectClick = (id) => {
-  this.props.loadCurrentProject(id);
-  this.handleToggle();
+    this.props.loadCurrentProject(id);
+    this.handleToggle();
   }
   render() {
     const { repos } = this.state;
-    // console.log(' WHAT IS THE CURRENT PROJ', this.state.currentProject);
     return (
       <div>
         <Button className={styles.repoButton} label="Repos" onClick={this.handleToggle} />
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
           {repos.map((repo) => (
             <div key={repo.id}>
-              <Button className={styles.button} label={repo.name} raised ripple primary
-                 onClick={() =>this.handleProjectClick(repo.id)}  />
+              <Button
+                className={styles.button}
+                label={repo.name}
+                raised
+                ripple
+                primary
+                onClick={() => this.handleProjectClick(repo.id)}
+              />
             </div>
           ))}
         </Drawer>
@@ -57,7 +68,11 @@ class RepoDrawer extends Component {
 export default connect((state, ownProps) => ({
   userRepos: state.repos.userRepos,
   currentProject: state.repos.currentProject,
+  git_profile: state.auth.git_profile,
+  git_token: state.auth.github_token,
+  fetchingRepos: state.repos,
+
 }), (dispatch) => ({
-  fetchUserRepos: (userId, token) => dispatch(fetchUserRepos(userId, token)),
-  loadCurrentProject: (projectId) =>dispatch(loadCurrentProject(projectId)),
+  fetchUserRepos: (userId, user_token) => dispatch(fetchUserRepos(userId, user_token)),
+  loadCurrentProject: (projectId) => dispatch(loadCurrentProject(projectId)),
 }))(RepoDrawer);

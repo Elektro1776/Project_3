@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import EventGenerator from './Event_Generator';
 import { fetchUserEvents } from '../../actions/githubActions/getEventAction';
-import token from '../../../gittoken';
 import styles from './card_styles.css';
 
 class EventFeed extends Component {
@@ -13,12 +12,20 @@ class EventFeed extends Component {
     };
   }
   componentDidMount() {
-    this.props.fetchUserEvents('901david', token);
+
+    console.log(' WE SHOULD BE FETCHING THE EVENT FEED!!!!!', this.props.git_profile);
+    if (this.props.git_profile.login) {
+      this.props.fetchUserEvents(this.props.git_profile.login, this.props.git_token);
+
+    }
   }
   componentWillReceiveProps(nextProps) {
-    // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
+    if (nextProps.git_profile.login && nextProps.git_profile.login !== this.props.git_profile.login) {
+      const { login } = nextProps.git_profile;
+      this.props.fetchUserEvents(login, nextProps.git_token);
+
+    }
     const { events } = nextProps;
-    // console.log(' WHAT IS USER REPOS', userRepos);
     if (events.length !== 0) {
       this.setState({ events });
     }
@@ -28,7 +35,7 @@ class EventFeed extends Component {
       return (
         <div>
           <div className={`row`}>
-            <button className={`${styles.refreshButt} btn center-block`} onClick={()=>this.props.fetchUserEvents('901david', token)}><i className="material-icons pull-right" style={{color: 'black', 'font-size': 20}}>refresh</i></button>
+            <button className={`${styles.refreshButt} btn center-block`} onClick={()=>this.props.fetchUserEvents('901david', token)}><i className="material-icons pull-right" style={{color: 'black'}}>refresh</i></button>
           </div>
           <EventGenerator eventData={this.state.events} />
         </div>
@@ -38,7 +45,7 @@ class EventFeed extends Component {
       <div>
         <div className={styles.loaderContainer}>
           <img className={`center-block ${styles.loaderImage}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
-          <h1 className={styles.loaderText}>Loading...</h1>
+          <h1 className={styles.loaderText} style={{color:'white'}}>Loading...</h1>
         </div>
       </div>
     );
@@ -47,6 +54,8 @@ class EventFeed extends Component {
 
 export default connect((state, ownProps) => ({
   events: state.events.events,
+  git_profile: state.auth.git_profile,
+  git_token: state.auth.github_token,
 }), (dispatch) => ({
   fetchUserEvents: (userId, token) => dispatch(fetchUserEvents(userId, token)),
 }))(EventFeed);

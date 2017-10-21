@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Chip from './Collab_Chip';
 import styles from './collab.css';
 import { fetchCollaborators } from '../../actions/githubActions/getCollabAction';
+const token = 'b38b9935f766385b9d73a1e7fa964120c2bb4d9b';
 
 
 class Collaborators extends Component {
@@ -15,8 +16,8 @@ class Collaborators extends Component {
     }
   }
   componentDidMount() {
-    console.log('Collabs just mounted', this.props.repoName);
-    this.props.fetchCollaborators(this.props.currentUser, this.props.repoName, token);
+    console.log('Collabs just mounted', this.props.currentUser, this.props.repoName, this.props.git_token);
+    this.props.fetchCollaborators(this.props.currentUser, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
     // console.info(' WHAT ARE THE NEXT PROPS,', nextProps.userRepos);
@@ -27,7 +28,7 @@ class Collaborators extends Component {
     }
     if (repoName) {
       if (repoName !== this.props.repoName) {
-        this.props.fetchCollaborators(currentUser, repoName, token);
+        this.props.fetchCollaborators(currentUser, repoName, this.props.git_token);
       }
     }
   }
@@ -44,6 +45,8 @@ class Collaborators extends Component {
 
 export default connect((state, ownProps) => ({
   collabs: state.collabs.collabs,
+  git_profile: state.auth.git_profile,
+  git_token: state.auth.github_token,
 }), (dispatch) => ({
   fetchCollaborators: (userId, repoName, token) => dispatch(fetchCollaborators(userId, repoName, token)),
 }))(Collaborators);
