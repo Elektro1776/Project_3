@@ -38,7 +38,7 @@ class Projects extends Component {
       // console.log(currentProject, 'currne tproj');
       if (currentProject !== null) {
         return (
-          <div>
+          <div style={{backgroundColor: 'white'}}>
             <div>
               <CollaboratorsBar repoName={currentProject.name} currentUser={currentProject.owner.login} />
             </div>
