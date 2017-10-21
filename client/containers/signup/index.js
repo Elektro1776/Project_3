@@ -35,7 +35,7 @@ class Signup extends Component {
   render() {
     const userState = this.state;
     return (
-      <div className="container" style={{backgroundColor: "black"}}>
+      <div className="container" style={{backgroundColor: "black", height:'100%'}}>
         <div className="row">
 
           <div className="col-lg-6 col-md-6 col-sm-12 col-xs-12">

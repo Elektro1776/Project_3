@@ -3,6 +3,7 @@ import Input from 'react-toolbox/lib/input';
 import { Button } from 'react-toolbox/lib/button';
 import PropTypes from 'prop-types';
 import styles from './SignUpForm.css';
+import { NavLink } from 'react-router-dom';
 
 class SignupForm extends Component {
   render() {
@@ -32,6 +33,11 @@ class SignupForm extends Component {
           onChange={(pass) => this.props.handleChange('password', pass)}
         />
         <Button className={styles.button} onClick={this.props.handleSignup} label="Sign Up" raised ripple primary />
+
+        <div style={{ marginTop: '30px', textAlign: 'center' }}>
+          <NavLink
+            to="/login">Already a user? Sign in!</NavLink>
+        </div>
 
       </form>
     );

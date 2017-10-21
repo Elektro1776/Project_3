@@ -1,3 +1,31 @@
 .logo {
   background-color: green;
 }
+
+.menuStyle {
+
+  text-align: center;
+  border-style: solid;
+  border-color: blue;
+  border-width: 3px;
+}
+
+.drawerOne {
+  padding-top: 20px;
+  margin: auto;
+  text-align: center;
+  width: 100%;
+}
+
+.drawerTwo {
+
+  margin: auto;
+  text-align: center;
+  width: 100%;
+
+}
+
+a:hover {
+  color: aqua;
+  text-decoration: none;
+}

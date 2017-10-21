@@ -21,8 +21,7 @@ class AltFooter extends Component {
         height: '50px',
         bottom: '0',
         position: 'fixed',
-        gridRowStart: 2,
-        gridRowEnd: 3,
+
       },
       icons: {
         height: '10px',
