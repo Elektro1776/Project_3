@@ -34,6 +34,8 @@ class Login extends Component {
   render() {
     const { email, password } = this.state;
     return (
+      <div style={{ display: 'grid', backgroundColor: 'black', height: '100%'}}>
+
         <div className={styles.wrapper}>
           <img src='./images/utile.gif' className={styles.logo} />
           <div className={styles.box}>

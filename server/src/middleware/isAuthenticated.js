@@ -1,7 +1,8 @@
 import jsonwebtoken from 'jsonwebtoken';
+let count = 0;
 
 export const isAuthenticated = (req, res, next) => {
-  console.log(' CHECKING AUTH!');
+  count += 1;
   // check header or url parameters or post parameters for token
   let token = req.headers.authorization;
   const { access_token } = req.query;
@@ -33,7 +34,7 @@ export const isAuthenticated = (req, res, next) => {
       res.locals.token = tokens.token;
       res.locals.access_token = tokens.access_token;
     }
-    console.log(' We should have a user!');
+    // console.log(' We should have a user!', req.user, res.locals);
     next();
   });
 };
