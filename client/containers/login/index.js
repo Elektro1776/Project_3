@@ -34,12 +34,14 @@ class Login extends Component {
   render() {
     const { email, password } = this.state;
     return (
+
       <div className="container-fluid">
         <div className="row">
           <img src='./images/utile.gif' className="col-lg-4 col-lg-offset-4 col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2" />
         </div>
         <div className="row">
           <div className="col-lg-6 col-lg-offset-3 col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3 col-xs-12">
+
             <LoginForm
               email={email}
               password={password}

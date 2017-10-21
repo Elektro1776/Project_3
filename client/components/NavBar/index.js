@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom';
 import RepoDrawer from './Drawer';
 import { IconButton } from 'react-toolbox/lib/button';
 import {IconMenu, MenuItem, MenuDivider } from 'react-toolbox/lib/menu';
+import styles from './NavBar.css'
 
 const GithubIcon = () => (
   <svg viewBox="0 0 284 277">
@@ -15,7 +16,7 @@ const MenuTest = () => (
   <IconMenu icon='more_vert' position='topLeft' menuRipple>
     <MenuItem value='download' icon='get_app' caption='Download' />
     <MenuItem value='help' icon='favorite' caption='Favorite' />
-    <MenuItem value='settings' icon='open_in_browser' caption='Open in app' />
+    <MenuItem value='settings' icon="open_in_browser" caption='Open in app' />
     <MenuDivider />
     <MenuItem value='signout' icon='delete' caption='Delete' disabled />
   </IconMenu>
@@ -35,12 +36,18 @@ class PrivateNavBar extends Component {
   }
   render() {
     return (
-      <AppBar title="uTile" leftIcon="menu" rightIcon={<GithubIcon />}>
+      <AppBar
+        title="uTile"
+        leftIcon={<GithubIcon />}>
         <Navigation type="horizontal">
-          <RepoDrawer active={this.state.active} handleDrawerToggle={this.handleDrawerToggle} />
-          <NavLink to="/dashboard">Dashboard</NavLink>
-          <NavLink to="/projects">Projects</NavLink>
+          <NavLink to="/dashboard" activeClassName="selected" label="dashboard" icon="dashboard" style={{color: "white", margin: "15px"}}>dashboard</NavLink>
+          <NavLink to="/projects" label="projects" icon="person" style={{color: "white", margin: "15px"}}>projects</NavLink>
         </Navigation>
+        <RepoDrawer style={{
+          float: "left",
+
+        }} active={this.state.active} handleDrawerToggle={this.handleDrawerToggle} />
+
         {/* <IconButton icon={<MenuTest />} accent /> */}
       </AppBar>
     );

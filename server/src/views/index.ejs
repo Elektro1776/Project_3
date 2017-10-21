@@ -14,7 +14,9 @@
         rel="stylesheet">
 
   <link rel="stylesheet" href="/dist/app.css?version=1">
-
+  <script>
+   window.__INITALSTATE__ = <%-JSON.stringify(initalState) -%>
+    </script>
 </head>
 <body>
   <div id="root"><div><%- initalContent -%></div></div>
