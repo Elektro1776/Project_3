@@ -37,7 +37,7 @@ class IssueCard extends Component {
     if (commentsLength === issuesLength) {
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
     }
-    if(issueComments.length !== this.props.issueComments.length) {
+    if (issueComments.length !== this.props.issueComments.length) {
       // console.log('We have neewwww shiiizzzzzz');
       this.setState({ issueComments });
     }
@@ -54,28 +54,29 @@ class IssueCard extends Component {
  handleClick = (currIssNum) => this.setState({ isShowingModal: true, currentIssueNumber: currIssNum })
  handleClose = () => this.setState({ isShowingModal: false })
  handleCloseIssue = (login, repoName, issueNum, token) => {
-  //  console.log('data to send on close issue', login, repoName, issueNum, token);
+   //  console.log('data to send on close issue', login, repoName, issueNum, token);
    this.props.closeUserIssue(login, repoName, issueNum, token);
  }
  shouldComponentUpdate(nextProps, nextState) {
    return true;
  }
  render() {
-  //  console.log(this.state.issueComments, 'my state of issue comments');
+   //  console.log(this.state.issueComments, 'my state of issue comments');
    const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
    const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
    if (issuesLoaded && commentsLoaded) {
      if (isShowingModal) {
        return (
          <div>
-           <ModalIssueComment 
-            changeHandler={this.modifyTextState} 
-             issueNumber={this.state.currentIssueNumber} 
-             handleClick={this.handleClick} 
-             handleClose={this.handleClose} 
-             isShowingModal={this.state.isShowingModal} 
-             value={this.state.newCommentText} 
-             handleAddComment={this.handleAddNewComment} />
+           <ModalIssueComment
+             changeHandler={this.modifyTextState}
+             issueNumber={this.state.currentIssueNumber}
+             handleClick={this.handleClick}
+             handleClose={this.handleClose}
+             isShowingModal={this.state.isShowingModal}
+             value={this.state.newCommentText}
+             handleAddComment={this.handleAddNewComment}
+           />
          </div>
        );
      }
@@ -99,7 +100,7 @@ class IssueCard extends Component {
                  <CardAssignees assigneesData={assigneeData} indexValue={i} />
 
                  <CardActions>
-                   <Button label="Add Comment" onClick={()=>this.handleClick(issue.number)} />
+                   <Button label="Add Comment" onClick={() => this.handleClick(issue.number)} />
                    <Button
                      label="Close Issue"
                      onClick={() => this.handleCloseIssue(this.props.git_profile.login, this.props.repoName, issue.number, this.props.git_token)}
@@ -121,7 +122,7 @@ class IssueCard extends Component {
      <div>
        <div className={styles.loaderContainerThree}>
          <img className={`center-block ${styles.loaderImageThree}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
-         <h1 className={styles.loaderTextThree} style={{color:'white'}}>Loading...</h1>
+         <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>Loading...</h1>
        </div>
      </div>
    );
