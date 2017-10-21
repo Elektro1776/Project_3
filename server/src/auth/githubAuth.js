@@ -15,6 +15,7 @@ if (DEV) {
   client_id = process.env.GITHUB_CLIENT_ID;
   client_secret = process.env.GITHUB_CLIENT_SECRET;
 } else {
+  console.log(' WE GOT PRODDD CLIENT SHITT');
   client_id = process.env.PROD_GITHUB_CLIENT_ID;
   client_secret = process.env.PROD_GITHUB_CLIENT_SECRET;
 }
