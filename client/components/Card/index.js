@@ -21,6 +21,7 @@ class IssueCard extends Component {
     issues: null,
     issueComments: null,
     newCommentText: '',
+    currentIssueNumber: '',
   }
   componentDidMount() {
     this.props.issues.map((issue) => {
@@ -28,29 +29,30 @@ class IssueCard extends Component {
     });
   }
   componentWillReceiveProps(nextProps) {
-    console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
+    // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues } = nextProps;
     // this.setState({ issueComments });
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (commentsLength === issuesLength) {
-      console.log("we dropped into ifff");
+      // console.log("we dropped into ifff");
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
     }
     if(issueComments.length !== this.props.issueComments.length) {
-      console.log('We have neewwww shiiizzzzzz');
+      // console.log('We have neewwww shiiizzzzzz');
       this.setState({ issueComments });
     }
   }
   modifyTextState = (event) => {
     this.setState({ newCommentText: event.target.value });
   }
-  handleAddNewComment = () => {
-    this.props.addUserComment('901david', 'test_repo', '1', this.state.newCommentText, token);
+  handleAddNewComment = (issueNum) => {
+    console.log('HERE AR ENEW CMMENT PARAMS', this.props.repoOwner, this.props.repoName, issueNum, this.state.newCommentText, token);
+    this.props.addUserComment(this.props.repoOwner, this.props.repoName, issueNum, this.state.newCommentText, token);
     this.handleClose();
   }
- handleClick = () => this.setState({ isShowingModal: true })
+ handleClick = (currIssNum) => this.setState({ isShowingModal: true, currentIssueNumber: currIssNum })
  handleClose = () => this.setState({ isShowingModal: false })
  handleCloseIssue = (login, repoName, issueNum, token) => {
   //  console.log('data to send on close issue', login, repoName, issueNum, token);
@@ -60,13 +62,14 @@ class IssueCard extends Component {
    return true;
  }
  render() {
+   console.log(this.state.currentIssueNumber, 'MY CURRENT ISSUE IN REDNER&*&*^*&&*^*&^*&^');
    const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
    const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
    if (issuesLoaded && commentsLoaded) {
      if (isShowingModal) {
        return (
          <div>
-           <ModalIssueComment changeHandler={this.modifyTextState} handleClick={this.handleClick} handleClose={this.handleClose} isShowingModal={this.state.isShowingModal} value={this.state.newCommentText} handleAddComment={this.handleAddNewComment} />
+           <ModalIssueComment changeHandler={this.modifyTextState} issueNumber={this.state.currentIssueNumber} handleClick={this.handleClick} handleClose={this.handleClose} isShowingModal={this.state.isShowingModal} value={this.state.newCommentText} handleAddComment={this.handleAddNewComment} />
          </div>
        );
      }
@@ -90,7 +93,7 @@ class IssueCard extends Component {
                  <CardAssignees assigneesData={assigneeData} indexValue={i} />
 
                  <CardActions>
-                   <Button label="Add Comment" onClick={this.handleClick} />
+                   <Button label="Add Comment" onClick={()=>this.handleClick(issue.number)} />
                    <Button
                      label="Close Issue"
                      onClick={() => this.handleCloseIssue(issue.user.login, this.props.repoName, issue.number, token)}
