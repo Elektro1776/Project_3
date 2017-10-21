@@ -38,7 +38,11 @@ class PrivateNavBar extends Component {
     return (
       <AppBar
         title="uTile"
-        leftIcon={<GithubIcon />}>
+        leftIcon={<GithubIcon />}
+        onLeftIconClick={()=>{
+          window.location = 'https://github.com/Elektro1776/Project_3';
+        }}>
+
         <Navigation type="horizontal">
           <NavLink to="/dashboard" activeClassName="selected" label="dashboard" icon="dashboard" style={{color: "white", margin: "15px"}}>dashboard</NavLink>
           <NavLink to="/projects" label="projects" icon="person" style={{color: "white", margin: "15px"}}>projects</NavLink>
