@@ -14,8 +14,12 @@ class Projects extends Component {
       currentProject: null,
       currentScreen: 'readmeButt',
     };
+    componentDidMount() {
+      console.log(' DO WE HAVE A CURRENT PROJECT?', this.props);
+      this.setState({ currentProject: this.props.currentProject });
+    }
     componentWillReceiveProps(nextProps) {
-      // console.log("this should show projects connected in state", nextProps.currentProject);
+      console.log("this should show projects connected in state", nextProps.currentProject);
       const { currentProject } = nextProps;
       if (currentProject.length !== 0 && currentProject.id !== this.props.currentProject.id) {
         this.setState({ currentProject });
@@ -35,7 +39,6 @@ class Projects extends Component {
     }
     render() {
       const { currentProject } = this.state;
-      // console.log(currentProject, 'currne tproj');
       if (currentProject !== null) {
         return (
           <div style={{backgroundColor: 'white'}}>

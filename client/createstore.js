@@ -18,9 +18,9 @@ export default function configureStore(history, initalState) {
     // })
   );
   // const initalState = window.__INITALSTATE__;
-  console.log(' WHAT IS THE INITAL STATE?', initalState);
+  // console.log(' WHAT IS THE INITAL STATE?', initalState);
   const store = createStore(reducer, initalState, enhancer);
-  console.log(' WHAT I SOUR STORE STATE?', store.getState());
+  // console.log(' WHAT I SOUR/ STORE STATE?', store.getState());
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
     module.hot.accept('./reducers', () => {

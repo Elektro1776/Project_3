@@ -29,7 +29,7 @@ import { isAuthenticated } from './src/middleware/isAuthenticated';
 const app = express();
 app.use(session({
   secret: 'keyboard cat',
-  resave: false,
+  resave: true,
   saveUninitialized: true,
 }));
 // const PROD = process.env.NODE_ENV === 'production';
@@ -68,7 +68,7 @@ app.use((req, res, next) => {
 // Runs our check on the tokens sent from client on every request
 app.use(githubAuthRouter);
 app.use(isAuthenticated);
-app.use('/auth', authRouter);
+app.use(authRouter);
 app.use('/signup', signupRouter);
 app.use('/login', loginRouter);
 app.use('/api/github', githubRouter);

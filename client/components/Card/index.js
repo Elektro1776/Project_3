@@ -11,7 +11,6 @@ import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
 import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
-import token from '../../../gittoken';
 
 class IssueCard extends Component {
   state = {
@@ -25,7 +24,7 @@ class IssueCard extends Component {
   }
   componentDidMount() {
     this.props.issues.map((issue) => {
-      this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, token);
+      this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
     });
   }
   componentWillReceiveProps(nextProps) {
@@ -36,7 +35,6 @@ class IssueCard extends Component {
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (commentsLength === issuesLength) {
-      // console.log("we dropped into ifff");
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
     }
     if(issueComments.length !== this.props.issueComments.length) {
@@ -48,8 +46,8 @@ class IssueCard extends Component {
     this.setState({ newCommentText: event.target.value });
   }
   handleAddNewComment = (issueNum) => {
-    console.log('HERE AR ENEW CMMENT PARAMS', this.props.repoOwner, this.props.repoName, issueNum, this.state.newCommentText, token);
-    this.props.addUserComment(this.props.repoOwner, this.props.repoName, issueNum, this.state.newCommentText, token);
+    console.log('HERE AR ENEW CMMENT PARAMS', this.props.repoOwner, this.props.repoName, issueNum, this.state.newCommentText, this.props.git_token);
+    this.props.addUserComment(this.props.repoOwner, this.props.repoName, issueNum, this.state.newCommentText, this.props.git_token);
     this.handleClose();
     this.setState({ newCommentText: '' });
   }
@@ -70,7 +68,14 @@ class IssueCard extends Component {
      if (isShowingModal) {
        return (
          <div>
-           <ModalIssueComment changeHandler={this.modifyTextState} issueNumber={this.state.currentIssueNumber} handleClick={this.handleClick} handleClose={this.handleClose} isShowingModal={this.state.isShowingModal} value={this.state.newCommentText} handleAddComment={this.handleAddNewComment} />
+           <ModalIssueComment 
+            changeHandler={this.modifyTextState} 
+             issueNumber={this.state.currentIssueNumber} 
+             handleClick={this.handleClick} 
+             handleClose={this.handleClose} 
+             isShowingModal={this.state.isShowingModal} 
+             value={this.state.newCommentText} 
+             handleAddComment={this.handleAddNewComment} />
          </div>
        );
      }
@@ -83,7 +88,7 @@ class IssueCard extends Component {
                  <CardTitle
                    avatar={issue.user.avatar_url}
                    title={issue.user.login}
-                   //  subtitle={this.state.currentProject.name}
+                   //  subtitle={issue.repository_url.replace(`https://api.github.com/repos/${this.props.repoOwner}/Project_3`, '')}
                  />
                  <CardTitle
                    subtitle={issue.body}
@@ -97,7 +102,7 @@ class IssueCard extends Component {
                    <Button label="Add Comment" onClick={()=>this.handleClick(issue.number)} />
                    <Button
                      label="Close Issue"
-                     onClick={() => this.handleCloseIssue(issue.user.login, this.props.repoName, issue.number, token)}
+                     onClick={() => this.handleCloseIssue(this.props.git_profile.login, this.props.repoName, issue.number, this.props.git_token)}
                    />
                    {/* <Button label="Add to Matrix" /> */}
                  </CardActions>
@@ -129,6 +134,9 @@ export default connect((state, ownProps) => ({
   closedIssData: state.issue,
   currentProject: state.repos.currentProject,
   issueComments: state.comments.issueComments,
+  git_profile: state.auth.git_profile,
+  git_token: state.auth.github_token,
+
 }), (dispatch) => ({
   closeUserIssue: (userId, repoName, issueNum, token) => dispatch(closeUserIssue(userId, repoName, issueNum, token)),
   fetchUserComments: (userId, repoName, issueNum, token) => dispatch(fetchUserComments(userId, repoName, issueNum, token)),
