@@ -14,27 +14,22 @@ class ProjLayout extends Component {
     super(props);
     this.state = {
       issues: [],
-      readme: [],
+      readme: null,
       repoName: '',
       currentUser: '',
     };
   }
   componentDidMount() {
-    // console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.state);
+    console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.currentUser, this.props.repoName);
     this.props.fetchUserReadme(this.props.currentUser, this.props.repoName, token);
     this.props.fetchUserIssues(this.props.currentUser, this.props.repoName, token);
   }
   componentWillReceiveProps(nextProps) {
     const { userIssues, readme, repoName, currentUser } = nextProps;
-    // console.info(' WHAT ARE THE NEXT PROPS,', repoName);
-    console.log('Do we ever get a read me ???????:::::', readme);
-    // console.log(' WHAT IS USER REPOS', userRepos);
-    if (userIssues.length !== 0 && userIssues.length !== this.props.userIssues.length) {
-      // console.log(' RE SET STATE:::::', userIssues.length);
-      // this.setState({ issues: userIssues });
-        this.setState({ issues: userIssues });
-    }
+    console.log(' WHAT ARE THE NEXT PROPS/??', repoName);
+    // this.setState({ issues: userIssues });
     if (readme.length !== 0) {
+      // console.log(' IS THIS README CHECK FIRING ?????');
       this.setState({ readme, repoName, currentUser });
     }
     if (repoName) {
@@ -44,45 +39,59 @@ class ProjLayout extends Component {
         this.props.fetchUserIssues(currentUser, repoName, token);
       }
     }
-  }
-  whatStateToUse = (state) => {
-    if (state.issuesButt === true) {
-      return (
-        <div>
-          <IssueCard issues={this.state.issues} />
-        </div>
-      );
-    } else if (state.readmeButt === true) {
-      return (
-        <div>
-          <ReadMe repoName={this.state.repoName} userName={this.state.currentUser} readme={this.state.readme} />
-        </div>
-      );
-    } else if (state.matrixButt === true) {
-      return (
-        <div>
-          <Matrix />
-        </div>
-      );
-    } else if (state.codeButt === true) {
-      return (
-        <div>
-          <CodeEditorParent />
-        </div>
-      );
+    if (readme !== null) {
+      // console.log(' WE SHOULD BE SETTING THE READ ME');
+      // this.setState({ readme });
     }
-
-    return (
-      <div>
-            Houston....We have a problem.
-      </div>
-    );
+    if (userIssues !== null) {
+      // console.log(' WHAT IS OUR READ ME ?????', readme);
+      this.setState({ issues: userIssues, readme });
+    }
+  }
+  whatStateToUse = (screen) => {
+    switch (screen) {
+      case 'readmeButt':
+        return (
+          <div>
+            <ReadMe
+              repoName={this.state.repoName}
+              userName={this.state.currentUser}
+              readme={this.state.readme === null ? '' : this.state.readme}
+            />
+          </div>
+        );
+      case 'issuesButt':
+        return (
+          <div>
+            <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.props.currentUser} />
+          </div>
+        );
+      case 'matrixButt':
+        return (
+          <div>
+            <Matrix />
+          </div>
+        );
+      case 'codeButt':
+        return (
+          <div>
+            <CodeEditorParent />
+          </div>
+        );
+      default:
+        return (
+          <div>
+              Houston....We have a problem.
+          </div>
+        );
+    }
   }
   render() {
-    // console.log('what is my state of my layout', this.state);
+    // console.log('what is my state of my layout', this.props.currentScreen);
+    console.log(' WHAT is my state????????', this.state);
     return (
       <div className={styles.layout}>
-        {this.whatStateToUse(this.props.state)}
+        {this.whatStateToUse(this.props.currentScreen)}
       </div>
     );
   }
@@ -94,5 +103,5 @@ export default connect((state, ownProps) => ({
   readme: state.readme.readme,
 }), (dispatch) => ({
   fetchUserIssues: (userId, repoName, token) => dispatch(fetchUserIssues(userId, repoName, token)),
-  fetchUserReadme: (userId, repoName, token) =>  dispatch(fetchUserReadme(userId, repoName, token)),
+  fetchUserReadme: (userId, repoName, token) => dispatch(fetchUserReadme(userId, repoName, token)),
 }))(ProjLayout);

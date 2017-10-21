@@ -3,7 +3,6 @@ export const SUCCESS_GETTING_EVENTS = 'SUCCESS_GETTING_EVENTS';
 export const FAILURE_GETTING_EVENTS = 'FAILURE_GETTING_EVENTS';
 
 export const fetchUserEvents = (userId, token) => (dispatch) => {
-  // console.log(' WHAT IS OUR stuff to send TO SEND?', userId, repoName);
   dispatch(fetchingEvents());
   return fetch('/api/github/getEvents', {
     method: 'POST',
