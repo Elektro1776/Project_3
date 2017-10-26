@@ -13,11 +13,11 @@ class Footer extends Component {
   }
 
   projectsButton = () => {
-    console.log("clicked on projects paths");
+    // console.log("clicked on projects paths");
   }
 
   dashboardButton = () => {
-    console.log("clicked on dashboard paths");
+    // console.log("clicked on dashboard paths");
   }
 
   render() {

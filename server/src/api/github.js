@@ -60,7 +60,7 @@ githubRouter.post('/getIssueComments', (req, res) => {
 
 // Get Collaborators
 githubRouter.post('/getCollaborators', (req, res) => {
-   console.log(req.body, 'hitting Collab GitRouter', req.body);
+  //  console.log(req.body, 'hitting Collab GitRouter', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -70,7 +70,7 @@ githubRouter.post('/getCollaborators', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/collaborators?access_token=${req.body.token}`,
   }, (err, response, body) => {
-    console.log(' WHAT IS THE BODY?', body);
+    // console.log(' WHAT IS THE BODY?', body);
     if (!err) {
       return res.status(200).json({ collabs: body, err: null });
     }
@@ -183,7 +183,7 @@ githubRouter.post('/getCollaborators', (req, res) => {
 
 // Create comment on issue
 githubRouter.post('/createIssueComment', (req, res) => {
-  console.log(' WHAT IS OUR REQ BODY ON CREATE ISSUE COMMENT', req.body);
+  // console.log(' WHAT IS OUR REQ BODY ON CREATE ISSUE COMMENT', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -194,7 +194,7 @@ githubRouter.post('/createIssueComment', (req, res) => {
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.issueNum}/comments?access_token=${req.body.token}`,
     body: { body: req.body.comment },
   }, (err, response, body) => {
-    console.log(' WHAT IS THE BODY?', body);
+    // console.log(' WHAT IS THE BODY?', body);
     if(!err) {
       return res.status(200).json({ newComment: body, err: null });
     }
@@ -203,7 +203,7 @@ githubRouter.post('/createIssueComment', (req, res) => {
 
 // Close an issue
 githubRouter.post('/closeIssue', (req, res) => {
-  console.log(' TRYING TO CLOSE AN ISSSUEEE', req.body);
+  // console.log(' TRYING TO CLOSE AN ISSSUEEE', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -216,7 +216,7 @@ githubRouter.post('/closeIssue', (req, res) => {
       state: 'closed',
     },
   }, (err, response, body) => {
-    console.log(' WHAT IS GOING OIN IN CLOSE ISSUE BODY?', body);
+    // console.log(' WHAT IS GOING OIN IN CLOSE ISSUE BODY?', body);
     if(!err) {
       return res.status(200).json({ closedIssue: body, err: null });
     }
@@ -225,7 +225,7 @@ githubRouter.post('/closeIssue', (req, res) => {
 
 // Get issues
 githubRouter.post('/getIssues', (req, res) => {
-  // console.log(' SUCCESS POST TO GET Issues GIT ROUTER', req.body);
+  console.log(' SUCCESS POST TO GET Issues GIT ROUTER - HERE IS THE BODY', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -235,7 +235,7 @@ githubRouter.post('/getIssues', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues?filter=all&sort=updated&access_token=${req.body.token}`,
   }, (err, response, body) => {
-  // console.log(' WHAT IS THE BODY?', body);
+  console.log(' WHAT IS THE BODY OF ISSUES RESPONSE?', body);
     if (!err) {
       return res.status(200).json({ issues: body, err: null });
     }
@@ -303,7 +303,7 @@ githubRouter.post('/api/github/authorize', (req, res) => {
 
 // Get Readme
 githubRouter.post('/readme', (req, res) => {
-  // console.log("Hitting github router for readme!!", req.body);
+  console.log("Hitting github router for readme!!", req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -314,6 +314,9 @@ githubRouter.post('/readme', (req, res) => {
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/readme?access_token=${req.body.token}`,
   }, (err, response, body) => {
     // console.log('WTF IS MY README BODY', body);
+    if (body.message === 'Not Found') {
+      return res.status(500).json({ readme: 'Unfortunately, there is no read me :(', err: null });
+    }
     if (!err) {
       const b64string = body.content;
       const buf = Buffer.from(b64string, 'base64');
