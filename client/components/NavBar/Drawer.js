@@ -22,7 +22,7 @@ class RepoDrawer extends Component {
       this.props.fetchUserRepos(login, this.props.git_token);
 
     }
-    console.log(' WHAT IS OUR LOGIN AND TOKEN ON MOUNT OF DRAWER???', this.props.git_profile, this.props.git_token);
+    // console.log(' WHAT IS OUR LOGIN AND TOKEN ON MOUNT OF DRAWER???', this.props.git_profile, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.git_profile.login && (nextProps.git_profile.login !== this.props.git_profile.login)) {

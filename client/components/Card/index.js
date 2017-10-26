@@ -27,7 +27,7 @@ class IssueCard extends Component {
     });
   }
   componentWillReceiveProps(nextProps) {
-    console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
+    // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues } = nextProps;
     // this.setState({ issueComments });
@@ -45,7 +45,7 @@ modifyTextState = (event) => {
 }
 handleAddNewComment = () => {
   // NOTE: WHAT NEEDS TO GET PASSED TO ADD USER COMMENT HERE ?????????
-  console.log(' WHAT IS OUR CURRENT ISSUE???????', this.state.currentIssue);
+  // console.log(' WHAT IS OUR CURRENT ISSUE???????', this.state.currentIssue);
   const { currentIssue } = this.state;
   this.props.addUserComment(this.props.git_profile.login, this.props.repoName, currentIssue, this.state.newCommentText, this.props.git_token);
   this.handleClose();
@@ -55,7 +55,7 @@ handleClose = () => this.setState({ isShowingModal: false })
 // NOTE: HANDLE CLOSE IS FIRING BUT NOT CLOSING ?????
 handleCloseIssue = (login, repoName, issueNum, token) => {
   // NOTE CLOSE ISSSUESSSSS IS NOW WORKING?????? just not updating the state again as of now ...
-  console.log(' What are all the props in close issssuuueeueueueue', login, repoName, issueNum, token);
+  // console.log(' What are all the props in close issssuuueeueueueue', login, repoName, issueNum, token);
   this.props.closeUserIssue(login, repoName, issueNum, token);
 }
 shouldComponentUpdate(nextProps, nextState) {

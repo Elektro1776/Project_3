@@ -37,7 +37,7 @@ export default function (state = initialState, action) {
     }
     case RECEIVED_COMMENT: {
       const { comment, issueNum } = action.payload;
-      console.log(comment.newComment, 'comment in reducer');
+      // console.log(comment.newComment, 'comment in reducer');
       const updatedObj = updateItemInObj(state.issueComments, { [issueNum]: comment.newComment });
       const finalIssues = updateItemInObj(state, { issueComments: updatedObj, fetchedNewComment: true, newComment: comment });
       // console.log('test object &&&&&&&&', updatedObj);

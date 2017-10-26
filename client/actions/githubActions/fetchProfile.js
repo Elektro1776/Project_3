@@ -20,7 +20,7 @@ export const fetchGitProfile = (user_token) => (dispatch) => {
     dispatch(recievedGitProfile(profile))
   })
   .catch((err) => {
-    console.log('ERR GETTING GIT PROFILE', err);
+    // console.log('ERR GETTING GIT PROFILE', err);
   })
 };
 

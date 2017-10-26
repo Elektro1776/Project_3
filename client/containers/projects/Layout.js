@@ -16,16 +16,18 @@ class ProjLayout extends Component {
       readme: null,
       repoName: '',
       currentUser: '',
+      currentRepoOwner: '',
     };
   }
   componentDidMount() {
-    console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.git_profile.login,this.props.repoName, this.props.git_token);
+    // console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.git_profile.login,this.props.repoName, this.props.git_token);
+    this.setState({currentRepoOwner: this.props.git_profile.login})
     this.props.fetchUserReadme(this.props.git_profile.login, this.props.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.props.git_profile.login, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
     const { userIssues, readme, repoName, git_profile } = nextProps;
-    console.log(' NEXT REPONAME%%%%%%%%%%%??', repoName);
+    // console.log(' NEXT REPONAME%%%%%%%%%%%??', repoName);
     // this.setState({ issues: userIssues });
     if (readme.length !== 0) {
       // console.log(' IS THIS README CHECK FIRING ?????');
@@ -33,9 +35,9 @@ class ProjLayout extends Component {
     }
     if (repoName) {
       if (repoName !== this.props.repoName) {
-        console.log(' FIRING FETCH README!!!!!!::::::::::');
-        this.props.fetchUserReadme(git_profile.login, repoName, this.props.git_token);
-        this.props.fetchUserIssues(git_profile.login, repoName, this.props.git_token);
+        // console.log(' FIRING FETCH README!!!!!!::::::::::', git_profile.login, repoName, this.props.git_token);
+        this.props.fetchUserReadme(this.state.currentRepoOwner, repoName, this.props.git_token);
+        this.props.fetchUserIssues(this.state.currentRepoOwner, repoName, this.props.git_token);
       }
     }
     if (readme !== null) {

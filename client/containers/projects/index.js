@@ -19,7 +19,7 @@ class Projects extends Component {
       this.setState({ currentProject: this.props.currentProject });
     }
     componentWillReceiveProps(nextProps) {
-      console.log("this should show projects connected in state", nextProps.currentProject);
+      // console.log("this should show projects connected in state", nextProps.currentProject);
       const { currentProject } = nextProps;
       if (currentProject.length !== 0 && currentProject.id !== this.props.currentProject.id) {
         this.setState({ currentProject });
@@ -39,11 +39,12 @@ class Projects extends Component {
     }
     render() {
       const { currentProject } = this.state;
-      console.log(currentProject, 'RENDERING CURRENT PROJECT ', this.props.currentProject);
+      // console.log(currentProject, 'RENDERING CURRENT PROJECT ', this.props.currentProject);
       if (currentProject !== null) {
         return (
           <div>
             <div>
+              <h4>Current Repository: {currentProject.name}</h4>
               <CollaboratorsBar repoName={currentProject.name} currentUser={currentProject.owner.login} />
             </div>
             <div className={styles.buttonBox}>

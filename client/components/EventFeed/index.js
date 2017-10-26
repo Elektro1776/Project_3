@@ -13,7 +13,7 @@ class EventFeed extends Component {
   }
   componentDidMount() {
 
-    console.log(' WE SHOULD BE FETCHING THE EVENT FEED!!!!!', this.props.git_profile);
+    // console.log(' WE SHOULD BE FETCHING THE EVENT FEED!!!!!', this.props.git_profile);
     if (this.props.git_profile.login) {
       this.props.fetchUserEvents(this.props.git_profile.login, this.props.git_token);
 
