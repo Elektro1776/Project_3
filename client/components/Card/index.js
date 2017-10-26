@@ -22,6 +22,7 @@ class IssueCard extends Component {
     newCommentText: '',
   }
   componentDidMount() {
+    console.log("INTIAL COMMENTS DATA TO SEND OFF ", this.props.repoOwner, this.props.repoName);
     this.props.issues.map((issue) => {
       this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
     });
@@ -65,6 +66,7 @@ render() {
   const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
   const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
   if (issuesLoaded && commentsLoaded) {
+    console.log(this.state.issues, 'THESE ARE MY ISSUES PASSED TO ISSUE CARD RENDER AREA');
     if (isShowingModal) {
       return (
         <div>

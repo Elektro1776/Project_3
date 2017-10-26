@@ -15,7 +15,7 @@ class Projects extends Component {
       currentScreen: 'readmeButt',
     };
     componentDidMount() {
-      console.log(' DO WE HAVE A CURRENT PROJECT?', this.props);
+      // console.log(' DO WE HAVE A CURRENT PROJECT?', this.props.currentProject);
       this.setState({ currentProject: this.props.currentProject });
     }
     componentWillReceiveProps(nextProps) {
@@ -39,8 +39,9 @@ class Projects extends Component {
     }
     render() {
       const { currentProject } = this.state;
-      // console.log(currentProject, 'RENDERING CURRENT PROJECT ', this.props.currentProject);
+
       if (currentProject !== null) {
+        console.log(currentProject, 'RENDERING CURRENT PROJECT ', currentProject);
         return (
           <div>
             <div>
@@ -51,7 +52,7 @@ class Projects extends Component {
               <ButtonBar clicker={this.whatStateToChange.bind(this)} />
             </div>
             <div>
-              <ProjLayout currentScreen={this.state.currentScreen}  repoName={currentProject.name} currentUser={currentProject.owner.login} />
+              <ProjLayout currentScreen={this.state.currentScreen}  repoName={currentProject.name} currentRepoOwner={currentProject.owner.login} />
             </div>
           </div>
         );

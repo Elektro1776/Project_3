@@ -15,15 +15,13 @@ class ProjLayout extends Component {
       issues: [],
       readme: null,
       repoName: '',
-      currentUser: '',
       currentRepoOwner: '',
     };
   }
   componentDidMount() {
-    // console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.git_profile.login,this.props.repoName, this.props.git_token);
-    this.setState({currentRepoOwner: this.props.git_profile.login})
-    this.props.fetchUserReadme(this.props.git_profile.login, this.props.repoName, this.props.git_token);
-    this.props.fetchUserIssues(this.props.git_profile.login, this.props.repoName, this.props.git_token);
+    console.log('What do we send for read me and issues', this.state.currentRepoOwner, this.props.repoName, this.props.git_token);
+    this.props.fetchUserReadme(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
+    this.props.fetchUserIssues(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
     const { userIssues, readme, repoName, git_profile } = nextProps;
@@ -31,7 +29,7 @@ class ProjLayout extends Component {
     // this.setState({ issues: userIssues });
     if (readme.length !== 0) {
       // console.log(' IS THIS README CHECK FIRING ?????');
-      this.setState({ readme, repoName, currentUser: git_profile.login });
+      this.setState({ readme, repoName, currentRepoOwner: this.props.currentRepoOwner });
     }
     if (repoName) {
       if (repoName !== this.props.repoName) {
@@ -56,7 +54,7 @@ class ProjLayout extends Component {
           <div>
             <ReadMe
               repoName={this.state.repoName}
-              userName={this.state.currentUser}
+              userName={this.state.currentRepoOwner}
               readme={this.state.readme === null ? '' : this.state.readme}
             />
           </div>
@@ -64,7 +62,7 @@ class ProjLayout extends Component {
       case 'issuesButt':
         return (
           <div>
-            <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.props.git_profile.login} />
+            <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
           </div>
         );
       case 'matrixButt':
@@ -88,7 +86,7 @@ class ProjLayout extends Component {
     }
   }
   render() {
-    // console.log('what is my state of my layout', this.props.currentScreen);
+    console.log(this.state.issues, "current issues from state");
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
