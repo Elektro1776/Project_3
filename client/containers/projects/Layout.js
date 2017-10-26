@@ -19,13 +19,13 @@ class ProjLayout extends Component {
     };
   }
   componentDidMount() {
-    // console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.git_profile, this.props.git_token);
+    console.log('WHEN DOES THIS FUKCER MUNT-STATE', this.props.git_profile.login,this.props.repoName, this.props.git_token);
     this.props.fetchUserReadme(this.props.git_profile.login, this.props.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.props.git_profile.login, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
     const { userIssues, readme, repoName, git_profile } = nextProps;
-    console.log(' WHAT ARE THE NEXT PROPS/??', git_profile);
+    console.log(' NEXT REPONAME%%%%%%%%%%%??', repoName);
     // this.setState({ issues: userIssues });
     if (readme.length !== 0) {
       // console.log(' IS THIS README CHECK FIRING ?????');

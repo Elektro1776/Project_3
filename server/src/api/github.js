@@ -313,7 +313,10 @@ githubRouter.post('/readme', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/readme?access_token=${req.body.token}`,
   }, (err, response, body) => {
-    // console.log('WTF IS MY README BODY', body);
+    console.log('WTF IS MY README BODY', body);
+    if (body.message === 'Not Found') {
+      return res.status(500).json({ readme: 'Unfortunately, there is no read me :(', err: null });
+    }
     if (!err) {
       const b64string = body.content;
       const buf = Buffer.from(b64string, 'base64');
