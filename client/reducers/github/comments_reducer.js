@@ -15,6 +15,11 @@ const initialState = {
 function updateItemInObj(old, newObj) {
   return Object.assign({}, old, newObj);
 }
+function updateSpecificCommentArray(old, newArray, key) {
+  const updatedArray= old[key].concat(newArray);
+  console.log(updatedArray);
+  return updatedArray;
+}
 export default function (state = initialState, action) {
   switch (action.type) {
     case FETCHING_COMMENTS:
@@ -37,6 +42,7 @@ export default function (state = initialState, action) {
     }
     case RECEIVED_COMMENT: {
       const { comment, issueNum } = action.payload;
+
       // console.log(comment.newComment, 'comment in reducer');
       const updatedObj = updateItemInObj(state.issueComments, { [issueNum]: comment.newComment });
       const finalIssues = updateItemInObj(state, { issueComments: updatedObj, fetchedNewComment: true, newComment: comment });
@@ -44,6 +50,7 @@ export default function (state = initialState, action) {
       // console.log(' WHAT IS OUR FINAL OBJ', finalIssues);
       // console.log(' WHAT IS STATE AS WE GO???', state);
       return finalIssues;
+
     }
     case FAILURE_ADD_COMMENT: {
       return Object.assign({}, state, { errorCommMessage: action.payload.err });

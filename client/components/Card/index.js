@@ -20,6 +20,7 @@ class IssueCard extends Component {
     issues: null,
     issueComments: null,
     newCommentText: '',
+    currentIssueNumber: '',
   }
   componentDidMount() {
     console.log("INTIAL COMMENTS DATA TO SEND OFF ", this.props.repoOwner, this.props.repoName);
@@ -38,7 +39,8 @@ class IssueCard extends Component {
       console.log('IS THIS FIRING ON PROJECT CHANGE');
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
     }
-    if(issueComments.length !== this.props.issueComments.length) {
+    if (issueComments.length !== this.props.issueComments.length) {
+      // console.log('We have neewwww shiiizzzzzz');
       this.setState({ issueComments });
     }
   }
@@ -115,16 +117,16 @@ render() {
         }
       </div>
     );
-  }
-  return (
-    <div>
-      <div className={styles.loaderContainerThree}>
-        <img className={`center-block ${styles.loaderImageThree}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
-        <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>Loading...</h1>
-      </div>
-    </div>
-  );
-}
+   }
+   return (
+     <div>
+       <div className={styles.loaderContainerThree}>
+         <img className={`center-block ${styles.loaderImageThree}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
+         <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>Loading...</h1>
+       </div>
+     </div>
+   );
+ }
 }
 
 // export default IssueCard;
