@@ -41,11 +41,11 @@ class Projects extends Component {
       const { currentProject } = this.state;
 
       if (currentProject !== null) {
-        console.log(currentProject, 'RENDERING CURRENT PROJECT ', currentProject);
+        console.log('HOPEFULLY CHANGES AS YOU CLICK!!!!!!! ', currentProject);
         return (
           <div>
             <div>
-              <h4>Current Repository: {currentProject.name}</h4>
+              <h4 style={{backgroundColor: 'white'}}>Current Repository: {currentProject.name}</h4>
               <CollaboratorsBar repoName={currentProject.name} currentUser={currentProject.owner.login} />
             </div>
             <div className={styles.buttonBox}>

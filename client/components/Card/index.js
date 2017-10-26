@@ -30,11 +30,12 @@ class IssueCard extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
     // console.log("this should show projects connected in state", nextProps.currentProject);
-    const { issueComments, issues } = nextProps;
+    const { issueComments, issues, repoName, repoOwner } = nextProps;
     // this.setState({ issueComments });
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (commentsLength === issuesLength) {
+      console.log('IS THIS FIRING ON PROJECT CHANGE');
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
     }
     if(issueComments.length !== this.props.issueComments.length) {

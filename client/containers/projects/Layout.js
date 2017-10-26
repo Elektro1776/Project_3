@@ -15,29 +15,42 @@ class ProjLayout extends Component {
       issues: [],
       readme: null,
       repoName: '',
-      currentRepoOwner: '',
+      currentRepoOwner: null,
     };
   }
   componentDidMount() {
-    console.log('What do we send for read me and issues', this.state.currentRepoOwner, this.props.repoName, this.props.git_token);
+    // console.log('What do we send for read me and issues', this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
     this.props.fetchUserReadme(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
-    const { userIssues, readme, repoName, git_profile } = nextProps;
-    // console.log(' NEXT REPONAME%%%%%%%%%%%??', repoName);
-    // this.setState({ issues: userIssues });
-    if (readme.length !== 0) {
-      // console.log(' IS THIS README CHECK FIRING ?????');
-      this.setState({ readme, repoName, currentRepoOwner: this.props.currentRepoOwner });
-    }
-    if (repoName) {
-      if (repoName !== this.props.repoName) {
-        // console.log(' FIRING FETCH README!!!!!!::::::::::', git_profile.login, repoName, this.props.git_token);
-        this.props.fetchUserReadme(this.state.currentRepoOwner, repoName, this.props.git_token);
-        this.props.fetchUserIssues(this.state.currentRepoOwner, repoName, this.props.git_token);
+    const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
+    console.log(' REPO OWNER NAME NEED THIS TO BE CHANGING', currentRepoOwner);
+    console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
+    if(currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
+      this.setState({ currentRepoOwner: currentRepoOwner });
+      // console.log('receive props after set state of current repo owner', this.state.currentRepoOwner);
+      if (repoName) {
+        if (repoName !== this.props.repoName) {
+          // console.log(' FIRING FETCH README!!!!!!::::::::::', this.state.currentRepoOwner, repoName, this.props.git_token);
+          // console.log('IF reponame is true', this.state.currentRepoOwner);
+          this.props.fetchUserReadme(currentRepoOwner, repoName, this.props.git_token);
+          this.props.fetchUserIssues(currentRepoOwner, repoName, this.props.git_token);
+        }
       }
     }
+    if (readme.length !== 0) {
+      // console.log(' IS THIS README CHECK FIRING ?????');
+      this.setState({ readme, repoName });
+    }
+    // if (repoName) {
+    //   if (repoName !== this.props.repoName) {
+    //     // console.log(' FIRING FETCH README!!!!!!::::::::::', this.state.currentRepoOwner, repoName, this.props.git_token);
+    //     console.log('IF reponame is true', this.state.currentRepoOwner);
+    //     this.props.fetchUserReadme(this.state.currentRepoOwner, repoName, this.props.git_token);
+    //     this.props.fetchUserIssues(this.state.currentRepoOwner, repoName, this.props.git_token);
+    //   }
+    // }
     if (readme !== null) {
       // console.log(' WE SHOULD BE SETTING THE READ ME');
       // this.setState({ readme });
