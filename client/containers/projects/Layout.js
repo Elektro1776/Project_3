@@ -25,8 +25,11 @@ class ProjLayout extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
-    console.log(' issues received by Layout', userIssues);
-    console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
+    // console.log(' issues received by Layout', userIssues);
+    // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
+    if (this.state.issues.length !== userIssues.length) {
+      this.setState({ issues: userIssues });
+    }
     if(currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
       this.setState({ currentRepoOwner: currentRepoOwner });
       // console.log('receive props after set state of current repo owner', this.state.currentRepoOwner);
@@ -99,7 +102,7 @@ class ProjLayout extends Component {
     }
   }
   render() {
-    console.log(this.state.issues, "current issues from state");
+    // console.log(this.state.issues, "current issues from state in LAYOUT");
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
