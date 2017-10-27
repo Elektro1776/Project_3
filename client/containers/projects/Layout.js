@@ -25,7 +25,7 @@ class ProjLayout extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
-    console.log(' REPO OWNER NAME NEED THIS TO BE CHANGING', currentRepoOwner);
+    console.log(' issues received by Layout', userIssues);
     console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
     if(currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
       this.setState({ currentRepoOwner: currentRepoOwner });

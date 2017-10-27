@@ -23,7 +23,7 @@ class IssueCard extends Component {
     currentIssueNumber: '',
   }
   componentDidMount() {
-    console.log("INTIAL COMMENTS DATA TO SEND OFF ", this.props.repoOwner, this.props.repoName);
+    console.log('INTIAL COMMENTS DATA TO SEND OFF ', this.props.repoOwner, this.props.repoName);
     this.props.issues.map((issue) => {
       this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
     });
@@ -33,19 +33,16 @@ class IssueCard extends Component {
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues, repoName, repoOwner } = nextProps;
     // this.setState({ issueComments });
-    console.log('Here are next props in Issue card', repoName, repoOwner);
+    // console.log('Here are next props in Issue card', repoName, repoOwner);
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (commentsLength === issuesLength) {
-      console.log('IS THIS FIRING ON PROJECT CHANGE');
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
     }
-    console.log('PREV ISSUES COMENTS LENGHT ', this.props.issueComments.length);
-    console.log('NEW ISSUE COMMENTS LENGTH', issueComments.length);
-    if (issueComments.length !== this.state.issueComments.length) {
-      console.log('YOUR ISSUES JUST CHANGED FOOL AND MAYBE YOU SHOULD CONSIDER FETCHING NEW COMMENTS');
-
-      this.setState({ issueComments });
+    if (this.state.issueComments.length !== null) {
+      if (issueComments.length !== this.state.issueComments.length) {
+        this.setState({ issueComments });
+      }
     }
   }
 modifyTextState = (event) => {
@@ -59,10 +56,8 @@ handleAddNewComment = () => {
 }
 handleClick = (currentIssue) => this.setState({ isShowingModal: true, currentIssue })
 handleClose = () => this.setState({ isShowingModal: false })
-// NOTE: HANDLE CLOSE IS FIRING BUT NOT CLOSING ?????
 handleCloseIssue = (login, repoName, issueNum, token) => {
-  // NOTE CLOSE ISSSUESSSSS IS NOW WORKING?????? just not updating the state again as of now ...
-  // console.log(' What are all the props in close issssuuueeueueueue', login, repoName, issueNum, token);
+console.log('PASSING TO CLOSE ISSUE', login, repoName, issueNum, token);
   this.props.closeUserIssue(login, repoName, issueNum, token);
 }
 shouldComponentUpdate(nextProps, nextState) {
@@ -108,7 +103,7 @@ render() {
                   <Button label="Add Comment" onClick={() => this.handleClick(issue.number)} />
                   <Button
                     label="Close Issue"
-                    onClick={() => this.handleCloseIssue(this.props.git_profile.login, this.props.repoName, issue.number, this.props.git_token)}
+                    onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
                   />
                   {/* <Button label="Add to Matrix" /> */}
                 </CardActions>
@@ -120,16 +115,16 @@ render() {
         }
       </div>
     );
-   }
-   return (
-     <div>
-       <div className={styles.loaderContainerThree}>
-         <img className={`center-block ${styles.loaderImageThree}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
-         <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>Loading...</h1>
-       </div>
-     </div>
-   );
- }
+  }
+  return (
+    <div>
+      <div className={styles.loaderContainerThree}>
+        <img className={`center-block ${styles.loaderImageThree}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
+        <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>Loading...</h1>
+      </div>
+    </div>
+  );
+}
 }
 
 // export default IssueCard;
