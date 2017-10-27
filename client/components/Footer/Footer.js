@@ -37,7 +37,7 @@ class Footer extends Component {
       },
     };
     const { currentRoute } = this.props;
-    console.log(currentRoute);
+    // console.log(currentRoute);
     return (
       <div style={styles.basic}>
         <Button icon="search" className={bootStrap} style={styles.icons} />

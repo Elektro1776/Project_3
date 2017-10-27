@@ -13,7 +13,7 @@ const initialState = {
 };
 function updateItemInArray(array, issueId) {
     const updatedItems = array.filter(issue => {
-      console.log(' WHAT ARE THE ISSUES IN MAP????', issue.number, issueId);
+      // console.log(' WHAT ARE THE ISSUES IN MAP????', issue.number, issueId);
         if(issue.number !== issueId) {
             // Since we only want to update one item, preserve all others as they are now
             return issue;
@@ -38,8 +38,8 @@ export default function (state = initialState, action) {
       // console.info('What is the Closed Issue', action.payload.closedIssue.number, )
       const id = action.payload.closedIssue.number;
       const newIssues = updateItemInArray(state.repoIssues, id);
-      console.log("PREV STATE", state.repoIssues);
-      console.log(newIssues, 'here are our new issues');
+      // console.log("PREV STATE", state.repoIssues);
+      // console.log(newIssues, 'here are our new issues');
       return Object.assign({}, state, { closedIssData: action.payload.issue, closedIssue: true, repoIssues: newIssues });
     }
     case FAILURE_CLOSING_ISSUE:
