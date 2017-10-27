@@ -63,6 +63,10 @@ class ProjLayout extends Component {
       this.setState({ issues: userIssues, readme });
     }
   }
+  handleRefresh = () => {
+    // console.log('WHAT WE SENDING FOR NEW ISSUES', this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
+    this.props.fetchUserIssues(this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
+  }
   whatStateToUse = (screen) => {
     switch (screen) {
       case 'readmeButt':
@@ -78,7 +82,12 @@ class ProjLayout extends Component {
       case 'issuesButt':
         return (
           <div>
+            <div>
+            <i className="material-icons pull-right" style={{cursor: 'pointer'}} onClick={this.handleRefresh}>refresh</i>
+            </div>
+            <div>
             <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
+          </div>
           </div>
         );
       case 'matrixButt':
