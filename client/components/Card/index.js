@@ -33,14 +33,18 @@ class IssueCard extends Component {
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues, repoName, repoOwner } = nextProps;
     // this.setState({ issueComments });
+    console.log('Here are next props in Issue card', repoName, repoOwner);
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (commentsLength === issuesLength) {
       console.log('IS THIS FIRING ON PROJECT CHANGE');
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
     }
-    if (issueComments.length !== this.props.issueComments.length) {
-      // console.log('We have neewwww shiiizzzzzz');
+    console.log('PREV ISSUES COMENTS LENGHT ', this.props.issueComments.length);
+    console.log('NEW ISSUE COMMENTS LENGTH', issueComments.length);
+    if (issueComments.length !== this.state.issueComments.length) {
+      console.log('YOUR ISSUES JUST CHANGED FOOL AND MAYBE YOU SHOULD CONSIDER FETCHING NEW COMMENTS');
+
       this.setState({ issueComments });
     }
   }
@@ -51,7 +55,7 @@ handleAddNewComment = () => {
   // NOTE: WHAT NEEDS TO GET PASSED TO ADD USER COMMENT HERE ?????????
   // console.log(' WHAT IS OUR CURRENT ISSUE???????', this.state.currentIssue);
   const { currentIssue } = this.state;
-  this.props.addUserComment(this.props.git_profile.login, this.props.repoName, currentIssue, this.state.newCommentText, this.props.git_token);
+  this.props.addUserComment(this.props.repoOwner, this.props.repoName, currentIssue, this.state.newCommentText, this.props.git_token);
   this.handleClose();
 }
 handleClick = (currentIssue) => this.setState({ isShowingModal: true, currentIssue })

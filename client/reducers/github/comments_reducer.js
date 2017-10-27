@@ -15,9 +15,9 @@ const initialState = {
 function updateItemInObj(old, newObj) {
   return Object.assign({}, old, newObj);
 }
-function updateSpecificCommentArray(old, newArray, key) {
-  const updatedArray= old[key].concat(newArray);
-  console.log(updatedArray);
+function updateSpecificCommentArray(old, newObj, key) {
+  const specificArrayToModify = old[key];
+  const updatedArray= specificArrayToModify.concat(newObj);
   return updatedArray;
 }
 export default function (state = initialState, action) {
@@ -42,12 +42,13 @@ export default function (state = initialState, action) {
     }
     case RECEIVED_COMMENT: {
       const { comment, issueNum } = action.payload;
-
-      // console.log(comment.newComment, 'comment in reducer');
-      const updatedObj = updateItemInObj(state.issueComments, { [issueNum]: comment.newComment });
-      const finalIssues = updateItemInObj(state, { issueComments: updatedObj, fetchedNewComment: true, newComment: comment });
+      const updatedObj = updateSpecificCommentArray(state.issueComments, comment.newComment, issueNum);
+      // console.log('WHAT IS UPDATED OBJ IN REDUCER', updatedObj);
+      const updatedIssueCommentState = updateItemInObj(state.issueComments, {[issueNum]:updatedObj});
+      // console.log('updated isue comment state',updatedIssueCommentState);
+      const finalIssues = updateItemInObj(state, { issueComments: updatedIssueCommentState, fetchedNewComment: true, newComment: comment });
       // console.log('test object &&&&&&&&', updatedObj);
-      // console.log(' WHAT IS OUR FINAL OBJ', finalIssues);
+      // console.log(' WHAT IS OUR FINAL STATE', finalIssues);
       // console.log(' WHAT IS STATE AS WE GO???', state);
       return finalIssues;
 
