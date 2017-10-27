@@ -38,7 +38,7 @@ let matchRep = str;
 function replaceLinks() {
   if (cycles === 0) {
     //console.log(matchRep);
-    console.log('I have finished your request');
+    // console.log('I have finished your request');
 
   }
   else {
