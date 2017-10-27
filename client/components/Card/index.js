@@ -52,10 +52,9 @@ modifyTextState = (event) => {
   this.setState({ newCommentText: event.target.value });
 }
 handleAddNewComment = () => {
-  // NOTE: WHAT NEEDS TO GET PASSED TO ADD USER COMMENT HERE ?????????
-  // console.log(' WHAT IS OUR CURRENT ISSUE???????', this.state.currentIssue);
   const { currentIssue } = this.state;
   this.props.addUserComment(this.props.repoOwner, this.props.repoName, currentIssue, this.state.newCommentText, this.props.git_token);
+  this.setState({ newCommentText: '' });
   this.handleClose();
 }
 handleClick = (currentIssue) => this.setState({ isShowingModal: true, currentIssue })
