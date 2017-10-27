@@ -36,7 +36,7 @@ export default function (state = initialState, action) {
       // console.log('repoID', action.payload., 'userRepos STate', state.userRepos);
       const projId = action.payload;
       const newCurrentProject = updateCurrentProject(state.userRepos, projId);
-      console.log('NEW CURRENT PROJ IN REDUCER', newCurrentProject);
+      // console.log('NEW CURRENT PROJ IN REDUCER', newCurrentProject);
       return Object.assign({}, state, { currentProject: newCurrentProject[0] });
     default:
       return { ...state };
