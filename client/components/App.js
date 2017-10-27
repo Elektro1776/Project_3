@@ -19,7 +19,7 @@ class App extends Component {
   };
 
   render() {
-    console.log(' WHAT ARE THE PROPS AS WE UPDATE?', this.props.home);
+    // console.log(' WHAT ARE THE PROPS AS WE UPDATE?', this.props.home);
     return (
         // <Router history={history}>
         <div>

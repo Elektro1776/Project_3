@@ -13,7 +13,7 @@ const tokenHelper = () => {
     }
   }
   function removeTokens() {
-    console.log(' REMOVING TOKENS');
+    // console.log(' REMOVING TOKENS');
 
   }
   that.setTokens = setTokens;

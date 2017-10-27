@@ -12,8 +12,8 @@ class ModalIssueComment extends Component {
             <ModalDialog onClose={this.props.handleClose}>
 
               <h3>Leave a comment on this issue</h3>
-              <textarea onChange={this.props.changeHandler} style={{ width: '100%', height: '75px' }}>
-                {this.props.value}
+              <textarea defaultValue={this.props.value} onChange={this.props.changeHandler} style={{ width: '100%', height: '75px' }}>
+
               </textarea>
               <button className="btn btn-lg btn-success" onClick={()=>this.props.handleAddComment(this.props.issueNumber)}>Submit</button>
               <button className="btn btn-lg btn-danger" onClick={this.props.handleClose}> Cancel</button>

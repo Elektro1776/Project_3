@@ -15,9 +15,9 @@ const initialState = {
 function updateItemInObj(old, newObj) {
   return Object.assign({}, old, newObj);
 }
-function updateSpecificCommentArray(old, newArray, key) {
-  const updatedArray= old[key].concat(newArray);
-  console.log(updatedArray);
+function updateSpecificCommentArray(old, newObj, key) {
+  const specificArrayToModify = old[key];
+  const updatedArray= specificArrayToModify.concat(newObj);
   return updatedArray;
 }
 export default function (state = initialState, action) {
@@ -42,16 +42,16 @@ export default function (state = initialState, action) {
     }
     case RECEIVED_COMMENT: {
       const { comment, issueNum } = action.payload;
-      console.log('this is previous state', state, 'issue number to change', issueNum);
       const updatedObj = updateSpecificCommentArray(state.issueComments, comment.newComment, issueNum);
-      console.log('WAZAAAAAAAAAAAAAAAAAM', updatedObj);
-      const prevState = state.issueComments;
-      console.log('KEY VALUE TO PASS', { [issueNum]: updatedObj });
-      const finalChanges = updateItemInObj(state.issueComments, { [issueNum]: updatedObj });
-      // Object.assign({}, prevState[issueNum], { [issueNum]: updatedObj });
-      console.log('FINALLLL STATE REDUCER', finalChanges);
-      const reSettingState = updateItemInObj(state, {issueComments: finalChanges});
-      return reSettingState;
+      // console.log('WHAT IS UPDATED OBJ IN REDUCER', updatedObj);
+      const updatedIssueCommentState = updateItemInObj(state.issueComments, {[issueNum]:updatedObj});
+      // console.log('updated isue comment state',updatedIssueCommentState);
+      const finalIssues = updateItemInObj(state, { issueComments: updatedIssueCommentState, fetchedNewComment: true, newComment: comment });
+      // console.log('test object &&&&&&&&', updatedObj);
+      // console.log(' WHAT IS OUR FINAL STATE', finalIssues);
+      // console.log(' WHAT IS STATE AS WE GO???', state);
+      return finalIssues;
+
     }
     case FAILURE_ADD_COMMENT: {
       return Object.assign({}, state, { errorCommMessage: action.payload.err });
