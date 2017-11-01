@@ -8,7 +8,7 @@ import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsA
 import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Card, CardActions, CardHeader, CardMedia, CardTitle, CardText } from 'material-ui/Card';
+import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 class IssueCard extends Component {
@@ -96,11 +96,6 @@ render() {
             subtitle="Subtitle"
             avatar="images/jsa-128.jpg"
           />
-          <CardMedia
-            overlay={<CardTitle title="Overlay title" subtitle="Overlay subtitle" />}
-          >
-            <img src="images/nature-600-337.jpg" alt="" />
-          </CardMedia>
           <CardTitle title="Card title" subtitle="Card subtitle" />
           <CardText>
       Lorem ipsum dolor sit amet, consectetur adipiscing elit.
