@@ -14,7 +14,7 @@ class Projects extends Component {
       currentProject: null,
       currentScreen: 'readmeButt',
     };
-    componentDidMount() {
+    componentDidMount() {      
       // console.log(' DO WE HAVE A CURRENT PROJECT?', this.props.currentProject);
       this.setState({ currentProject: this.props.currentProject });
     }
