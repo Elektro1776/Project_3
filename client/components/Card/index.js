@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardTitle, CardActions } from 'react-toolbox/lib/card';
-import { Button } from 'react-toolbox/lib/button';
 import CardComments from './Card_Comments';
 import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
-import Collapsible from 'react-collapsible';
-import DropdownTrigger from './Dropdown_Card';
 import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
 import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 class IssueCard extends Component {
   state = {
@@ -90,40 +87,12 @@ render() {
     }
     return (
       <div className={styles.mainCont}>
-        {this.state.issues.map((issue) => 
+        {this.state.issues.map((issue) =>
           <div>
             <p>{issue.title}</p>
           </div>
         )}
-        {/* {issues.map((issue, i) => (
-          <div key={issue.id}>
-            <Collapsible trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
-              <Card className={styles.child}>
-                <CardTitle
-                  avatar={issue.user.avatar_url}
-                  title={issue.user.login}
-                  //  subtitle={this.state.currentProject.name}
-                />
-                <CardTitle
-                  subtitle={issue.body}
-                />
-                <CardComments issueComments={issueComments[issue.number]} handleClick={this.handleClick} handleClose={this.handleClose} />
-                <h6 style={{ marginLeft: 15 }}>Assignees</h6>
-                <CardAssignees assigneesData={assigneeData} indexValue={i} />
-                <CardActions>
-                  <Button label="Add Comment" onClick={() => this.handleClick(issue.number)} />
-                  <Button
-                    label="Close Issue"
-                    onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
-                  />
-                  {/* <Button label="Add to Matrix" /> */}
-                {/* </CardActions>
-              </Card>
-            </Collapsible>
-          </div> */}
-        {/* ),
-        )
-      } */}
+      
       </div>
     );
   }
