@@ -29,21 +29,21 @@ class ProjLayout extends Component {
     const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
     // console.log(' issues received by Layout', userIssues);
     // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
-    console.log('IssueState', this.state.issues);
-    console.log('New Props', userIssues);
+    // console.log('IssueState', this.state.issues);
+    // console.log('New Props', userIssues);
     if (this.state.issues === userIssues) {
       this.setState({ issues: userIssues });
     }
     if(currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
       this.setState({ currentRepoOwner: currentRepoOwner });
       // console.log('receive props after set state of current repo owner', this.state.currentRepoOwner);
-      // if (repoName) {
+      if (repoName) {
         if (repoName !== this.state.repoName) {
-          console.log('Going to get new stuff');
+          // console.log('Going to get new stuff');
           this.props.fetchUserReadme(currentRepoOwner, repoName, this.props.git_token);
           this.props.fetchUserIssues(currentRepoOwner, repoName, this.props.git_token);
         }
-      // }
+      }
     }
     if (readme.length !== 0) {
       // console.log(' IS THIS README CHECK FIRING ?????');

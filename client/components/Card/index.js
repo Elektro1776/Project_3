@@ -90,7 +90,12 @@ render() {
     }
     return (
       <div className={styles.mainCont}>
-        {issues.map((issue, i) => (
+        {this.state.issues.map((issue) => 
+          <div>
+            <p>{issue.title}</p>
+          </div>
+        )}
+        {/* {issues.map((issue, i) => (
           <div key={issue.id}>
             <Collapsible trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
               <Card className={styles.child}>
@@ -112,13 +117,13 @@ render() {
                     onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
                   />
                   {/* <Button label="Add to Matrix" /> */}
-                </CardActions>
+                {/* </CardActions>
               </Card>
             </Collapsible>
-          </div>
-        ),
+          </div> */}
+        {/* ),
         )
-        }
+      } */}
       </div>
     );
   }
