@@ -24,19 +24,22 @@ class ProjLayout extends Component {
     this.props.fetchUserIssues(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
+    // console.log('Current layout state in receive props', this.state);
+    // console.log('Next Props coming in', nextProps);
     const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
     // console.log(' issues received by Layout', userIssues);
     // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
-    if (this.state.issues.length !== userIssues.length) {
+    // console.log('IssueState', this.state.issues);
+    // console.log('New Props', userIssues);
+    if (this.state.issues === userIssues) {
       this.setState({ issues: userIssues });
     }
     if(currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
       this.setState({ currentRepoOwner: currentRepoOwner });
       // console.log('receive props after set state of current repo owner', this.state.currentRepoOwner);
       if (repoName) {
-        if (repoName !== this.props.repoName) {
-          // console.log(' FIRING FETCH README!!!!!!::::::::::', this.state.currentRepoOwner, repoName, this.props.git_token);
-          // console.log('IF reponame is true', this.state.currentRepoOwner);
+        if (repoName !== this.state.repoName) {
+          // console.log('Going to get new stuff');
           this.props.fetchUserReadme(currentRepoOwner, repoName, this.props.git_token);
           this.props.fetchUserIssues(currentRepoOwner, repoName, this.props.git_token);
         }
@@ -112,6 +115,7 @@ class ProjLayout extends Component {
   }
   render() {
     // console.log(this.state.issues, "current issues from state in LAYOUT");
+    // console.log('readme', this.state.readme);/
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}

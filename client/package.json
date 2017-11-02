@@ -2,10 +2,11 @@
   "dependencies": {
     "add": "^2.0.6",
     "axios": "^0.16.2",
+    "babel-cli": "^6.26.0",
     "history": "^4.7.2",
+    "material-ui": "^0.19.4",
     "prop-types": "^15.6.0",
     "react": "^15.6.1",
-    "react-collapsible": "^2.0.3",
     "react-dnd": "^2.5.3",
     "react-dnd-html5-backend": "^2.5.3",
     "react-dom": "^15.6.1",

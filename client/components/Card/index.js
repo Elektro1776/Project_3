@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Card, CardTitle, CardActions } from 'react-toolbox/lib/card';
-import { Button } from 'react-toolbox/lib/button';
 import CardComments from './Card_Comments';
 import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
-import Collapsible from 'react-collapsible';
-import DropdownTrigger from './Dropdown_Card';
 import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
 import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
+import FlatButton from 'material-ui/FlatButton';
 
 class IssueCard extends Component {
   state = {
@@ -21,12 +20,27 @@ class IssueCard extends Component {
     issueComments: null,
     newCommentText: '',
     currentIssueNumber: '',
+    expandedCards: {},
+  }
+  handleCardExpansionChange = (issueNum) => {
+    const expansionValue = !this.state.expandedCards[issueNum].expanded;
+    let newObjGroup = this.state.expandedCards;
+    newObjGroup = Object.assign({}, newObjGroup, { [issueNum]: { expanded: expansionValue } });
+    this.setState({ expandedCards: newObjGroup });
+  }
+  handleCardExpansion = () => {
+    let objGroup = {};
+    this.props.issues.map((issue) => {
+      objGroup = Object.assign({}, objGroup, { [issue.number]: { expanded: false } });
+    });
+    this.setState({ expandedCards: objGroup });
   }
   componentDidMount() {
     // console.log('INTIAL COMMENTS DATA TO SEND OFF ', this.props.repoOwner, this.props.repoName);
     this.props.issues.map((issue) => {
       this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
     });
+    this.handleCardExpansion();
   }
   componentWillReceiveProps(nextProps) {
     // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
@@ -70,8 +84,10 @@ shouldComponentUpdate(nextProps, nextState) {
   return true;
 }
 render() {
+  // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
   const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
+  // console.log('TESTING DATA', this.state.issues[0].pull_request.url);
   if (issuesLoaded && commentsLoaded) {
     // console.log(this.state.issues, 'THESE ARE MY ISSUES PASSED TO ISSUE CARD RENDER AREA');
     if (isShowingModal) {
@@ -91,34 +107,29 @@ render() {
     return (
       <div className={styles.mainCont}>
         {issues.map((issue, i) => (
-          <div key={issue.id}>
-            <Collapsible trigger={<DropdownTrigger issueTitle={issue.title} issueNumber={issue.number} />}>
-              <Card className={styles.child}>
-                <CardTitle
-                  avatar={issue.user.avatar_url}
-                  title={issue.user.login}
-                  //  subtitle={this.state.currentProject.name}
+          <MuiThemeProvider key={issue.id}>
+            <Card style={{ width: 350, height: 'auto', margin: 10 }} expanded={this.state.expandedCards[issue.number].expanded} onExpandChange={() => this.handleCardExpansionChange(issue.number)}>
+              <CardHeader
+                title={issue.title}
+                subtitle={`${issue.pull_request ? 'Pull Request': 'Issue'} #${issue.number} Opened By ${issue.user.login}`}
+                avatar={issue.user.avatar_url}
+                actAsExpander={true}
+                showExpandableButton={true}
+              />
+              <CardComments expandable={true} issueComments={issueComments[issue.number]} />
+
+              <CardActions expandable={true}>
+                <FlatButton label="Comment" onClick={() => this.handleClick(issue.number)} />
+                <FlatButton
+                  label="Close"
+                  onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
                 />
-                <CardTitle
-                  subtitle={issue.body}
-                />
-                <CardComments issueComments={issueComments[issue.number]} handleClick={this.handleClick} handleClose={this.handleClose} />
-                <h6 style={{ marginLeft: 15 }}>Assignees</h6>
-                <CardAssignees assigneesData={assigneeData} indexValue={i} />
-                <CardActions>
-                  <Button label="Add Comment" onClick={() => this.handleClick(issue.number)} />
-                  <Button
-                    label="Close Issue"
-                    onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
-                  />
-                  {/* <Button label="Add to Matrix" /> */}
-                </CardActions>
-              </Card>
-            </Collapsible>
-          </div>
-        ),
-        )
-        }
+              </CardActions>
+            </Card>
+          </MuiThemeProvider>
+
+        ))}
+
       </div>
     );
   }
