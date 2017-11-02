@@ -78,22 +78,6 @@ githubRouter.post('/getCollaborators', (req, res) => {
   });
 });
 
-// Get all pull requests
-// githubRouter.post('/api/github/getPulls', (req, res) => {
-//   //  console.log(req.body);
-//   request({
-//     headers: {
-//       Accept: 'application/vnd.github.v3.full+json',
-//       'User-Agent': 'request',
-//     },
-//     method: 'GET',
-//     json: true,
-//     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/pulls`,
-//   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY?', body);
-//   });
-// });
-
 // // Create an issue
 // githubRouter.post('/api/github/createIssue', (req, res) => {
 //   request({
