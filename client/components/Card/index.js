@@ -107,7 +107,8 @@ render() {
     return (
       <div className={styles.mainCont}>
         {issues.map((issue, i) => (
-          <MuiThemeProvider key={issue.id}>
+          <div key={issue.id}>
+          <MuiThemeProvider>
             <Card style={{ width: 350, height: 'auto', margin: 10 }} expanded={this.state.expandedCards[issue.number].expanded} onExpandChange={() => this.handleCardExpansionChange(issue.number)}>
               <CardHeader
                 title={issue.title}
@@ -127,7 +128,7 @@ render() {
               </CardActions>
             </Card>
           </MuiThemeProvider>
-
+        </div>
         ))}
 
       </div>
