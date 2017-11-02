@@ -98,7 +98,7 @@ githubRouter.post('/createIssue', (req, res) => {
     //   return res.status(200).json({ collabs: body, err: null });
     // }
     // res.status(500).json({ err, collabs: null });
-  });
+  // });
 });
 
 // Create a pull request
