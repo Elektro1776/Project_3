@@ -87,6 +87,7 @@ render() {
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
   const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
+  // console.log('TESTING DATA', this.state.issues[0].pull_request.url);
   if (issuesLoaded && commentsLoaded) {
     // console.log(this.state.issues, 'THESE ARE MY ISSUES PASSED TO ISSUE CARD RENDER AREA');
     if (isShowingModal) {
@@ -105,13 +106,12 @@ render() {
     }
     return (
       <div className={styles.mainCont}>
-        {issues.map((issue) => (
-
+        {issues.map((issue, i) => (
           <MuiThemeProvider key={issue.id}>
             <Card style={{ width: 350, height: 'auto', margin: 10 }} expanded={this.state.expandedCards[issue.number].expanded} onExpandChange={() => this.handleCardExpansionChange(issue.number)}>
               <CardHeader
                 title={issue.title}
-                subtitle={`Issue #${issue.number} Opened By ${issue.user.login}`}
+                subtitle={`${issue.pull_request ? 'Pull Request': 'Issue'} #${issue.number} Opened By ${issue.user.login}`}
                 avatar={issue.user.avatar_url}
                 actAsExpander={true}
                 showExpandableButton={true}
@@ -119,9 +119,11 @@ render() {
               <CardComments expandable={true} issueComments={issueComments[issue.number]} />
 
               <CardActions expandable={true}>
-                <FlatButton label='Comment' onClick={() => this.handleClick(issue.number)} />
-                <FlatButton label='Close'
-                    onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)} />
+                <FlatButton label="Comment" onClick={() => this.handleClick(issue.number)} />
+                <FlatButton
+                  label="Close"
+                  onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
+                />
               </CardActions>
             </Card>
           </MuiThemeProvider>
