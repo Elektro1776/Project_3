@@ -23,3 +23,11 @@
 .loaderTextTwo{
   text-align: center;
 }
+.issueButtons {
+  display:flex;
+  justify-content:space-evenly;
+  border-bottom:2px solid black;
+  padding-bottom: 10px;
+  padding-top: 10px;
+
+}

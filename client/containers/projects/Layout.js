@@ -8,6 +8,7 @@ import { fetchUserIssues } from '../../actions/githubActions/getIssuesAction';
 import { fetchUserReadme } from '../../actions/githubActions/getReadmeAction';
 import Matrix from '../../components/Matrix/Matrix';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 
 class ProjLayout extends Component {
@@ -87,11 +88,25 @@ class ProjLayout extends Component {
       case 'issuesButt':
         return (
           <div>
-            <div>
+            <div className={styles.issueButtons}>
               <MuiThemeProvider>
+                <Card style={{width:350}}>
+                  <CardActions>
               <FlatButton label='New' />
+            </CardActions>
+
+              </Card>
+
             </MuiThemeProvider>
-            <i className="material-icons pull-right" style={{cursor: 'pointer'}} onClick={this.handleRefresh}>refresh</i>
+            <MuiThemeProvider>
+              <Card style={{width:350}}>
+                <CardActions>
+            <FlatButton label='Refresh' onClick={this.handleRefresh} />
+          </CardActions>
+
+            </Card>
+
+          </MuiThemeProvider>
             </div>
             <div>
             <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
