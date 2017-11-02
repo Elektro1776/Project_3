@@ -84,7 +84,7 @@ shouldComponentUpdate(nextProps, nextState) {
   return true;
 }
 render() {
-  console.log('Expanded card State', this.state.expandedCards);
+  // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
   const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
   if (issuesLoaded && commentsLoaded) {

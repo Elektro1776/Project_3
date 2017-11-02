@@ -14,7 +14,7 @@ class Projects extends Component {
       currentProject: null,
       currentScreen: 'readmeButt',
     };
-    componentDidMount() {      
+    componentDidMount() {
       // console.log(' DO WE HAVE A CURRENT PROJECT?', this.props.currentProject);
       this.setState({ currentProject: this.props.currentProject });
     }
@@ -22,7 +22,7 @@ class Projects extends Component {
       // console.log("this should show projects connected in state", nextProps.currentProject);
       const { currentProject } = nextProps;
       if (currentProject.length !== 0 && currentProject.id !== this.props.currentProject.id) {
-        this.setState({ currentProject });
+        this.setState({ currentProject, currentScreen: 'readmeButt' });
       }
     }
     whatStateToChange(prop) {
