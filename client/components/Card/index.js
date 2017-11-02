@@ -47,7 +47,7 @@ class IssueCard extends Component {
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues, repoName, repoOwner } = nextProps;
     // this.setState({ issueComments });
-    // console.log('AM I geting the new refresh in issue card', issues);
+    console.log('AM I geting the new refresh in issue card', issues);
     // console.log('Here are next props in Issue card', repoName, repoOwner);
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;

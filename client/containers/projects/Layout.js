@@ -32,8 +32,8 @@ class ProjLayout extends Component {
     const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
     // console.log(' issues received by Layout', userIssues);
     // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
-    // console.log('IssueState', this.state.issues);
-    // console.log('New Props', userIssues);
+    console.log('IssueState', this.state.issues);
+    console.log('New Props', userIssues);
     if (this.state.issues === userIssues) {
       this.setState({ issues: userIssues });
     }
@@ -85,7 +85,7 @@ class ProjLayout extends Component {
 
             </MuiThemeProvider>
             <MuiThemeProvider>
-              <Card className={styles.buttonPos} style={{width:350}}>
+              <Card className={styles.buttonPos} style={{width:350, cursor:'pointer'}} onClick={this.handleRefresh}>
                 <CardActions>
             <FlatButton label='Refresh' onClick={this.handleRefresh} />
           </CardActions>
