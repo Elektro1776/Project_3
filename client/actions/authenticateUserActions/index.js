@@ -24,7 +24,7 @@ export const checkUserToken = ({ token, access_token, github_token }) => {
         if (git_token || github_token) {
           dispatch(githubTokenSuccess(git_token || github_token));
           if (git_profile) {
-            console.log(' DO WE GET A GIT PROFILE???', git_profile);
+            // console.log(' DO WE GET A GIT PROFILE???', git_profile);
             dispatch(githubProfileInfo(git_profile));
           }
         }

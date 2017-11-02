@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { CardText } from 'react-toolbox/lib/card';
+import { CardText } from 'material-ui/Card';
 import styles from './cardComments.css';
 import { convertDate } from '../EventFeed/logical_solutions';
 

@@ -15,7 +15,7 @@ editorDidMount(editor, monaco) {
   editor.focus();
 }
 onChange(newValue, e) {
-  console.log('onChange', newValue, e);
+  // console.log('onChange', newValue, e);
   function localStore (state) {
     localStorage.setItem('CodeEditorPreviousState', JSON.stringify(state));
 
@@ -34,7 +34,7 @@ render() {
     selectOnLineNumbers: true
   };
   // console.log(this.props.currentLanguageState, 'should be language');
-  console.log(this.state.code, 'here is my code state');
+  // console.log(this.state.code, 'here is my code state');
   return (
     <div>
       <MonacoEditor

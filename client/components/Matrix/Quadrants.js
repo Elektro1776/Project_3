@@ -8,7 +8,7 @@ class Quadrants extends Component {
   state = {}
 
   toggleCheckbox = (title) => {
-    console.log(title);
+    // console.log(title);
   }
 
   render() {
