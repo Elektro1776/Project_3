@@ -119,8 +119,9 @@ render() {
               <CardComments expandable={true} issueComments={issueComments[issue.number]} />
 
               <CardActions expandable={true}>
-                <FlatButton label="Action1" />
-                <FlatButton label="Action2" />
+                <FlatButton label='Comment' onClick={() => this.handleClick(issue.number)} />
+                <FlatButton label='Close'
+                    onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)} />
               </CardActions>
             </Card>
           </MuiThemeProvider>
