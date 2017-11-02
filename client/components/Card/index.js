@@ -108,27 +108,27 @@ render() {
       <div className={styles.mainCont}>
         {issues.map((issue, i) => (
           <div key={issue.id}>
-          <MuiThemeProvider>
-            <Card style={{ width: 350, height: 'auto', margin: 10 }} expanded={this.state.expandedCards[issue.number].expanded} onExpandChange={() => this.handleCardExpansionChange(issue.number)}>
-              <CardHeader
-                title={issue.title}
-                subtitle={`${issue.pull_request ? 'Pull Request': 'Issue'} #${issue.number} Opened By ${issue.user.login}`}
-                avatar={issue.user.avatar_url}
-                actAsExpander={true}
-                showExpandableButton={true}
-              />
-              <CardComments expandable={true} issueComments={issueComments[issue.number]} />
-
-              <CardActions expandable={true}>
-                <FlatButton label="Comment" onClick={() => this.handleClick(issue.number)} />
-                <FlatButton
-                  label="Close"
-                  onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
+            <MuiThemeProvider>
+              <Card style={{ width: 350, height: 'auto', margin: 10 }} expanded={this.state.expandedCards[issue.number].expanded} onExpandChange={() => this.handleCardExpansionChange(issue.number)}>
+                <CardHeader
+                  title={issue.title}
+                  subtitle={`${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number} Opened By ${issue.user.login}`}
+                  avatar={issue.user.avatar_url}
+                  actAsExpander={true}
+                  showExpandableButton={true}
                 />
-              </CardActions>
-            </Card>
-          </MuiThemeProvider>
-        </div>
+                <CardComments expandable={true} issueComments={issueComments[issue.number]} />
+
+                <CardActions expandable={true}>
+                  <FlatButton label="Comment" onClick={() => this.handleClick(issue.number)} />
+                  <FlatButton
+                    label="Close"
+                    onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
+                  />
+                </CardActions>
+              </Card>
+            </MuiThemeProvider>
+          </div>
         ))}
 
       </div>

@@ -19,6 +19,7 @@ class Dashboard extends Component {
     this.handleToggle = this.handleToggle.bind(this);
   }
   componentDidMount() {
+    console.log('mounted');
     if (this.props.gitAuth.githubAuthentication) {
       if (!this.props.gitAuth.git_profile) {
         this.props.fetchGitProfile(this.props.gitAuth.github_token);

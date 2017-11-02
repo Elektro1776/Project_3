@@ -12,11 +12,11 @@ class EventFeed extends Component {
     };
   }
   componentDidMount() {
-    // if (this.props.git_profile.login) {
-    //   console.log(' WE SHOULD BE FETCHING THE EVENT FEED!!!!!', this.props.git_profile);
-    //   this.props.fetchUserEvents(this.props.git_profile.login, this.props.git_token);
-    //
-    // }
+    if (this.props.git_profile.login) {
+      // console.log(' WE SHOULD BE FETCHING THE EVENT FEED!!!!!', this.props.git_profile);
+      this.props.fetchUserEvents(this.props.git_profile.login, this.props.git_token);
+
+    }
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.git_profile.login && nextProps.git_profile.login !== this.props.git_profile.login) {

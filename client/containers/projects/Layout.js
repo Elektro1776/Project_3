@@ -7,6 +7,8 @@ import CodeEditorParent from '../../components/CodeEditor';
 import { fetchUserIssues } from '../../actions/githubActions/getIssuesAction';
 import { fetchUserReadme } from '../../actions/githubActions/getReadmeAction';
 import Matrix from '../../components/Matrix/Matrix';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import FlatButton from 'material-ui/FlatButton';
 
 class ProjLayout extends Component {
   constructor(props) {
@@ -86,6 +88,9 @@ class ProjLayout extends Component {
         return (
           <div>
             <div>
+              <MuiThemeProvider>
+              <FlatButton label='New' />
+            </MuiThemeProvider>
             <i className="material-icons pull-right" style={{cursor: 'pointer'}} onClick={this.handleRefresh}>refresh</i>
             </div>
             <div>
