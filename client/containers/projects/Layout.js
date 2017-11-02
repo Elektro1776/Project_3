@@ -115,6 +115,7 @@ class ProjLayout extends Component {
   }
   render() {
     // console.log(this.state.issues, "current issues from state in LAYOUT");
+    // console.log('readme', this.state.readme);/
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
