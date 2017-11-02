@@ -52,25 +52,11 @@ class ProjLayout extends Component {
       // console.log(' IS THIS README CHECK FIRING ?????');
       this.setState({ readme, repoName });
     }
-    // if (repoName) {
-    //   if (repoName !== this.props.repoName) {
-    //     // console.log(' FIRING FETCH README!!!!!!::::::::::', this.state.currentRepoOwner, repoName, this.props.git_token);
-    //     console.log('IF reponame is true', this.state.currentRepoOwner);
-    //     this.props.fetchUserReadme(this.state.currentRepoOwner, repoName, this.props.git_token);
-    //     this.props.fetchUserIssues(this.state.currentRepoOwner, repoName, this.props.git_token);
-    //   }
-    // }
-    if (readme !== null) {
-      // console.log(' WE SHOULD BE SETTING THE READ ME');
-      // this.setState({ readme });
-    }
     if (userIssues !== null) {
-      // console.log(' WHAT IS OUR READ ME ?????', readme);
       this.setState({ issues: userIssues, readme });
     }
   }
   handleRefresh = () => {
-    // console.log('WHAT WE SENDING FOR NEW ISSUES', this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
   }
   whatStateToUse = (screen) => {
@@ -90,7 +76,7 @@ class ProjLayout extends Component {
           <div>
             <div className={styles.issueButtons}>
               <MuiThemeProvider>
-                <Card style={{width:350}}>
+                <Card className={styles.buttonPos} style={{width:350}}>
                   <CardActions>
               <FlatButton label='New' />
             </CardActions>
@@ -99,7 +85,7 @@ class ProjLayout extends Component {
 
             </MuiThemeProvider>
             <MuiThemeProvider>
-              <Card style={{width:350}}>
+              <Card className={styles.buttonPos} style={{width:350}}>
                 <CardActions>
             <FlatButton label='Refresh' onClick={this.handleRefresh} />
           </CardActions>
