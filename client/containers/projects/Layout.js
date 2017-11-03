@@ -10,6 +10,7 @@ import Matrix from '../../components/Matrix/Matrix';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import { createUserIssue } from '../../actions/githubActions/createIssueAction';
 
 class ProjLayout extends Component {
   constructor(props) {
@@ -37,8 +38,8 @@ class ProjLayout extends Component {
     if (this.state.issues === userIssues) {
       this.setState({ issues: userIssues });
     }
-    if(currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
-      this.setState({ currentRepoOwner: currentRepoOwner });
+    if (currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
+      this.setState({ currentRepoOwner });
       // console.log('receive props after set state of current repo owner', this.state.currentRepoOwner);
       if (repoName) {
         if (repoName !== this.state.repoName) {
@@ -59,6 +60,10 @@ class ProjLayout extends Component {
   handleRefresh = () => {
     this.props.fetchUserIssues(this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
   }
+  handleCreateIssueData = () => {
+    console.log('WHAT ARE WE SENDING TO CREATE', this.state.currentRepoOwner, this.state.repoName, this.props.git_token, 'title', 'body', '901david');
+    this.props.createUserIssue(this.state.currentRepoOwner, this.state.repoName, this.props.git_token, 'title', 'body', '901david')
+  }
   whatStateToUse = (screen) => {
     switch (screen) {
       case 'readmeButt':
@@ -76,27 +81,27 @@ class ProjLayout extends Component {
           <div>
             <div className={styles.issueButtons}>
               <MuiThemeProvider>
-                <Card className={styles.buttonPos} style={{width:350}}>
+                <Card className={styles.buttonPos} style={{ width: 350 }}>
                   <CardActions>
-              <FlatButton label='New' />
-            </CardActions>
+                    <FlatButton label="New" onClick={this.handleCreateIssueData} />
+                  </CardActions>
 
-              </Card>
+                </Card>
 
-            </MuiThemeProvider>
-            <MuiThemeProvider>
-              <Card className={styles.buttonPos} style={{width:350, cursor:'pointer'}} onClick={this.handleRefresh}>
-                <CardActions>
-            <FlatButton label='Refresh' onClick={this.handleRefresh} />
-          </CardActions>
+              </MuiThemeProvider>
+              <MuiThemeProvider>
+                <Card className={styles.buttonPos} style={{ width: 350, cursor: 'pointer' }} onClick={this.handleRefresh}>
+                  <CardActions>
+                    <FlatButton label="Refresh" onClick={this.handleRefresh} />
+                  </CardActions>
 
-            </Card>
+                </Card>
 
-          </MuiThemeProvider>
+              </MuiThemeProvider>
             </div>
             <div>
-            <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
-          </div>
+              <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
+            </div>
           </div>
         );
       case 'matrixButt':
@@ -139,4 +144,5 @@ export default connect((state, ownProps) => ({
 }), (dispatch) => ({
   fetchUserIssues: (userId, repoName, token) => dispatch(fetchUserIssues(userId, repoName, token)),
   fetchUserReadme: (userId, repoName, token) => dispatch(fetchUserReadme(userId, repoName, token)),
+  createUserIssue: (userId, repoName, token, title, body, assignees) => dispatch(createUserIssue(userId, repoName, token, title, body, assignees)),
 }))(ProjLayout);

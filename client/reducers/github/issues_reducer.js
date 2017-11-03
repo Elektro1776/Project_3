@@ -26,6 +26,9 @@ function updateItemInArray(array, issueId) {
 
   return updatedItems;
 }
+function updateItemInObj(old, newObj) {
+  return Object.assign({}, old, newObj);
+}
 export default function (state = initialState, action) {
   switch (action.type) {
     case FETCHING_ISSUES:
@@ -51,8 +54,11 @@ export default function (state = initialState, action) {
     case CREATING_ISSUE: {
       return Object.assign({}, state, { creatingIssue: true });
     }
-    case RECEIVED_CLOSING_ISSUE: {
-      //need to update the state here
+    case RECEIVED_CREATED_ISSUE: {
+      // const oldState = state.repoIssues;
+      // const updatedState = updateItemInObj(oldState, action.payload.issue);
+      // console.log('NEW UPDATED STATE WITH NEW ISSUE');
+
     }
     case FAILURE_CREATING_ISSUE: {
       return Object.assign({}, state, { errorCreatingIssue: action.payload.err });

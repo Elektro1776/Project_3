@@ -80,25 +80,25 @@ githubRouter.post('/getCollaborators', (req, res) => {
 
 // Create an issue
 githubRouter.post('/createIssue', (req, res) => {
-  console.log('HITTING CREATE ISSUE ROUTE ON SERVER');
-  // request({
-  //   headers: {
-  //     Accept: 'application/vnd.github.v3.full+json',
-  //     'User-Agent': 'request',
-  //   },
-  //   method: 'POST',
-  //   json: true,
-  //   url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues?access_token=${req.body.token}`,
-  //   body: { title: req.body.title,
-  //     body: req.body.body,
-  //     assignees: req.body.assignees },
-  // }, (err, response, body) => {
-    // console.log(' WHAT IS THE BODY?', body);
+  console.log('HITTING CREATE ISSUE ROUTE ON SERVER', req.body.assignees);
+  request({
+    headers: {
+      Accept: 'application/vnd.github.v3.full+json',
+      'User-Agent': 'request',
+    },
+    method: 'POST',
+    json: true,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues?access_token=${req.body.token}`,
+    body: { title: req.body.title,
+      body: req.body.body,
+      assignees: [req.body.assignees] },
+  }, (err, response, body) => {
+    console.log(' WHAT IS THE BODY? FOR CREATE ISSUE', body);
     // if (!err) {
     //   return res.status(200).json({ collabs: body, err: null });
     // }
     // res.status(500).json({ err, collabs: null });
-  // });
+  });
 });
 
 // Create a pull request
