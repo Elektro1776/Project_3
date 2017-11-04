@@ -32,6 +32,7 @@ class IssuePullModal extends Component {
                   source={values}
                   value={this.state.showing}
                 />
+                <form>
                 <p>Title</p>
                 <input name='title' />
                 <p>Body</p>
@@ -41,6 +42,7 @@ class IssuePullModal extends Component {
                 <p>Assignees</p>
                 <button className="btn btn-lg btn-success">Submit</button>
                 <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+              </form>
               </ModalDialog>
 
             </ModalContainer>
