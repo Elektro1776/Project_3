@@ -10,6 +10,9 @@ const values = [
 class IssuePullModal extends Component {
   state = {
     showing: 'issue',
+    title: '',
+    body: '',
+    assignees: '',
   }
   handlePullRequestDisplay = (value) => {
     this.setState({ showing: value });
@@ -29,7 +32,13 @@ class IssuePullModal extends Component {
                   source={values}
                   value={this.state.showing}
                 />
-                <p>New Issue</p>
+                <p>Title</p>
+                <input name='title' />
+                <p>Body</p>
+                <textarea defaultValue={this.state.body} name='body' onChange={this.props.changeHandler} style={{ width: '100%', height: '75px' }}>
+
+                </textarea>
+                <p>Assignees</p>
                 <button className="btn btn-lg btn-success">Submit</button>
                 <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
               </ModalDialog>
