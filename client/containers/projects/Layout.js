@@ -11,6 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import { createUserIssue } from '../../actions/githubActions/createIssueAction';
+import IssuePullModal from '../../components/Modal/newissuePull_Modal';
 
 class ProjLayout extends Component {
   constructor(props) {
@@ -20,6 +21,7 @@ class ProjLayout extends Component {
       readme: null,
       repoName: '',
       currentRepoOwner: null,
+      issuePullModalShowing: false,
     };
   }
   componentDidMount() {
@@ -64,6 +66,12 @@ class ProjLayout extends Component {
     console.log('WHAT ARE WE SENDING TO CREATE', this.state.currentRepoOwner, this.state.repoName, this.props.git_token, 'title', 'body', '901david');
     this.props.createUserIssue(this.state.currentRepoOwner, this.state.repoName, this.props.git_token, 'title', 'body', '901david')
   }
+  handleIssuePullClick = () => {
+    this.setState({ issuePullModalShowing: true });
+  }
+  handleIssuePullClose = () => {
+    this.setState({ issuePullModalShowing: false });
+  }
   whatStateToUse = (screen) => {
     switch (screen) {
       case 'readmeButt':
@@ -83,7 +91,7 @@ class ProjLayout extends Component {
               <MuiThemeProvider>
                 <Card className={styles.buttonPos} style={{ width: 350 }}>
                   <CardActions>
-                    <FlatButton label="New" onClick={this.handleCreateIssueData} />
+                    <FlatButton label="New" onClick={this.handleIssuePullClick} />
                   </CardActions>
 
                 </Card>
@@ -102,6 +110,7 @@ class ProjLayout extends Component {
             <div>
               <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
             </div>
+            <IssuePullModal isShowing={this.state.issuePullModalShowing} handleIssuePullClick={this.handleIssuePullClick} handleIssuePullClose={this.handleIssuePullClose} />
           </div>
         );
       case 'matrixButt':
