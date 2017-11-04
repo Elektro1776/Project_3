@@ -106,11 +106,11 @@ class ProjLayout extends Component {
                 </Card>
 
               </MuiThemeProvider>
+              <IssuePullModal collabs={this.props.collabs} isShowing={this.state.issuePullModalShowing} handleIssuePullClick={this.handleIssuePullClick} handleIssuePullClose={this.handleIssuePullClose} />
             </div>
             <div>
               <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
             </div>
-            <IssuePullModal isShowing={this.state.issuePullModalShowing} handleIssuePullClick={this.handleIssuePullClick} handleIssuePullClose={this.handleIssuePullClose} />
           </div>
         );
       case 'matrixButt':
@@ -146,6 +146,7 @@ class ProjLayout extends Component {
 
 
 export default connect((state, ownProps) => ({
+  collabs: state.collabs.collabs,
   userIssues: state.issues.repoIssues,
   readme: state.readme.readme,
   git_profile: state.auth.git_profile,

@@ -1,11 +1,22 @@
 import React, { Component } from 'react';
 import { ModalContainer, ModalDialog } from 'react-modal-dialog';
 import Dropdown from 'react-toolbox/lib/dropdown';
+import Checkbox from 'material-ui/Checkbox';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import AvatarComp from './avatar_comp';
 
 const values = [
-  {value: 'issue', label: 'New Issue'},
-  {value: 'pull_request', label: 'New Pull Request'},
-]
+  { value: 'issue', label: 'New Issue' },
+  { value: 'pull_request', label: 'New Pull Request' },
+];
+const styles = {
+  block: {
+    maxWidth: 250,
+  },
+  checkbox: {
+    marginBottom: 16,
+  },
+};
 
 class IssuePullModal extends Component {
   state = {
@@ -33,24 +44,36 @@ class IssuePullModal extends Component {
                   value={this.state.showing}
                 />
                 <form>
-                <p>Title</p>
-                <input name='title' />
-                <p>Body</p>
-                <textarea defaultValue={this.state.body} name='body' onChange={this.props.changeHandler} style={{ width: '100%', height: '75px' }}>
+                  <p>Title</p>
+                  <input name="title" />
+                  <p>Body</p>
+                  <textarea defaultValue={this.state.body} name="body" onChange={this.props.changeHandler} style={{ width: '100%', height: '75px' }} />
+                  <div>
+                    <p>Assignees</p>
+                    {this.props.collabs.map((collab) => {
+                      return (
+                        <div key={collab.id} >
+                      <MuiThemeProvider>
+                        <Checkbox
+                          label={<AvatarComp collab={collab} />}
+                          style={styles.checkbox}
+                        />
+                      </MuiThemeProvider>
+                      </div>
+                      );
+                    })}
 
-                </textarea>
-                <p>Assignees</p>
-                <button className="btn btn-lg btn-success">Submit</button>
-                <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
-              </form>
+                  </div>
+                  <button className="btn btn-lg btn-success">Submit</button>
+                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+                </form>
               </ModalDialog>
 
             </ModalContainer>
           }
         </div>
       );
-    }
-    else if (this.state.showing === 'pull_request') {
+    } else if (this.state.showing === 'pull_request') {
       return (
         <div onClick={this.props.handleIssuePullClick}>
           {
