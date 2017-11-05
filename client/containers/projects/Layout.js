@@ -106,7 +106,7 @@ class ProjLayout extends Component {
                 </Card>
 
               </MuiThemeProvider>
-              <IssuePullModal collabs={this.props.collabs} isShowing={this.state.issuePullModalShowing} handleIssuePullClick={this.handleIssuePullClick} handleIssuePullClose={this.handleIssuePullClose} />
+
             </div>
             <div>
               <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
@@ -139,6 +139,7 @@ class ProjLayout extends Component {
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
+        <IssuePullModal collabs={this.props.collabs} isShowing={this.state.issuePullModalShowing} handleIssuePullClick={this.handleIssuePullClick} handleIssuePullClose={this.handleIssuePullClose} />
       </div>
     );
   }

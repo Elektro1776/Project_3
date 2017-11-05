@@ -36,37 +36,36 @@ class IssuePullModal extends Component {
             this.props.isShowing &&
             <ModalContainer onClose={this.props.handleIssuePullClose}>
               <ModalDialog onClose={this.props.handleIssuePullClose}>
-                <Dropdown
-                  auto
-                  label={`Choose Type`}
-                  onChange={this.handlePullRequestDisplay}
-                  source={values}
-                  value={this.state.showing}
-                />
-                <form>
-                  <p>Title</p>
-                  <input name="title" />
-                  <p>Body</p>
-                  <textarea defaultValue={this.state.body} name="body" onChange={this.props.changeHandler} style={{ width: '100%', height: '75px' }} />
-                  <div>
-                    <p>Assignees</p>
-                    {this.props.collabs.map((collab) => {
-                      return (
+                <span style={{visibility:'hidden'}}>loremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem</span>
+                  <Dropdown
+                    auto
+                    label={`Choose Type`}
+                    onChange={this.handlePullRequestDisplay}
+                    source={values}
+                    value={this.state.showing}
+                  />
+                  <form style={{marginBottom: 25}}>
+                    <p>Title</p>
+                    <input name="title" style={{width:'100%'}} />
+                    <p>Body</p>
+                    <textarea defaultValue={this.state.body} name="body" onChange={this.props.changeHandler} style={{ width: '100%', height: '75px' }} />
+                    <div>
+                      <p>Assignees</p>
+                      {this.props.collabs.map((collab) => (
                         <div key={collab.id} >
-                      <MuiThemeProvider>
-                        <Checkbox
-                          label={<AvatarComp collab={collab} />}
-                          style={styles.checkbox}
-                        />
-                      </MuiThemeProvider>
-                      </div>
-                      );
-                    })}
+                          <MuiThemeProvider>
+                            <Checkbox
+                              label={<AvatarComp collab={collab} />}
+                              style={styles.checkbox}
+                            />
+                          </MuiThemeProvider>
+                        </div>
+                      ))}
 
-                  </div>
-                  <button className="btn btn-lg btn-success">Submit</button>
-                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
-                </form>
+                    </div>
+                    <button className="btn btn-lg btn-success">Submit</button>
+                    <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+                  </form>
               </ModalDialog>
 
             </ModalContainer>
