@@ -38,6 +38,7 @@ class Projects extends Component {
       return false;
     }
     render() {
+      console.log('Current screen from container', this.state.currentScreen);
       const { currentProject } = this.state;
       if (currentProject !== null) {
         console.log('HOPEFULLY CHANGES AS YOU CLICK!!!!!!! ', currentProject);

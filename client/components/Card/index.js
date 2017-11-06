@@ -48,19 +48,28 @@ class IssueCard extends Component {
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues, repoName, repoOwner } = nextProps;
     // this.setState({ issueComments });
-    console.log('AM I geting the new refresh in issue card', issues);
+    // console.log('State Prios in Card itself need to see if this is being modified', this.state.issues);
+    // console.log('AM I geting the new issue Array', issues);
     // console.log('Here are next props in Issue card', repoName, repoOwner);
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (this.state.issues !== null) {
       if (this.props.issues.length !== issues.length) {
-        console.log('SETTING ISSUES STATE AS WE READ');
-        this.setState({ issues });
+        this.setState({ issuesLoaded: false });
+        // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
+        this.setState({ issues, issuesLoaded: true });
+        // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
+
       }
     }
     if (commentsLength === issuesLength) {
       // console.log('Issues in Issue Card from next props', issues);
+      this.setState({ issuesLoaded: false });
+      // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
+
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
+      // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
+
     }
     if (this.state.issueComments !== null) {
       if (issueComments.length !== this.state.issueComments.length) {
@@ -90,10 +99,8 @@ shouldComponentUpdate(nextProps, nextState) {
 render() {
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
-  // console.log('TESTING DATA', this.state.issues[0].pull_request.url);
+  console.log("Card state issues!!!!!!!!!!!!!!!!!!!!", this.state.issues);
   if (issuesLoaded && commentsLoaded) {
-
-    // console.log(this.state.issues, 'THESE ARE MY ISSUES PASSED TO ISSUE CARD RENDER AREA');
     if (isShowingModal) {
       return (
         <div>
@@ -122,6 +129,9 @@ render() {
                   actAsExpander={true}
                   showExpandableButton={true}
                 />
+                <CardText expandable={true}>
+                  <p>{issue.body}</p>
+                </CardText>
                 <CardComments expandable={true} issueComments={issueComments[issue.number]} />
                 <CardText expandable={true}>
                 <h5>Current Assignees:</h5>

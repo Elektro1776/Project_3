@@ -32,11 +32,12 @@ class ProjLayout extends Component {
     // console.log('Current layout state in receive props', this.state);
     // console.log('Next Props coming in', nextProps);
     const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
-    console.log(' issues received by Layout', userIssues);
+    // console.log(' issues received by Layout', userIssues);
     // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
-    console.log('IssueState', this.state.issues);
-    console.log('New Props', userIssues);
-    if (this.state.issues === userIssues) {
+    // console.log('IssueState', this.state.issues.length);
+    // console.log('New Props', userIssues.length);
+    if (this.props.issues !== userIssues) {
+      // console.log('FIRING SET STATE IN LAYOUT?????');
       this.setState({ issues: userIssues });
     }
     if (currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
@@ -134,8 +135,6 @@ class ProjLayout extends Component {
     }
   }
   render() {
-    // console.log(this.state.issues, "current issues from state in LAYOUT");
-    // console.log('readme', this.state.readme);/
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
