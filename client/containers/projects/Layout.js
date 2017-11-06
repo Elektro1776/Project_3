@@ -61,8 +61,7 @@ class ProjLayout extends Component {
   handleRefresh = () => {
     this.props.fetchUserIssues(this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
   }
-  handleCreateIssueData = (event, title, body, assignees) => {
-    event.preventDefault();
+  handleCreateIssueData = (title, body, assignees) => {
     console.log('WHAT ARE WE SENDING TO CREATE', this.state.currentRepoOwner, this.state.repoName, this.props.git_token, title, body, assignees);
     this.props.createUserIssue(this.state.currentRepoOwner, this.state.repoName, this.props.git_token, title, body, assignees);
   }

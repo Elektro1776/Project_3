@@ -59,6 +59,15 @@ class IssuePullModal extends Component {
     this.setState({ [prop]:val });
     // console.log('heres state', this.state);
   }
+  handleSubmit = (event) => {
+    event.preventDefault();
+    if (this.state.showing === 'issue') {
+      this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
+    }
+    else if (this.state.showing === 'pull_request') {
+      console.log('you submitted a pull request');
+    }
+  }
   render() {
     // console.log('Here are my assignees', this.state.assignees);
     if (this.state.showing === 'issue') {
@@ -76,7 +85,7 @@ class IssuePullModal extends Component {
                   source={values}
                   value={this.state.showing}
                 />
-                <form style={{ marginBottom: 25 }} onSubmit={()=> this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees)}>
+                <form style={{ marginBottom: 25 }} onSubmit={this.handleSubmit}>
                   <p>Title</p>
                   <input name="title" style={{ width: '100%' }} onChange={this.handleIssueFormChange} />
                   <p>Body</p>
