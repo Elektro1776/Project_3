@@ -23,12 +23,44 @@ class IssuePullModal extends Component {
     showing: 'issue',
     title: '',
     body: '',
-    assignees: '',
+    assignees: [],
   }
   handlePullRequestDisplay = (value) => {
     this.setState({ showing: value });
   }
+  handleCheck = (user) => {
+    const currentAssignees = this.state.assignees;
+    if (currentAssignees.length === 0) {
+      currentAssignees.push(user);
+    } else {
+      function nameCheck() {
+        for (let i = 0; i < currentAssignees.length; i++) {
+          if (currentAssignees[i] === user) {
+            return i;
+          }
+        }
+        return false;
+      }
+      if (nameCheck() === false) {
+        // console.log('I am false');
+        currentAssignees.push(user);
+      } else {
+        // console.log('I should be removing');
+        const index = nameCheck();
+        // console.log('Here is my index', nameCheck());
+        currentAssignees.splice(index, 1);
+      }
+    }
+    this.setState({ assignees: currentAssignees });
+  }
+  handleIssueFormChange = (event) => {
+    const prop = event.target.name;
+    const val = event.target.value;
+    this.setState({ [prop]:val });
+    // console.log('heres state', this.state);
+  }
   render() {
+    // console.log('Here are my assignees', this.state.assignees);
     if (this.state.showing === 'issue') {
       return (
         <div onClick={this.props.handleIssuePullClick}>
@@ -36,36 +68,37 @@ class IssuePullModal extends Component {
             this.props.isShowing &&
             <ModalContainer onClose={this.props.handleIssuePullClose}>
               <ModalDialog onClose={this.props.handleIssuePullClose}>
-                <span style={{visibility:'hidden'}}>loremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem</span>
-                  <Dropdown
-                    auto
-                    label={`Choose Type`}
-                    onChange={this.handlePullRequestDisplay}
-                    source={values}
-                    value={this.state.showing}
-                  />
-                  <form style={{marginBottom: 25}}>
-                    <p>Title</p>
-                    <input name="title" style={{width:'100%'}} />
-                    <p>Body</p>
-                    <textarea defaultValue={this.state.body} name="body" onChange={this.props.changeHandler} style={{ width: '100%', height: '75px' }} />
-                    <div>
-                      <p>Assignees</p>
-                      {this.props.collabs.map((collab) => (
-                        <div key={collab.id} >
-                          <MuiThemeProvider>
-                            <Checkbox
-                              label={<AvatarComp collab={collab} />}
-                              style={styles.checkbox}
-                            />
-                          </MuiThemeProvider>
-                        </div>
-                      ))}
+                <span style={{ visibility: 'hidden' }}>loremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem</span>
+                <Dropdown
+                  auto
+                  label={`Choose Type`}
+                  onChange={this.handlePullRequestDisplay}
+                  source={values}
+                  value={this.state.showing}
+                />
+                <form style={{ marginBottom: 25 }} onSubmit={()=> this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees)}>
+                  <p>Title</p>
+                  <input name="title" style={{ width: '100%' }} onChange={this.handleIssueFormChange} />
+                  <p>Body</p>
+                  <textarea defaultValue={this.state.body} name="body" onChange={this.handleIssueFormChange} style={{ width: '100%', height: '75px' }} />
+                  <div>
+                    <p>Assignees</p>
+                    {this.props.collabs.map((collab) => (
+                      <div key={collab.id} >
+                        <MuiThemeProvider>
+                          <Checkbox
+                            label={<AvatarComp collab={collab} />}
+                            style={styles.checkbox}
+                            onCheck={() => this.handleCheck(collab.login)}
+                          />
+                        </MuiThemeProvider>
+                      </div>
+                    ))}
 
-                    </div>
-                    <button className="btn btn-lg btn-success">Submit</button>
-                    <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
-                  </form>
+                  </div>
+                  <button className="btn btn-lg btn-success" type='submit'>Submit</button>
+                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+                </form>
               </ModalDialog>
 
             </ModalContainer>

@@ -91,7 +91,7 @@ githubRouter.post('/createIssue', (req, res) => {
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues?access_token=${req.body.token}`,
     body: { title: req.body.title,
       body: req.body.body,
-      assignees: [req.body.assignees] },
+      assignees: req.body.assignees },
   }, (err, response, body) => {
     console.log(' WHAT IS THE BODY? FOR CREATE ISSUE', body);
     // if (!err) {

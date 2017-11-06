@@ -10,6 +10,7 @@ import { addUserComment } from '../../actions/githubActions/addCommentAction';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
+import IssuePullModal from '../../components/Modal/newissuePull_Modal';
 
 class IssueCard extends Component {
   state = {
@@ -84,6 +85,7 @@ handleCloseIssue = (login, repoName, issueNum, token) => {
 shouldComponentUpdate(nextProps, nextState) {
   return true;
 }
+
 render() {
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
@@ -131,7 +133,7 @@ render() {
             </MuiThemeProvider>
           </div>
         ))}
-
+        <IssuePullModal handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
       </div>
     );
   }
@@ -149,6 +151,7 @@ render() {
 // export default IssueCard;
 
 export default connect((state, ownProps) => ({
+  collabs: state.collabs.collabs,
   closedIssData: state.issue,
   currentProject: state.repos.currentProject,
   issueComments: state.comments.issueComments,

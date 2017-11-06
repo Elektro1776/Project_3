@@ -11,7 +11,6 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import { createUserIssue } from '../../actions/githubActions/createIssueAction';
-import IssuePullModal from '../../components/Modal/newissuePull_Modal';
 
 class ProjLayout extends Component {
   constructor(props) {
@@ -62,7 +61,8 @@ class ProjLayout extends Component {
   handleRefresh = () => {
     this.props.fetchUserIssues(this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
   }
-  handleCreateIssueData = (title, body, assignees) => {
+  handleCreateIssueData = (event, title, body, assignees) => {
+    event.preventDefault();
     console.log('WHAT ARE WE SENDING TO CREATE', this.state.currentRepoOwner, this.state.repoName, this.props.git_token, title, body, assignees);
     this.props.createUserIssue(this.state.currentRepoOwner, this.state.repoName, this.props.git_token, title, body, assignees);
   }
@@ -109,7 +109,7 @@ class ProjLayout extends Component {
 
             </div>
             <div>
-              <IssueCard issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
+              <IssueCard handleCreateIssueData={this.handleCreateIssueData} handleIssuePullClose={this.handleIssuePullClose} issueModalState={this.state.issuePullModalShowing} handleIssuePullClick={this.handleIssuePullClick} issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
             </div>
           </div>
         );
@@ -139,7 +139,6 @@ class ProjLayout extends Component {
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
-        <IssuePullModal collabs={this.props.collabs} isShowing={this.state.issuePullModalShowing} handleIssuePullClick={this.handleIssuePullClick} handleIssuePullClose={this.handleIssuePullClose} />
       </div>
     );
   }
@@ -147,7 +146,6 @@ class ProjLayout extends Component {
 
 
 export default connect((state, ownProps) => ({
-  collabs: state.collabs.collabs,
   userIssues: state.issues.repoIssues,
   readme: state.readme.readme,
   git_profile: state.auth.git_profile,
