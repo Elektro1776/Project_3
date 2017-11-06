@@ -32,7 +32,7 @@ class ProjLayout extends Component {
     // console.log('Current layout state in receive props', this.state);
     // console.log('Next Props coming in', nextProps);
     const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
-    // console.log(' issues received by Layout', userIssues);
+    console.log(' issues received by Layout', userIssues);
     // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
     console.log('IssueState', this.state.issues);
     console.log('New Props', userIssues);
@@ -62,8 +62,9 @@ class ProjLayout extends Component {
     this.props.fetchUserIssues(this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
   }
   handleCreateIssueData = (title, body, assignees) => {
-    console.log('WHAT ARE WE SENDING TO CREATE', this.state.currentRepoOwner, this.state.repoName, this.props.git_token, title, body, assignees);
+    // console.log('WHAT ARE WE SENDING TO CREATE', this.state.currentRepoOwner, this.state.repoName, this.props.git_token, title, body, assignees);
     this.props.createUserIssue(this.state.currentRepoOwner, this.state.repoName, this.props.git_token, title, body, assignees);
+    this.handleIssuePullClose();
   }
   handleIssuePullClick = () => {
     this.setState({ issuePullModalShowing: true });

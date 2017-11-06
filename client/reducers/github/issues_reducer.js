@@ -12,7 +12,7 @@ const initialState = {
   closedIssData: [],
   errorCloseMessage: '',
   creatingIssue: false,
-  createdIssue: null,
+  createdIssue: false,
   errorCreatingIssue: '',
 };
 function updateItemInArray(array, issueId) {
@@ -55,9 +55,11 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, { creatingIssue: true });
     }
     case RECEIVED_CREATED_ISSUE: {
-      // const oldState = state.repoIssues;
-      // const updatedState = updateItemInObj(oldState, action.payload.issue);
-      // console.log('NEW UPDATED STATE WITH NEW ISSUE');
+      let oldState = state.repoIssues;
+      console.log('old State', oldState);
+      let newState = oldState.push(action.payload.createdIssue);
+      console.log('now new state', newState);
+      return Object.assign({}, state, { repoIssues: newState, createdIssue: true });
 
     }
     case FAILURE_CREATING_ISSUE: {

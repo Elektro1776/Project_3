@@ -53,7 +53,8 @@ class IssueCard extends Component {
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (this.state.issues !== null) {
-      if (this.state.issues.length !== issues.length) {
+      if (this.props.issues.length !== issues.length) {
+        console.log('SETTING ISSUES STATE AS WE READ');
         this.setState({ issues });
       }
     }
@@ -89,9 +90,9 @@ shouldComponentUpdate(nextProps, nextState) {
 render() {
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
-  const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
   // console.log('TESTING DATA', this.state.issues[0].pull_request.url);
   if (issuesLoaded && commentsLoaded) {
+
     // console.log(this.state.issues, 'THESE ARE MY ISSUES PASSED TO ISSUE CARD RENDER AREA');
     if (isShowingModal) {
       return (
@@ -107,6 +108,7 @@ render() {
         </div>
       );
     }
+    const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
     return (
       <div className={styles.mainCont}>
         {issues.map((issue, i) => (
@@ -121,7 +123,10 @@ render() {
                   showExpandableButton={true}
                 />
                 <CardComments expandable={true} issueComments={issueComments[issue.number]} />
-
+                <CardText expandable={true}>
+                <h5>Current Assignees:</h5>
+              </CardText>
+                <CardAssignees expandable={true} assigneesData={assigneeData} indexValue={i} />
                 <CardActions expandable={true}>
                   <FlatButton label="Comment" onClick={() => this.handleClick(issue.number)} />
                   <FlatButton
