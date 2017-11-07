@@ -98,9 +98,10 @@ shouldComponentUpdate(nextProps, nextState) {
 
 render() {
   // console.log('Expanded card State', this.state.expandedCards);
-  const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
+  const { issuesLoaded, commentsLoaded } = this.state;
   console.log("Card state issues!!!!!!!!!!!!!!!!!!!!", this.state.issues);
   if (issuesLoaded && commentsLoaded) {
+    const { issues, issueComments, isShowingModal } = this.state;
     if (isShowingModal) {
       return (
         <div>

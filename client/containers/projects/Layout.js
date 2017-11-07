@@ -38,6 +38,7 @@ class ProjLayout extends Component {
     // console.log('New Props', userIssues.length);
     if (this.props.issues !== userIssues) {
       // console.log('FIRING SET STATE IN LAYOUT?????');
+      console.log('WHat are my issues in layout thAT I am about to set??????', userIssues);
       this.setState({ issues: userIssues });
     }
     if (currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
