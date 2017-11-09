@@ -149,7 +149,7 @@ render() {
             </MuiThemeProvider>
           </div>
         ))}
-        <IssuePullModal branches={this.props.branches} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
+        <IssuePullModal handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
       </div>
     );
   }
@@ -173,7 +173,7 @@ export default connect((state, ownProps) => ({
   issueComments: state.comments.issueComments,
   git_profile: state.auth.git_profile,
   git_token: state.auth.github_token,
-  branches: state.branches.branches,
+  // branches: state.branches.branches,
 }), (dispatch) => ({
   closeUserIssue: (userId, repoName, issueNum, token) => dispatch(closeUserIssue(userId, repoName, issueNum, token)),
   fetchUserComments: (userId, repoName, issueNum, token) => dispatch(fetchUserComments(userId, repoName, issueNum, token)),

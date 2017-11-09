@@ -22,19 +22,19 @@ class ProjLayout extends Component {
       repoName: '',
       currentRepoOwner: null,
       issuePullModalShowing: false,
-      branches: null,
+      // branches: null,
     };
   }
   componentDidMount() {
     // console.log('What do we send for read me and issues', this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
     this.props.fetchUserReadme(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
-    this.props.getRepoBranches(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
+    // this.props.getRepoBranches(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
     // console.log('Current layout state in receive props', this.state);
     // console.log('Next Props coming in', nextProps);
-    const { userIssues, branches, readme, repoName, git_profile, currentRepoOwner } = nextProps;
+    const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
     // console.log(' issues received by Layout', userIssues);
     // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
     // console.log('IssueState', this.state.issues.length);
@@ -51,7 +51,7 @@ class ProjLayout extends Component {
           // console.log('Going to get new stuff');
           this.props.fetchUserReadme(currentRepoOwner, repoName, this.props.git_token);
           this.props.fetchUserIssues(currentRepoOwner, repoName, this.props.git_token);
-          this.props.getRepoBranches(currentRepoOwner, repoName, this.props.git_token);
+          // this.props.getRepoBranches(currentRepoOwner, repoName, this.props.git_token);
         }
       }
     }
@@ -60,7 +60,7 @@ class ProjLayout extends Component {
       this.setState({ readme, repoName });
     }
     if (userIssues !== null) {
-      this.setState({ issues: userIssues, readme, branches });
+      this.setState({ issues: userIssues, readme });
     }
   }
   handleRefresh = () => {
@@ -139,7 +139,7 @@ class ProjLayout extends Component {
     }
   }
   render() {
-    console.log('Here re my branches?????', this.state.branches);
+    // console.log('Here re my branches?????', this.state.branches);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
