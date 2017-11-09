@@ -1,9 +1,23 @@
 .mainCont {
   display:flex;
   flex-wrap:wrap;
-  justify-content: space-evenly;
+  /*justify-content: space-evenly;*/
   margin-bottom: 50px;
 
+}
+.titleBump {
+  line-height: 30px;
+}
+.buttonOrganizer {
+  display:flex;
+  justify-content: space-between;
+  padding:3px;
+}
+.avatarFix {
+  width:35px;
+  height:auto;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 .child {
   width:350px;
@@ -34,4 +48,7 @@
 }
 .loaderTextThree {
   text-align: center;
+}
+.cardStyle {
+  margin-bottom: 10px;
 }

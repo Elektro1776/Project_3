@@ -11,10 +11,9 @@ class CardComments extends Component {
           // console.log('WHAT IS OUR COMMENT IN MAP??', comment);
           return (
             <div key={comment.id}>
-              <CardText>
+              <br />
                 <h6 className={styles.byWho}>{ `Comment by ${comment.user.login}${convertDate(comment.created_at)}` }</h6>
-                <p>{ comment.body }</p>
-              </CardText>
+                <p className='card-text'>{ comment.body }</p>
             </div>
           );
         },

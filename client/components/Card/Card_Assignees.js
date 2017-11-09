@@ -10,9 +10,7 @@ const CardAssignees = (props) => {
     <div className={styles.mainCont} >
       { props.assigneesData[props.indexValue].map((assignee, i) => (
         <div key={assignee.id}>
-          <CardTitle
-            avatar={assignee.avatar_url}
-          />
+          <img className={`${styles.avatarFix} pull-left`} src={assignee.avatar_url} alt='user' />
         </div>
       ))}
     </div>
