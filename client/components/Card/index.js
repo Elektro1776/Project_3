@@ -59,17 +59,14 @@ class IssueCard extends Component {
         // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
         this.setState({ issues, issuesLoaded: true });
         // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
-
       }
     }
     if (commentsLength === issuesLength) {
       // console.log('Issues in Issue Card from next props', issues);
-      this.setState({ issuesLoaded: false });
       // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
 
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
       // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
-
     }
     if (this.state.issueComments !== null) {
       if (issueComments.length !== this.state.issueComments.length) {
@@ -95,11 +92,14 @@ handleCloseIssue = (login, repoName, issueNum, token) => {
 shouldComponentUpdate(nextProps, nextState) {
   return true;
 }
-
+handeStateInCardFromModal = () => {
+  this.setState({ issuesLoaded: false, commentsLoaded: false });
+  console.log('I work');
+}
 render() {
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded } = this.state;
-  console.log("Card state issues!!!!!!!!!!!!!!!!!!!!", this.state.issues);
+  console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
   if (issuesLoaded && commentsLoaded) {
     const { issues, issueComments, isShowingModal } = this.state;
     if (isShowingModal) {
@@ -135,8 +135,8 @@ render() {
                 </CardText>
                 <CardComments expandable={true} issueComments={issueComments[issue.number]} />
                 <CardText expandable={true}>
-                <h5>Current Assignees:</h5>
-              </CardText>
+                  <h5>Current Assignees:</h5>
+                </CardText>
                 <CardAssignees expandable={true} assigneesData={assigneeData} indexValue={i} />
                 <CardActions expandable={true}>
                   <FlatButton label="Comment" onClick={() => this.handleClick(issue.number)} />
@@ -149,7 +149,7 @@ render() {
             </MuiThemeProvider>
           </div>
         ))}
-        <IssuePullModal handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
+        <IssuePullModal branches={this.props.branches} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
       </div>
     );
   }
@@ -173,7 +173,7 @@ export default connect((state, ownProps) => ({
   issueComments: state.comments.issueComments,
   git_profile: state.auth.git_profile,
   git_token: state.auth.github_token,
-
+  branches: state.branches.branches,
 }), (dispatch) => ({
   closeUserIssue: (userId, repoName, issueNum, token) => dispatch(closeUserIssue(userId, repoName, issueNum, token)),
   fetchUserComments: (userId, repoName, issueNum, token) => dispatch(fetchUserComments(userId, repoName, issueNum, token)),

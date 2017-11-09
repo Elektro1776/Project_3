@@ -78,13 +78,13 @@ class IssuePullModal extends Component {
             <ModalContainer onClose={this.props.handleIssuePullClose}>
               <ModalDialog onClose={this.props.handleIssuePullClose}>
                 <span style={{ visibility: 'hidden' }}>loremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem</span>
-                <Dropdown
+                {/* <Dropdown
                   auto
                   label={`Choose Type`}
                   onChange={this.handlePullRequestDisplay}
                   source={values}
                   value={this.state.showing}
-                />
+                /> */}
                 <form style={{ marginBottom: 25 }} onSubmit={this.handleSubmit}>
                   <p>Title</p>
                   <input name="title" style={{ width: '100%' }} onChange={this.handleIssueFormChange} />
@@ -114,30 +114,31 @@ class IssuePullModal extends Component {
           }
         </div>
       );
-    } else if (this.state.showing === 'pull_request') {
-      return (
-        <div onClick={this.props.handleIssuePullClick}>
-          {
-            this.props.isShowing &&
-            <ModalContainer onClose={this.props.handleIssuePullClose}>
-              <ModalDialog onClose={this.props.handleIssuePullClose}>
-                <Dropdown
-                  auto
-                  label={`Choose Type`}
-                  onChange={this.handlePullRequestDisplay}
-                  source={values}
-                  value={this.state.showing}
-                />
-                <p>New Pull</p>
-                <button className="btn btn-lg btn-success">Submit</button>
-                <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
-              </ModalDialog>
-
-            </ModalContainer>
-          }
-        </div>
-      );
     }
+    // else if (this.state.showing === 'pull_request') {
+    //   return (
+    //     <div onClick={this.props.handleIssuePullClick}>
+    //       {
+    //         this.props.isShowing &&
+    //         <ModalContainer onClose={this.props.handleIssuePullClose}>
+    //           <ModalDialog onClose={this.props.handleIssuePullClose}>
+    //             <Dropdown
+    //               auto
+    //               label={`Choose Type`}
+    //               onChange={this.handlePullRequestDisplay}
+    //               source={values}
+    //               value={this.state.showing}
+    //             />
+    //             <p>New Pull</p>
+    //             <button className="btn btn-lg btn-success">Submit</button>
+    //             <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+    //           </ModalDialog>
+    //
+    //         </ModalContainer>
+    //       }
+    //     </div>
+    //   );
+    // }
   }
 }
 export default IssuePullModal;

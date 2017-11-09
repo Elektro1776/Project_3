@@ -56,9 +56,9 @@ export default function (state = initialState, action) {
     }
     case RECEIVED_CREATED_ISSUE: {
       let oldState = state.repoIssues;
-      console.log('old State', oldState);
+      // console.log('old State', oldState);
       let newState = oldState.concat(action.payload.createdIssue);
-      console.log('now new state', newState);
+      // console.log('now new state', newState);
       return Object.assign({}, state, { repoIssues: newState, createdIssue: true });
     }
     case FAILURE_CREATING_ISSUE: {

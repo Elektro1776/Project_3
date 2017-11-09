@@ -11,6 +11,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import { createUserIssue } from '../../actions/githubActions/createIssueAction';
+import { getRepoBranches } from '../../actions/githubActions/getBranchesAction';
 
 class ProjLayout extends Component {
   constructor(props) {
@@ -21,24 +22,25 @@ class ProjLayout extends Component {
       repoName: '',
       currentRepoOwner: null,
       issuePullModalShowing: false,
+      branches: null,
     };
   }
   componentDidMount() {
     // console.log('What do we send for read me and issues', this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
     this.props.fetchUserReadme(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
+    this.props.getRepoBranches(this.props.currentRepoOwner, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
     // console.log('Current layout state in receive props', this.state);
     // console.log('Next Props coming in', nextProps);
-    const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
+    const { userIssues, branches, readme, repoName, git_profile, currentRepoOwner } = nextProps;
     // console.log(' issues received by Layout', userIssues);
     // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
     // console.log('IssueState', this.state.issues.length);
     // console.log('New Props', userIssues.length);
     if (this.props.issues !== userIssues) {
       // console.log('FIRING SET STATE IN LAYOUT?????');
-      console.log('WHat are my issues in layout thAT I am about to set??????', userIssues);
       this.setState({ issues: userIssues });
     }
     if (currentRepoOwner !== null || currentRepoOwner !== this.state.currentRepoOwner) {
@@ -49,6 +51,7 @@ class ProjLayout extends Component {
           // console.log('Going to get new stuff');
           this.props.fetchUserReadme(currentRepoOwner, repoName, this.props.git_token);
           this.props.fetchUserIssues(currentRepoOwner, repoName, this.props.git_token);
+          this.props.getRepoBranches(currentRepoOwner, repoName, this.props.git_token);
         }
       }
     }
@@ -57,7 +60,7 @@ class ProjLayout extends Component {
       this.setState({ readme, repoName });
     }
     if (userIssues !== null) {
-      this.setState({ issues: userIssues, readme });
+      this.setState({ issues: userIssues, readme, branches });
     }
   }
   handleRefresh = () => {
@@ -136,6 +139,7 @@ class ProjLayout extends Component {
     }
   }
   render() {
+    console.log('Here re my branches?????', this.state.branches);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
@@ -150,8 +154,10 @@ export default connect((state, ownProps) => ({
   readme: state.readme.readme,
   git_profile: state.auth.git_profile,
   git_token: state.auth.github_token,
+  // branches: state.branches.branches ,
 }), (dispatch) => ({
   fetchUserIssues: (userId, repoName, token) => dispatch(fetchUserIssues(userId, repoName, token)),
   fetchUserReadme: (userId, repoName, token) => dispatch(fetchUserReadme(userId, repoName, token)),
+  getRepoBranches: (userId, repoName, token) => dispatch(getRepoBranches(userId, repoName, token)),
   createUserIssue: (userId, repoName, token, title, body, assignees) => dispatch(createUserIssue(userId, repoName, token, title, body, assignees)),
 }))(ProjLayout);
