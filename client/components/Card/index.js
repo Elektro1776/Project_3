@@ -118,10 +118,26 @@ render() {
     }
     const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
     return (
-      <div className={styles.mainCont}>
+      // <div className={styles.mainCont}>
+      <div>
         {issues.map((issue, i) => (
           <div key={issue.id}>
-            <MuiThemeProvider>
+
+            <div className="row">
+              <div className='col-sm-12'>
+              <div className="col-sm-6">
+                <div className="card">
+                  <div className="card-block">
+                    <h3 className="card-title">{issue.title}</h3>
+                    <p className="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                    <a href="#" className="btn btn-primary">Go somewhere</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            </div>
+
+            {/* <MuiThemeProvider>
               <Card style={{ width: 350, height: 'auto', margin: 10 }} expanded={this.state.expandedCards[issue.number].expanded} onExpandChange={() => this.handleCardExpansionChange(issue.number)}>
                 <CardHeader
                   title={issue.title}
@@ -146,7 +162,7 @@ render() {
                   />
                 </CardActions>
               </Card>
-            </MuiThemeProvider>
+            </MuiThemeProvider> */}
           </div>
         ))}
         <IssuePullModal handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
