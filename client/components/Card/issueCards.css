@@ -5,6 +5,9 @@
   margin-bottom: 50px;
 
 }
+.byWho {
+  font-style: italic;
+}
 .mainContAss {
   display:flex;
   flex-wrap: wrap;

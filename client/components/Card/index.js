@@ -1,16 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CardComments from './Card_Comments';
-import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
 import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
-import IssuePullModal from '../../components/Modal/newissuePull_Modal';
+import IssuePullModal from '../Modal/newissuePull_Modal';
+import { convertDate } from '../EventFeed/logical_solutions';
 
 class IssueCard extends Component {
   state = {
@@ -58,6 +54,10 @@ class IssueCard extends Component {
         this.setState({ issuesLoaded: false });
         // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
         this.setState({ issues, issuesLoaded: true });
+        issues.map((issue) => {
+          this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
+        });
+        this.handleCardExpansion();
         // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
       }
     }
@@ -100,6 +100,7 @@ render() {
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded } = this.state;
   console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
+  console.log('Here aremy issue comments', this.state.issueComments);
   if (issuesLoaded && commentsLoaded) {
     const { issues, issueComments, isShowingModal } = this.state;
     if (isShowingModal) {
@@ -131,10 +132,20 @@ render() {
                 <br />
                 <p className="card-text">{issue.body}</p>
                 <br />
-                {/* <CardComments issueComments={issueComments[issue.number]} /> */}
+                <div>
+                  {issueComments[issue.number].map((comment) => (
+                    <div key={comment.id}>
+                      <br />
+                      <h6 className={styles.byWho}>{ `Comment by ${comment.user.login}${convertDate(comment.created_at)}` }</h6>
+                      <p className="card-text">{ comment.body }</p>
+                    </div>
+                  ),
+                  )
+                  }
+                </div>
                 <h5 style={{ marginTop: 5 }}>Current Assignees:</h5>
                 <div className={styles.mainContAss} >
-                  { assigneeData[i].map(assignee => (
+                  { assigneeData[i].map((assignee) => (
                     <div key={assignee.id}>
                       <img className={`${styles.avatarFix} pull-left`} src={assignee.avatar_url} alt="user" />
                     </div>
@@ -147,35 +158,6 @@ render() {
                 </div>
               </div>
             </div>
-
-
-            {/* <MuiThemeProvider>
-              <Card style={{ width: 350, height: 'auto', margin: 10 }} expanded={this.state.expandedCards[issue.number].expanded} onExpandChange={() => this.handleCardExpansionChange(issue.number)}>
-                <CardHeader
-                  title={issue.title}
-                  subtitle={`${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number} Opened By ${issue.user.login}`}
-                  avatar={issue.user.avatar_url}
-                  actAsExpander={true}
-                  showExpandableButton={true}
-                />
-                <CardText expandable={true}>
-                  <p>{issue.body}</p>
-                </CardText>
-                <CardComments expandable={true} issueComments={issueComments[issue.number]} />
-                <CardText expandable={true}>
-
-                  <h5>Current Assignees:</h5>
-                </CardText>
-                <CardAssignees expandable={true} assigneesData={assigneeData} indexValue={i} />
-                <CardActions expandable={true}>
-                  <FlatButton label="Comment" onClick={() => this.handleClick(issue.number)} />
-                  <FlatButton
-                    label="Close"
-                    onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
-                  />
-                </CardActions>
-              </Card>
-            </MuiThemeProvider> */}
           </div>
         ))}
         <IssuePullModal handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
