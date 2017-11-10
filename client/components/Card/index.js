@@ -116,7 +116,7 @@ render() {
         </div>
       );
     }
-    const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
+    const assigneeData = this.props.issues.map((issue, j) => issue.assignees);
     return (
       // <div className={styles.mainCont}>
       <div className={`card-group ${styles.mainCont}`}>
@@ -133,7 +133,13 @@ render() {
                 <br />
                 {/* <CardComments issueComments={issueComments[issue.number]} /> */}
                 <h5 style={{ marginTop: 5 }}>Current Assignees:</h5>
-                {/* <CardAssignees assigneesData={assigneeData} indexValue={i} /> */}
+                <div className={styles.mainContAss} >
+                  { assigneeData[i].map(assignee => (
+                    <div key={assignee.id}>
+                      <img className={`${styles.avatarFix} pull-left`} src={assignee.avatar_url} alt="user" />
+                    </div>
+                  ))}
+                </div>
                 <div className={styles.buttonOrganizer}>
                   <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleClick(issue.number)}>Comment</div>
                   <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}>Close</div>
