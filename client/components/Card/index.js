@@ -119,28 +119,28 @@ render() {
     const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
     return (
       // <div className={styles.mainCont}>
-      <div className={styles.mainCont}>
+      <div className={`card-group ${styles.mainCont}`}>
         {issues.map((issue, i) => (
           <div className="col-sm-6" key={issue.id}>
-                  <div className="card">
-                    <div className='card-header'>{issue.title}</div>
-                    <div className="card-block">
-                      <img className={`${styles.avatarFix} pull-left`} src={issue.user.avatar_url} alt='user' />
-                      <h6 className={`card-title pull-left ${styles.titleBump}`}>{`${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number} Opened By ${issue.user.login}`}</h6>
-                      <br />
-                      <br />
-                      <p className="card-text">{issue.body}</p>
-                      <br />
-                      <CardComments issueComments={issueComments[issue.number]} />
-                      <h5 style={{marginTop:5}}>Current Assignees:</h5>
-                      <CardAssignees assigneesData={assigneeData} indexValue={i} />
-                      <div className={styles.buttonOrganizer}>
-                      <div style={{marginRight:5}} className={`btn btn-primary`} onClick={() => this.handleClick(issue.number)}>Comment</div>
-                      <div style={{marginRight:5}} className={`btn btn-primary`} onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}>Close</div>
-                      <div className={`btn btn-primary`}>Add Assignee</div>
-                    </div>
-                    </div>
-                  </div>
+            <div className="card">
+              <div className="card-header">{issue.title}</div>
+              <div className="card-block">
+                <img className={`${styles.avatarFix} pull-left`} src={issue.user.avatar_url} alt="user" />
+                <h6 className={`card-title pull-left ${styles.titleBump}`}>{`${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number} Opened By ${issue.user.login}`}</h6>
+                <br />
+                <br />
+                <p className="card-text">{issue.body}</p>
+                <br />
+                {/* <CardComments issueComments={issueComments[issue.number]} /> */}
+                <h5 style={{ marginTop: 5 }}>Current Assignees:</h5>
+                {/* <CardAssignees assigneesData={assigneeData} indexValue={i} /> */}
+                <div className={styles.buttonOrganizer}>
+                  <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleClick(issue.number)}>Comment</div>
+                  <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}>Close</div>
+                  <div className={`btn btn-primary`}>Add Assignee</div>
+                </div>
+              </div>
+            </div>
 
 
             {/* <MuiThemeProvider>
