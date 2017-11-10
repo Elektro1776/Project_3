@@ -18,9 +18,11 @@ class IssueCard extends Component {
     newCommentText: '',
     currentIssueNumber: '',
     expandedCards: {},
+    currentModalState: '',
   }
   handleCardExpansionChange = (issueNum) => {
-    const expansionValue = !this.state.expandedCards[issueNum].expanded;
+    const expansionValue = !this.state.expandedCards[issueNum].expanded ? true : false;
+    console.log('Expansin value', expansionValue);
     let newObjGroup = this.state.expandedCards;
     newObjGroup = Object.assign({}, newObjGroup, { [issueNum]: { expanded: expansionValue } });
     this.setState({ expandedCards: newObjGroup });
@@ -32,12 +34,19 @@ class IssueCard extends Component {
     });
     this.setState({ expandedCards: objGroup });
   }
+  handleShowCardsExpandedOnRefresh = (issueNum) => {
+    const classList = document.getElementById(`collapse${issueNum}`).getAttribute('class');
+    const currentClassState = classList.includes('collapsing') || classList.includes('show') ? true : false;
+    const classToSet = currentClassState ? 'show' : '';
+    if (!currentClassState && this.state.expandedCards[issueNum].expanded) {
+      console.log('I think I should show htis.');
+    }
+  }
   componentDidMount() {
     // console.log('INTIAL COMMENTS DATA TO SEND OFF ', this.props.repoOwner, this.props.repoName);
     this.props.issues.map((issue) => {
       this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
     });
-    this.handleCardExpansion();
   }
   componentWillReceiveProps(nextProps) {
     // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
@@ -57,7 +66,6 @@ class IssueCard extends Component {
         issues.map((issue) => {
           this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
         });
-        this.handleCardExpansion();
         // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
       }
     }
@@ -70,9 +78,13 @@ class IssueCard extends Component {
     }
     if (this.state.issueComments !== null) {
       if (issueComments.length !== this.state.issueComments.length) {
+        console.log('do these comments reset?????');
         this.setState({ issueComments });
       }
     }
+  }
+  handleModalStateChange = (state) => {
+    this.setState({ currentModalState: state });
   }
 modifyTextState = (event) => {
   this.setState({ newCommentText: event.target.value });
@@ -96,11 +108,13 @@ handeStateInCardFromModal = () => {
   this.setState({ issuesLoaded: false, commentsLoaded: false });
   console.log('I work');
 }
+
 render() {
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded } = this.state;
-  console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
-  console.log('Here aremy issue comments', this.state.issueComments);
+  // console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
+  console.log('Here are the expanded cards', this.state.expandedCards);
+  // console.log('Here aremy issue comments', this.state.issueComments);
   if (issuesLoaded && commentsLoaded) {
     const { issues, issueComments, isShowingModal } = this.state;
     if (isShowingModal) {
@@ -123,11 +137,11 @@ render() {
       <div className={`card-group ${styles.mainCont}`}>
         {issues.map((issue, i) => (
           <div className="col-sm-6" key={issue.id}>
-            <div className="card">
-              <div className="card-header">{issue.title}</div>
-              <div id='cards' className="card-block" data-toggle='collapse' data-target='#cards'>
+            <div className={`card ${styles.boxShad}`}>
+              <div className="card-header" data-toggle="collapse" href={`#collapse${issue.number}`} >{`${issue.title} -  ${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number}`}</div>
+              <div id={`collapse${issue.number}`} className={`card-block collapse`}>
                 <img className={`${styles.avatarFix} pull-left`} src={issue.user.avatar_url} alt="user" />
-                <h6 className={`card-title pull-left ${styles.titleBump}`}>{`${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number} Opened By ${issue.user.login}`}</h6>
+                <h6 className={`card-title pull-left ${styles.titleBump}`}>{`Opened By ${issue.user.login}`}</h6>
                 <br />
                 <br />
                 <p className="card-text">{issue.body}</p>

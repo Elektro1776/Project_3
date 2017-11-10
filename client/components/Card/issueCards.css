@@ -5,6 +5,10 @@
   margin-bottom: 50px;
 
 }
+.boxShad {
+  box-shadow: 3px 5px lightgrey;
+  margin-bottom: 3px;
+}
 .byWho {
   font-style: italic;
 }

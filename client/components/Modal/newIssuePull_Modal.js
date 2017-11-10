@@ -25,6 +25,9 @@ class IssuePullModal extends Component {
     body: '',
     assignees: [],
   }
+  componentWillMount () {
+    this.setState({ showing: this.props.modalName });
+  }
   handlePullRequestDisplay = (value) => {
     this.setState({ showing: value });
   }
@@ -113,6 +116,11 @@ class IssuePullModal extends Component {
             </ModalContainer>
           }
         </div>
+      );
+    }
+    else if (this.state.showing === 'assignee') {
+      return (
+        <p>HellowWorld</p>
       );
     }
     // else if (this.state.showing === 'pull_request') {
