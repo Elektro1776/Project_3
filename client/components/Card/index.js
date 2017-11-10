@@ -125,7 +125,7 @@ render() {
           <div className="col-sm-6" key={issue.id}>
             <div className="card">
               <div className="card-header">{issue.title}</div>
-              <div className="card-block">
+              <div id='cards' className="card-block" data-toggle='collapse' data-target='#cards'>
                 <img className={`${styles.avatarFix} pull-left`} src={issue.user.avatar_url} alt="user" />
                 <h6 className={`card-title pull-left ${styles.titleBump}`}>{`${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number} Opened By ${issue.user.login}`}</h6>
                 <br />
