@@ -73,7 +73,6 @@ class ProjLayout extends Component {
     this.handleIssuePullClose();
   }
   handleIssuePullClick = () => {
-
     this.setState({ issuePullModalShowing: true });
   }
   handleIssuePullClose = () => {

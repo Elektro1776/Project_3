@@ -25,8 +25,8 @@ class IssuePullModal extends Component {
     body: '',
     assignees: [],
   }
-  componentWillMount () {
-    this.setState({ showing: this.props.modalName });
+  componentWillMount() {
+    // this.setState({ showing: this.props.modalName });
   }
   handlePullRequestDisplay = (value) => {
     this.setState({ showing: value });
@@ -59,15 +59,14 @@ class IssuePullModal extends Component {
   handleIssueFormChange = (event) => {
     const prop = event.target.name;
     const val = event.target.value;
-    this.setState({ [prop]:val });
+    this.setState({ [prop]: val });
     // console.log('heres state', this.state);
   }
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.showing === 'issue') {
       this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
-    }
-    else if (this.state.showing === 'pull_request') {
+    } else if (this.state.showing === 'pull_request') {
       console.log('you submitted a pull request');
     }
   }
@@ -75,7 +74,8 @@ class IssuePullModal extends Component {
     // console.log('Here are my assignees', this.state.assignees);
     if (this.state.showing === 'issue') {
       return (
-        <div onClick={this.props.handleIssuePullClick}>
+        // <div onClick={this.props.handleIssuePullClick}>
+        <div>
           {
             this.props.isShowing &&
             <ModalContainer onClose={this.props.handleIssuePullClose}>
@@ -108,7 +108,7 @@ class IssuePullModal extends Component {
                     ))}
 
                   </div>
-                  <button className="btn btn-lg btn-success" type='submit'>Submit</button>
+                  <button className="btn btn-lg btn-success" type="submit">Submit</button>
                   <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
                 </form>
               </ModalDialog>
@@ -117,10 +117,10 @@ class IssuePullModal extends Component {
           }
         </div>
       );
-    }
-    else if (this.state.showing === 'assignee') {
+    } else if (this.state.showing === 'assignee') {
       return (
-        <p>HellowWorld</p>
+        this.props.isShowing &&
+          <p>HellowWorld</p>
       );
     }
     // else if (this.state.showing === 'pull_request') {
