@@ -75,54 +75,55 @@ class IssuePullModal extends Component {
     // console.log('Here are my assignees', this.state.assignees);
     if (this.state.showing === 'issue') {
       return (
-        <div onClick={this.props.handleIssuePullClick}>
-          {
-            this.props.isShowing &&
-            <ModalContainer onClose={this.props.handleIssuePullClose}>
-              <ModalDialog onClose={this.props.handleIssuePullClose}>
-                <span style={{ visibility: 'hidden' }}>loremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem</span>
-                {/* <Dropdown
-                  auto
-                  label={`Choose Type`}
-                  onChange={this.handlePullRequestDisplay}
-                  source={values}
-                  value={this.state.showing}
-                /> */}
-                <form style={{ marginBottom: 25 }} onSubmit={this.handleSubmit}>
-                  <p>Title</p>
-                  <input name="title" style={{ width: '100%' }} onChange={this.handleIssueFormChange} />
-                  <p>Body</p>
-                  <textarea defaultValue={this.state.body} name="body" onChange={this.handleIssueFormChange} style={{ width: '100%', height: '75px' }} />
-                  <div>
-                    <p>Assignees</p>
-                    {this.props.collabs.map((collab) => (
-                      <div key={collab.id} >
-                        <MuiThemeProvider>
-                          <Checkbox
-                            label={<AvatarComp collab={collab} />}
-                            style={styles.checkbox}
-                            onCheck={() => this.handleCheck(collab.login)}
-                          />
-                        </MuiThemeProvider>
-                      </div>
-                    ))}
-
-                  </div>
-                  <button className="btn btn-lg btn-success" type='submit'>Submit</button>
-                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
-                </form>
-              </ModalDialog>
-
-            </ModalContainer>
-          }
-        </div>
+        <div>Hellow WOrld</div>
+        // <div onClick={this.props.handleIssuePullClick}>
+        //   {
+        //     this.props.isShowing &&
+        //     <ModalContainer onClose={this.props.handleIssuePullClose}>
+        //       <ModalDialog onClose={this.props.handleIssuePullClose}>
+        //         <span style={{ visibility: 'hidden' }}>loremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem</span>
+        //         <Dropdown
+        //           auto
+        //           label={`Choose Type`}
+        //           onChange={this.handlePullRequestDisplay}
+        //           source={values}
+        //           value={this.state.showing}
+        //         />
+        //         <form style={{ marginBottom: 25 }} onSubmit={this.handleSubmit}>
+        //           <p>Title</p>
+        //           <input name="title" style={{ width: '100%' }} onChange={this.handleIssueFormChange} />
+        //           <p>Body</p>
+        //           <textarea defaultValue={this.state.body} name="body" onChange={this.handleIssueFormChange} style={{ width: '100%', height: '75px' }} />
+        //           <div>
+        //             <p>Assignees</p>
+        //             {this.props.collabs.map((collab) => (
+        //               <div key={collab.id} >
+        //                 <MuiThemeProvider>
+        //                   <Checkbox
+        //                     label={<AvatarComp collab={collab} />}
+        //                     style={styles.checkbox}
+        //                     onCheck={() => this.handleCheck(collab.login)}
+        //                   />
+        //                 </MuiThemeProvider>
+        //               </div>
+        //             ))}
+        //
+        //           </div>
+        //           <button className="btn btn-lg btn-success" type='submit'>Submit</button>
+        //           <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+        //         </form>
+        //       </ModalDialog>
+        //
+        //     </ModalContainer>
+        //   }
+        // </div>
       );
     }
-    else if (this.state.showing === 'assignee') {
-      return (
-        <p>HellowWorld</p>
-      );
-    }
+    // else if (this.state.showing === 'assignee') {
+    //   return (
+    //     <p>HellowWorld</p>
+    //   );
+    // }
     // else if (this.state.showing === 'pull_request') {
     //   return (
     //     <div onClick={this.props.handleIssuePullClick}>

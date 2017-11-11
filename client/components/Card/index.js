@@ -5,7 +5,7 @@ import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
 import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
-import IssuePullModal from '../Modal/newissuePull_Modal';
+import IssuePullModal from '../Modal/newIssuePull_Modal';
 import { convertDate } from '../EventFeed/logical_solutions';
 
 class IssueCard extends Component {
@@ -17,31 +17,12 @@ class IssueCard extends Component {
     issueComments: null,
     newCommentText: '',
     currentIssueNumber: '',
-    expandedCards: {},
-    currentModalState: '',
   }
-  handleCardExpansionChange = (issueNum) => {
-    const expansionValue = !this.state.expandedCards[issueNum].expanded ? true : false;
-    console.log('Expansin value', expansionValue);
-    let newObjGroup = this.state.expandedCards;
-    newObjGroup = Object.assign({}, newObjGroup, { [issueNum]: { expanded: expansionValue } });
-    this.setState({ expandedCards: newObjGroup });
+  handleCardExpansion = (issueNum) => {
+    // create a parent function that sets state to an array of the open issues
+    console.log(issueNum);
   }
-  handleCardExpansion = () => {
-    let objGroup = {};
-    this.props.issues.map((issue) => {
-      objGroup = Object.assign({}, objGroup, { [issue.number]: { expanded: false } });
-    });
-    this.setState({ expandedCards: objGroup });
-  }
-  handleShowCardsExpandedOnRefresh = (issueNum) => {
-    const classList = document.getElementById(`collapse${issueNum}`).getAttribute('class');
-    const currentClassState = classList.includes('collapsing') || classList.includes('show') ? true : false;
-    const classToSet = currentClassState ? 'show' : '';
-    if (!currentClassState && this.state.expandedCards[issueNum].expanded) {
-      console.log('I think I should show htis.');
-    }
-  }
+
   componentDidMount() {
     // console.log('INTIAL COMMENTS DATA TO SEND OFF ', this.props.repoOwner, this.props.repoName);
     this.props.issues.map((issue) => {
@@ -49,42 +30,26 @@ class IssueCard extends Component {
     });
   }
   componentWillReceiveProps(nextProps) {
-    // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
-    // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues, repoName, repoOwner } = nextProps;
-    // this.setState({ issueComments });
-    // console.log('State Prios in Card itself need to see if this is being modified', this.state.issues);
-    // console.log('AM I geting the new issue Array', issues);
-    // console.log('Here are next props in Issue card', repoName, repoOwner);
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (this.state.issues !== null) {
       if (this.props.issues.length !== issues.length) {
         this.setState({ issuesLoaded: false });
-        // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
         this.setState({ issues, issuesLoaded: true });
         issues.map((issue) => {
           this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
         });
-        // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
       }
     }
     if (commentsLength === issuesLength) {
-      // console.log('Issues in Issue Card from next props', issues);
-      // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
-
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
-      // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
     }
     if (this.state.issueComments !== null) {
       if (issueComments.length !== this.state.issueComments.length) {
-        console.log('do these comments reset?????');
         this.setState({ issueComments });
       }
     }
-  }
-  handleModalStateChange = (state) => {
-    this.setState({ currentModalState: state });
   }
 modifyTextState = (event) => {
   this.setState({ newCommentText: event.target.value });
@@ -95,8 +60,12 @@ handleAddNewComment = () => {
   this.setState({ newCommentText: '' });
   this.handleClose();
 }
-handleClick = (currentIssue) => this.setState({ isShowingModal: true, currentIssue })
-handleClose = () => this.setState({ isShowingModal: false })
+handleClick = (currentIssue) => {
+  this.setState({ isShowingModal: true, currentIssue });
+}
+handleClose = () => {
+  this.setState({ isShowingModal: false });
+}
 handleCloseIssue = (login, repoName, issueNum, token) => {
 // console.log('PASSING TO CLOSE ISSUE', login, repoName, issueNum, token);
   this.props.closeUserIssue(login, repoName, issueNum, token);
@@ -108,12 +77,11 @@ handeStateInCardFromModal = () => {
   this.setState({ issuesLoaded: false, commentsLoaded: false });
   console.log('I work');
 }
-
 render() {
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded } = this.state;
   // console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
-  console.log('Here are the expanded cards', this.state.expandedCards);
+  // console.log('Here are the expanded cards', this.state.expandedCards);
   // console.log('Here aremy issue comments', this.state.issueComments);
   if (issuesLoaded && commentsLoaded) {
     const { issues, issueComments, isShowingModal } = this.state;
@@ -137,8 +105,10 @@ render() {
       <div className={`card-group ${styles.mainCont}`}>
         {issues.map((issue, i) => (
           <div className="col-sm-6" key={issue.id}>
-            <div className={`card ${styles.boxShad}`}>
-              <div className="card-header" data-toggle="collapse" href={`#collapse${issue.number}`} >{`${issue.title} -  ${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number}`}</div>
+            <div className={`card ${styles.boxShad}`} onClick={() => this.handleCardExpansion(issue.number)}>
+              <div className="card-header" data-toggle="collapse" href={`#collapse${issue.number}`}>
+                {`${issue.title} -  ${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number}`}
+              </div>
               <div id={`collapse${issue.number}`} className={`card-block collapse`}>
                 <img className={`${styles.avatarFix} pull-left`} src={issue.user.avatar_url} alt="user" />
                 <h6 className={`card-title pull-left ${styles.titleBump}`}>{`Opened By ${issue.user.login}`}</h6>
@@ -166,8 +136,8 @@ render() {
                   ))}
                 </div>
                 <div className={styles.buttonOrganizer}>
-                  <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleClick(issue.number)}>Comment</div>
-                  <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}>Close</div>
+                  <div role='button' style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleClick(issue.number)}>Comment</div>
+                  <div role='button' style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}>Close</div>
                   <div className={`btn btn-primary`}>Add Assignee</div>
                 </div>
               </div>
