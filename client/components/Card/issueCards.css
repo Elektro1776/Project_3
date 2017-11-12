@@ -1,8 +1,40 @@
 .mainCont {
   display:flex;
-  flex-wrap: wrap;
+  flex-wrap:wrap;
+  /*justify-content: space-evenly;*/
   margin-bottom: 50px;
 
+}
+.boxShad {
+  box-shadow: 3px 5px lightgrey;
+  margin-bottom: 3px;
+}
+.byWho {
+  font-style: italic;
+}
+.mainContAss {
+  display:flex;
+  flex-wrap: wrap;
+}
+.avatarFix {
+  width:35px;
+  height:auto;
+  border-radius: 50%;
+  margin:3px;
+}
+.titleBump {
+  line-height: 30px;
+}
+.buttonOrganizer {
+  display:flex;
+  justify-content: space-between;
+  padding:3px;
+}
+.avatarFix {
+  width:35px;
+  height:auto;
+  border-radius: 50%;
+  margin-right: 5px;
 }
 .child {
   width:350px;
@@ -33,4 +65,7 @@
 }
 .loaderTextThree {
   text-align: center;
+}
+.cardStyle {
+  margin-bottom: 10px;
 }

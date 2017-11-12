@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import CardComments from './Card_Comments';
-import CardAssignees from './Card_Assignees';
 import styles from './issueCards.css';
 import { closeUserIssue } from '../../actions/githubActions/closeIssueAction';
 import { fetchUserComments } from '../../actions/githubActions/getIssueCommentsAction';
 import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { Card, CardActions, CardHeader, CardTitle, CardText } from 'material-ui/Card';
-import FlatButton from 'material-ui/FlatButton';
+import IssuePullModal from '../Modal/newissuePull_Modal';
+import { convertDate } from '../EventFeed/logical_solutions';
 
 class IssueCard extends Component {
   state = {
@@ -21,9 +18,11 @@ class IssueCard extends Component {
     newCommentText: '',
     currentIssueNumber: '',
     expandedCards: {},
+    currentModalState: '',
   }
   handleCardExpansionChange = (issueNum) => {
-    const expansionValue = !this.state.expandedCards[issueNum].expanded;
+    const expansionValue = !this.state.expandedCards[issueNum].expanded ? true : false;
+    console.log('Expansin value', expansionValue);
     let newObjGroup = this.state.expandedCards;
     newObjGroup = Object.assign({}, newObjGroup, { [issueNum]: { expanded: expansionValue } });
     this.setState({ expandedCards: newObjGroup });
@@ -35,35 +34,57 @@ class IssueCard extends Component {
     });
     this.setState({ expandedCards: objGroup });
   }
+  handleShowCardsExpandedOnRefresh = (issueNum) => {
+    const classList = document.getElementById(`collapse${issueNum}`).getAttribute('class');
+    const currentClassState = classList.includes('collapsing') || classList.includes('show') ? true : false;
+    const classToSet = currentClassState ? 'show' : '';
+    if (!currentClassState && this.state.expandedCards[issueNum].expanded) {
+      console.log('I think I should show htis.');
+    }
+  }
   componentDidMount() {
     // console.log('INTIAL COMMENTS DATA TO SEND OFF ', this.props.repoOwner, this.props.repoName);
     this.props.issues.map((issue) => {
       this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
     });
-    this.handleCardExpansion();
   }
   componentWillReceiveProps(nextProps) {
     // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues, repoName, repoOwner } = nextProps;
     // this.setState({ issueComments });
+    // console.log('State Prios in Card itself need to see if this is being modified', this.state.issues);
+    // console.log('AM I geting the new issue Array', issues);
     // console.log('Here are next props in Issue card', repoName, repoOwner);
     const commentsLength = Object.keys(issueComments).length;
     const issuesLength = issues.length;
     if (this.state.issues !== null) {
-      if (this.state.issues.length !== issues.length) {
-        this.setState({ issues });
+      if (this.props.issues.length !== issues.length) {
+        this.setState({ issuesLoaded: false });
+        // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
+        this.setState({ issues, issuesLoaded: true });
+        issues.map((issue) => {
+          this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
+        });
+        // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
       }
     }
     if (commentsLength === issuesLength) {
       // console.log('Issues in Issue Card from next props', issues);
+      // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
+
       this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
+      // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
     }
     if (this.state.issueComments !== null) {
       if (issueComments.length !== this.state.issueComments.length) {
+        console.log('do these comments reset?????');
         this.setState({ issueComments });
       }
     }
+  }
+  handleModalStateChange = (state) => {
+    this.setState({ currentModalState: state });
   }
 modifyTextState = (event) => {
   this.setState({ newCommentText: event.target.value });
@@ -83,13 +104,20 @@ handleCloseIssue = (login, repoName, issueNum, token) => {
 shouldComponentUpdate(nextProps, nextState) {
   return true;
 }
+handeStateInCardFromModal = () => {
+  this.setState({ issuesLoaded: false, commentsLoaded: false });
+  console.log('I work');
+}
+
 render() {
+  console.log('issue card mocal state', this.props.modalState);
   // console.log('Expanded card State', this.state.expandedCards);
-  const { issuesLoaded, commentsLoaded, issues, issueComments, isShowingModal } = this.state;
-  const assigneeData = this.props.issues.map((issue, i) => issue.assignees);
-  // console.log('TESTING DATA', this.state.issues[0].pull_request.url);
+  const { issuesLoaded, commentsLoaded } = this.state;
+  // console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
+  console.log('Here are the expanded cards', this.state.expandedCards);
+  // console.log('Here aremy issue comments', this.state.issueComments);
   if (issuesLoaded && commentsLoaded) {
-    // console.log(this.state.issues, 'THESE ARE MY ISSUES PASSED TO ISSUE CARD RENDER AREA');
+    const { issues, issueComments, isShowingModal } = this.state;
     if (isShowingModal) {
       return (
         <div>
@@ -104,33 +132,51 @@ render() {
         </div>
       );
     }
+    const assigneeData = this.props.issues.map((issue, j) => issue.assignees);
+
     return (
-      <div className={styles.mainCont}>
+      // <div className={styles.mainCont}>
+      <div className={`card-group ${styles.mainCont}`}>
         {issues.map((issue, i) => (
-          <div key={issue.id}>
-          <MuiThemeProvider>
-            <Card style={{ width: 350, height: 'auto', margin: 10 }} expanded={this.state.expandedCards[issue.number].expanded} onExpandChange={() => this.handleCardExpansionChange(issue.number)}>
-              <CardHeader
-                title={issue.title}
-                subtitle={`${issue.pull_request ? 'Pull Request': 'Issue'} #${issue.number} Opened By ${issue.user.login}`}
-                avatar={issue.user.avatar_url}
-                actAsExpander={true}
-                showExpandableButton={true}
-              />
-              <CardComments expandable={true} issueComments={issueComments[issue.number]} />
-
-              <CardActions expandable={true}>
-                <FlatButton label="Comment" onClick={() => this.handleClick(issue.number)} />
-                <FlatButton
-                  label="Close"
-                  onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}
-                />
-              </CardActions>
-            </Card>
-          </MuiThemeProvider>
-        </div>
+          <div className="col-sm-6" key={issue.id}>
+            <div className={`card ${styles.boxShad}`}>
+              <div className="card-header" data-toggle="collapse" href={`#collapse${issue.number}`} >{`${issue.title} -  ${issue.pull_request ? 'Pull Request' : 'Issue'} #${issue.number}`}</div>
+              <div id={`collapse${issue.number}`} className={`card-block collapse`}>
+                <img className={`${styles.avatarFix} pull-left`} src={issue.user.avatar_url} alt="user" />
+                <h6 className={`card-title pull-left ${styles.titleBump}`}>{`Opened By ${issue.user.login}`}</h6>
+                <br />
+                <br />
+                <p className="card-text">{issue.body}</p>
+                <br />
+                <div>
+                  {issueComments[issue.number].map((comment) => (
+                    <div key={comment.id}>
+                      <br />
+                      <h6 className={styles.byWho}>{ `Comment by ${comment.user.login}${convertDate(comment.created_at)}` }</h6>
+                      <p className="card-text">{ comment.body }</p>
+                    </div>
+                  ),
+                  )
+                  }
+                </div>
+                <h5 style={{ marginTop: 5 }}>Current Assignees:</h5>
+                <div className={styles.mainContAss} >
+                  { assigneeData[i].map((assignee) => (
+                    <div key={assignee.id}>
+                      <img className={`${styles.avatarFix} pull-left`} src={assignee.avatar_url} alt="user" />
+                    </div>
+                  ))}
+                </div>
+                <div className={styles.buttonOrganizer}>
+                  <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleClick(issue.number)}>Comment</div>
+                  <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}>Close</div>
+                  {/* <div className={`btn btn-primary`} onClick={()=>this.props.handleModalState('assignee')}>Add Assignee</div> */}
+                </div>
+              </div>
+            </div>
+          </div>
         ))}
-
+        <IssuePullModal modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
       </div>
     );
   }
@@ -148,12 +194,13 @@ render() {
 // export default IssueCard;
 
 export default connect((state, ownProps) => ({
+  collabs: state.collabs.collabs,
   closedIssData: state.issue,
   currentProject: state.repos.currentProject,
   issueComments: state.comments.issueComments,
   git_profile: state.auth.git_profile,
   git_token: state.auth.github_token,
-
+  // branches: state.branches.branches,
 }), (dispatch) => ({
   closeUserIssue: (userId, repoName, issueNum, token) => dispatch(closeUserIssue(userId, repoName, issueNum, token)),
   fetchUserComments: (userId, repoName, issueNum, token) => dispatch(fetchUserComments(userId, repoName, issueNum, token)),

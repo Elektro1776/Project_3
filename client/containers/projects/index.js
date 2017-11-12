@@ -22,7 +22,7 @@ class Projects extends Component {
       // console.log("this should show projects connected in state", nextProps.currentProject);
       const { currentProject } = nextProps;
       if (currentProject.length !== 0 && currentProject.id !== this.props.currentProject.id) {
-        this.setState({ currentProject, currentScreen: 'readmeButt' });
+        this.setState({ currentProject });
       }
     }
     whatStateToChange(prop) {
@@ -38,9 +38,9 @@ class Projects extends Component {
       return false;
     }
     render() {
+      // console.log('Current screen from container', this.state.currentScreen);
       const { currentProject } = this.state;
       if (currentProject !== null) {
-        console.log('HOPEFULLY CHANGES AS YOU CLICK!!!!!!! ', currentProject);
         return (
           <div style={{backgroundColor: 'white'}}>
             <div>

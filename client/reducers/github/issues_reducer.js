@@ -1,5 +1,6 @@
 import { FETCHING_ISSUES, SUCCESS_GETTING_ISSUES, FAILURE_GETTING_ISSUES } from '../../actions/githubActions/getIssuesAction';
 import { CLOSING_ISSUE, RECEIVED_CLOSING_ISSUE, FAILURE_CLOSING_ISSUE } from '../../actions/githubActions/closeIssueAction';
+import { CREATING_ISSUE, RECEIVED_CREATED_ISSUE, FAILURE_CREATING_ISSUE } from '../../actions/githubActions/createIssueAction';
 
 const initialState = {
   fetchingIssues: false,
@@ -10,17 +11,23 @@ const initialState = {
   closedIssue: false,
   closedIssData: [],
   errorCloseMessage: '',
+  creatingIssue: false,
+  createdIssue: false,
+  errorCreatingIssue: '',
 };
 function updateItemInArray(array, issueId) {
-    const updatedItems = array.filter(issue => {
-      // console.log(' WHAT ARE THE ISSUES IN MAP????', issue.number, issueId);
-        if(issue.number !== issueId) {
-            // Since we only want to update one item, preserve all others as they are now
-            return issue;
-        }
-    });
+  const updatedItems = array.filter((issue) => {
+    // console.log(' WHAT ARE THE ISSUES IN MAP????', issue.number, issueId);
+    if (issue.number !== issueId) {
+      // Since we only want to update one item, preserve all others as they are now
+      return issue;
+    }
+  });
 
-    return updatedItems;
+  return updatedItems;
+}
+function updateItemInObj(old, newObj) {
+  return Object.assign({}, old, newObj);
 }
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -44,6 +51,19 @@ export default function (state = initialState, action) {
     }
     case FAILURE_CLOSING_ISSUE:
       return Object.assign({}, state, { errorCloseMessage: action.payload.err });
+    case CREATING_ISSUE: {
+      return Object.assign({}, state, { creatingIssue: true });
+    }
+    case RECEIVED_CREATED_ISSUE: {
+      let oldState = state.repoIssues;
+      // console.log('old State', oldState);
+      let newState = oldState.concat(action.payload.createdIssue);
+      // console.log('now new state', newState);
+      return Object.assign({}, state, { repoIssues: newState, createdIssue: true });
+    }
+    case FAILURE_CREATING_ISSUE: {
+      return Object.assign({}, state, { errorCreatingIssue: action.payload.err });
+    }
     default:
       return { ...state };
   }

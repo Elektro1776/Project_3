@@ -78,24 +78,32 @@ githubRouter.post('/getCollaborators', (req, res) => {
   });
 });
 
-// Get all pull requests
-// githubRouter.post('/api/github/getPulls', (req, res) => {
-//   //  console.log(req.body);
-//   request({
-//     headers: {
-//       Accept: 'application/vnd.github.v3.full+json',
-//       'User-Agent': 'request',
-//     },
-//     method: 'GET',
-//     json: true,
-//     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/pulls`,
-//   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY?', body);
-//   });
-// });
+// Create an issue
+githubRouter.post('/createIssue', (req, res) => {
+  // console.log('HITTING CREATE ISSUE ROUTE ON SERVER', req.body.assignees);
+  request({
+    headers: {
+      Accept: 'application/vnd.github.v3.full+json',
+      'User-Agent': 'request',
+    },
+    method: 'POST',
+    json: true,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues?access_token=${req.body.token}`,
+    body: { title: req.body.title,
+      body: req.body.body,
+      assignees: req.body.assignees },
+  }, (err, response, body) => {
+    // console.log(' WHAT IS THE BODY? FOR CREATE ISSUE', body);
+    if (!err) {
+      return res.status(200).json({ createdIssue: body, err: null });
+    }
+    res.status(500).json({ err, collabs: null });
+  });
+});
 
-// // Create an issue
-// githubRouter.post('/api/github/createIssue', (req, res) => {
+// Get branches
+// githubRouter.post('/branches', (req, res) => {
+//   console.log('HITTING branches ROUTE ON SERVER', req.body);
 //   request({
 //     headers: {
 //       Accept: 'application/vnd.github.v3.full+json',
@@ -103,12 +111,13 @@ githubRouter.post('/getCollaborators', (req, res) => {
 //     },
 //     method: 'POST',
 //     json: true,
-//     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues?access_token=${req.user.github.token}`,
-//     body: { title: req.body.title,
-//       body: req.body.body,
-//       assignees: req.body.assignees },
+//     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/branches?access_token=${req.body.token}`,
 //   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY?', body);
+//     console.log(' WHAT IS THE BODY? FOR CREATE ISSUE', body);
+//   //   if (!err) {
+//   //     return res.status(200).json({ createdIssue: body, err: null });
+//   //   }
+//   //   res.status(500).json({ err, collabs: null });
 //   });
 // });
 
@@ -126,25 +135,6 @@ githubRouter.post('/getCollaborators', (req, res) => {
 //       head: req.body.head,
 //       base: req.body.base,
 //       body: req.body.body },
-//   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY?', body);
-//   });
-// });
-
-// Create pull request comment
-// githubRouter.post('/api/github/createPullRequestComment', (req, res) => {
-//   request({
-//     headers: {
-//       Accept: 'application/vnd.github.v3.full+json',
-//       'User-Agent': 'request',
-//     },
-//     method: 'POST',
-//     json: true,
-//     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/pulls/${req.body.number}/comments?access_token=${req.user.github.token}`,
-//     body: { body: req.body.body,
-//       commit_id: req.body.commit_id,
-//       path: req.body.path,
-//       position: req.body.position }, // position must be passed as an integer
 //   }, (err, response, body) => {
 //     console.log(' WHAT IS THE BODY?', body);
 //   });
@@ -225,7 +215,7 @@ githubRouter.post('/closeIssue', (req, res) => {
 
 // Get issues
 githubRouter.post('/getIssues', (req, res) => {
-  console.log(' SUCCESS POST TO GET Issues GIT ROUTER - HERE IS THE BODY', req.body);
+  // console.log(' SUCCESS POST TO GET Issues GIT ROUTER - HERE IS THE BODY', req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
@@ -235,7 +225,7 @@ githubRouter.post('/getIssues', (req, res) => {
     json: true,
     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues?filter=all&sort=updated&access_token=${req.body.token}`,
   }, (err, response, body) => {
-  console.log(' WHAT IS THE BODY OF ISSUES RESPONSE?', body);
+  // console.log(' WHAT IS THE BODY OF ISSUES RESPONSE?', body);
     if (!err) {
       return res.status(200).json({ issues: body, err: null });
     }
@@ -303,7 +293,7 @@ githubRouter.post('/api/github/authorize', (req, res) => {
 
 // Get Readme
 githubRouter.post('/readme', (req, res) => {
-  console.log("Hitting github router for readme!!", req.body);
+  // console.log("Hitting github router for readme!!", req.body);
   request({
     headers: {
       Accept: 'application/vnd.github.v3.full+json',
