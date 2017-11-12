@@ -15,11 +15,11 @@ class Projects extends Component {
       currentScreen: 'readmeButt',
     };
     componentDidMount() {
-      console.log(' DO WE HAVE A CURRENT PROJECT?', this.props);
+      // console.log(' DO WE HAVE A CURRENT PROJECT?', this.props.currentProject);
       this.setState({ currentProject: this.props.currentProject });
     }
     componentWillReceiveProps(nextProps) {
-      console.log("this should show projects connected in state", nextProps.currentProject);
+      // console.log("this should show projects connected in state", nextProps.currentProject);
       const { currentProject } = nextProps;
       if (currentProject.length !== 0 && currentProject.id !== this.props.currentProject.id) {
         this.setState({ currentProject });
@@ -38,18 +38,20 @@ class Projects extends Component {
       return false;
     }
     render() {
+      // console.log('Current screen from container', this.state.currentScreen);
       const { currentProject } = this.state;
       if (currentProject !== null) {
         return (
           <div style={{backgroundColor: 'white'}}>
             <div>
+              <h4 style={{backgroundColor: 'white'}}>Current Repository: {currentProject.name}</h4>
               <CollaboratorsBar repoName={currentProject.name} currentUser={currentProject.owner.login} />
             </div>
             <div className={styles.buttonBox}>
               <ButtonBar clicker={this.whatStateToChange.bind(this)} />
             </div>
             <div>
-              <ProjLayout currentScreen={this.state.currentScreen}  repoName={currentProject.name} currentUser={currentProject.owner.login} />
+              <ProjLayout currentScreen={this.state.currentScreen}  repoName={currentProject.name} currentRepoOwner={currentProject.owner.login} />
             </div>
           </div>
         );

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import Chip from './Collab_Chip';
 import styles from './collab.css';
 import { fetchCollaborators } from '../../actions/githubActions/getCollabAction';
+
 const token = 'b38b9935f766385b9d73a1e7fa964120c2bb4d9b';
 
 
@@ -13,10 +14,10 @@ class Collaborators extends Component {
       collabs: [],
       repoName: '',
       currentUser: '',
-    }
+    };
   }
   componentDidMount() {
-    console.log('Collabs just mounted', this.props.currentUser, this.props.repoName, this.props.git_token);
+    // console.log('Collabs just mounted', this.props.currentUser, this.props.repoName, this.props.git_token);
     this.props.fetchCollaborators(this.props.currentUser, this.props.repoName, this.props.git_token);
   }
   componentWillReceiveProps(nextProps) {
@@ -34,14 +35,13 @@ class Collaborators extends Component {
   }
   render() {
     // console.log('Here is my collab state', this.state);
-  return (
-    <div>
-      <Chip collabs={this.state.collabs} />
-    </div>
-  );
+    return (
+      <div>
+        <Chip collabs={this.state.collabs} />
+      </div>
+    );
+  }
 }
-
-};
 
 export default connect((state, ownProps) => ({
   collabs: state.collabs.collabs,

@@ -13,11 +13,11 @@ class Footer extends Component {
   }
 
   projectsButton = () => {
-    console.log("clicked on projects paths");
+    // console.log("clicked on projects paths");
   }
 
   dashboardButton = () => {
-    console.log("clicked on dashboard paths");
+    // console.log("clicked on dashboard paths");
   }
 
   render() {
@@ -37,7 +37,7 @@ class Footer extends Component {
       },
     };
     const { currentRoute } = this.props;
-    console.log(currentRoute);
+    // console.log(currentRoute);
     return (
       <div style={styles.basic}>
         <Button icon="search" className={bootStrap} style={styles.icons} />

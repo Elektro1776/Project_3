@@ -14,11 +14,11 @@ export const logUserIn = (email, password) => (dispatch) => {
   })
     .then((response) => response.json())
     .then((user) => {
-      console.log(' WHAT IS OUR USER DATA?', user);
+      // console.log(' WHAT IS OUR USER DATA?', user);
       dispatch(successLoggedUserIn(user));
     })
     .catch((err) => {
-      console.info('WHAT WAS THE ERROR??', err.response);
+      // console.info('WHAT WAS THE ERROR??', err.response);
       // dispatch(failedLogginUserIn(err));
     });
 };

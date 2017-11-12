@@ -16,7 +16,7 @@ import comments from './github/comments_reducer';
 import collabs from './github/collab_reducer';
 import readme from './github/readme_reducer';
 import events from './github/event_reducer';
-
+// import branches from './github/branches_reducer';
 
 export default combineReducers({
   router: routerReducer,
@@ -30,4 +30,5 @@ export default combineReducers({
   collabs,
   readme,
   events,
+  // branches,
 });
