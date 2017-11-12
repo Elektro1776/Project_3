@@ -25,11 +25,20 @@ class IssuePullModal extends Component {
     body: '',
     assignees: [],
   }
-  componentWillMount() {
-    // this.setState({ showing: this.props.modalName });
+  componentDidMount() {
+    this.handleModalShowing(this.props.modalState);
+  }
+  componentWillReceiveProps(nextProps) {
+    const { modalState } = nextProps;
+    if (this.props.modalState !== modalState) {
+      this.setState({ showing: modalState });
+    }
   }
   handlePullRequestDisplay = (value) => {
     this.setState({ showing: value });
+  }
+  handleModalShowing = (val) => {
+    this.setState({ showing: val });
   }
   handleCheck = (user) => {
     const currentAssignees = this.state.assignees;
@@ -71,7 +80,7 @@ class IssuePullModal extends Component {
     }
   }
   render() {
-    // console.log('Here are my assignees', this.state.assignees);
+    console.log('Here is what is showing', this.state.showing);
     if (this.state.showing === 'issue') {
       return (
         // <div onClick={this.props.handleIssuePullClick}>
@@ -119,8 +128,53 @@ class IssuePullModal extends Component {
       );
     } else if (this.state.showing === 'assignee') {
       return (
-        this.props.isShowing &&
-          <p>HellowWorld</p>
+        <div>
+          {
+            this.props.isShowing &&
+            <ModalContainer onClose={this.props.handleIssuePullClose}>
+              <ModalDialog onClose={this.props.handleIssuePullClose}>
+                <span style={{ visibility: 'hidden' }}>loremloremloremloremloremloremloremloremloremloremloremloremloremloremlorem</span>
+                {/* <Dropdown
+                  auto
+                  label={`Choose Type`}
+                  onChange={this.handlePullRequestDisplay}
+                  source={values}
+                  value={this.state.showing}
+                /> */}
+                <form style={{ marginBottom: 25 }} onSubmit={this.handleSubmit}>
+                  <div>
+                    <p> Add Assignees</p>
+                    {this.props.collabs.map((collab) => (
+                      <div key={collab.id} >
+                        <MuiThemeProvider>
+                          <Checkbox
+                            label={<AvatarComp collab={collab} />}
+                            style={styles.checkbox}
+                            onCheck={() => this.handleCheck(collab.login)}
+                          />
+                        </MuiThemeProvider>
+                      </div>
+                    ))}
+
+                  </div>
+                  <button className="btn btn-lg btn-success" type="submit">Submit</button>
+                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+                </form>
+              </ModalDialog>
+
+            </ModalContainer>
+          }
+        </div>
+      );
+    }
+    else {
+      return (
+        <div>
+          {this.props.isShowing &&
+            <p>Loading......</p>
+          }
+
+        </div>
       );
     }
     // else if (this.state.showing === 'pull_request') {

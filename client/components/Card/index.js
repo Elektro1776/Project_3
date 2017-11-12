@@ -110,6 +110,7 @@ handeStateInCardFromModal = () => {
 }
 
 render() {
+  console.log('issue card mocal state', this.props.modalState);
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded } = this.state;
   // console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
@@ -132,6 +133,7 @@ render() {
       );
     }
     const assigneeData = this.props.issues.map((issue, j) => issue.assignees);
+
     return (
       // <div className={styles.mainCont}>
       <div className={`card-group ${styles.mainCont}`}>
@@ -168,13 +170,13 @@ render() {
                 <div className={styles.buttonOrganizer}>
                   <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleClick(issue.number)}>Comment</div>
                   <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}>Close</div>
-                  <div className={`btn btn-primary`}>Add Assignee</div>
+                  {/* <div className={`btn btn-primary`} onClick={()=>this.props.handleModalState('assignee')}>Add Assignee</div> */}
                 </div>
               </div>
             </div>
           </div>
         ))}
-        <IssuePullModal handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
+        <IssuePullModal modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
       </div>
     );
   }

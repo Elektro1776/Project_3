@@ -22,6 +22,7 @@ class ProjLayout extends Component {
       repoName: '',
       currentRepoOwner: null,
       issuePullModalShowing: false,
+      modalShowState: 'issue',
       // branches: null,
     };
   }
@@ -63,6 +64,9 @@ class ProjLayout extends Component {
       this.setState({ issues: userIssues, readme });
     }
   }
+  handleModalShowState = (state) => {
+    this.setState({ modalShowState: state });
+  }
   handleRefresh = () => {
     console.log('What we are sending REFRESH', this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
@@ -73,6 +77,7 @@ class ProjLayout extends Component {
     this.handleIssuePullClose();
   }
   handleIssuePullClick = () => {
+    this.handleModalShowState('issue');
     this.setState({ issuePullModalShowing: true });
   }
   handleIssuePullClose = () => {
@@ -115,7 +120,9 @@ class ProjLayout extends Component {
 
             </div>
             <div>
-              <IssueCard handleCreateIssueData={this.handleCreateIssueData} handleIssuePullClose={this.handleIssuePullClose} issueModalState={this.state.issuePullModalShowing} handleIssuePullClick={this.handleIssuePullClick} issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
+              <IssueCard handleCreateIssueData={this.handleCreateIssueData}
+                modalState={this.state.modalShowState} handleIssuePullClose={this.handleIssuePullClose} issueModalState={this.state.issuePullModalShowing}
+              handleModalState={this.handleModalShowState} handleIssuePullClick={this.handleIssuePullClick} issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
             </div>
           </div>
         );
@@ -141,6 +148,7 @@ class ProjLayout extends Component {
   }
   render() {
     // console.log('Here re my branches?????', this.state.branches);
+    console.log('modal show state in layout', this.state.modalShowState);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
