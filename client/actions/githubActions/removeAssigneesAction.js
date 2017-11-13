@@ -13,11 +13,11 @@ export const removeNewAssignees = (userName, repoName, issueNum, assignees, toke
   })
     .then((response) => response.json())
     .then((issue) => {
-      dispatch(receivedAssignees(issue, issueNum));
+      dispatch(receivedRemovedAssignees(issue, issueNum));
     })
     .catch((err) => {
       // console.info(' WHAT IS OUR ERR RESPONSE', err.response);
-      dispatch(failedAddAssignees(err));
+      dispatch(failedRemoveAssignees(err));
     });
 };
 const removeAssignees = () => ({

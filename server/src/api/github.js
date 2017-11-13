@@ -161,6 +161,27 @@ githubRouter.post('/addAssignees', (req, res) => {
   });
 });
 
+// Add assignees to issues
+githubRouter.post('/removeAssignees', (req, res) => {
+  // console.log('HITTING ASSIGNEES ROUTE', req.body);
+  request({
+    headers: {
+      Accept: 'application/vnd.github.v3.full+json',
+      'User-Agent': 'request',
+    },
+    method: 'DELETE',
+    json: true,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.issueNum}/assignees?access_token=${req.body.token}`,
+    body: { assignees: req.body.assignees },
+  }, (err, response, body) => {
+    // console.log(' WHAT IS THE BODY?', body);
+    if (!err) {
+      return res.status(200).json({ modifiedIssue: body, err: null });
+    }
+    res.status(500).json({ err });
+  });
+});
+
 // Add collaborator
 // githubRouter.post('/api/github/addCollaborator', (req, res) => {
 //   request({
