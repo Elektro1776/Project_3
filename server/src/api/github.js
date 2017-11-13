@@ -141,20 +141,25 @@ githubRouter.post('/createIssue', (req, res) => {
 // });
 
 // Add assignees to issues
-// githubRouter.post('/api/github/addAssignees', (req, res) => {
-//   request({
-//     headers: {
-//       Accept: 'application/vnd.github.v3.full+json',
-//       'User-Agent': 'request',
-//     },
-//     method: 'POST',
-//     json: true,
-//     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/issues/${req.body.number}/assignees?access_token=${req.user.github.token}`,
-//     body: { assignees: req.body.assignees },
-//   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY?', body);
-//   });
-// });
+githubRouter.post('/addAssignees', (req, res) => {
+  // console.log('HITTING ASSIGNEES ROUTE', req.body);
+  request({
+    headers: {
+      Accept: 'application/vnd.github.v3.full+json',
+      'User-Agent': 'request',
+    },
+    method: 'POST',
+    json: true,
+    url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/issues/${req.body.issueNum}/assignees?access_token=${req.body.token}`,
+    body: { assignees: req.body.assignees },
+  }, (err, response, body) => {
+    // console.log(' WHAT IS THE BODY?', body);
+    if (!err) {
+      return res.status(200).json({ modifiedIssue: body, err: null });
+    }
+    res.status(500).json({ err });
+  });
+});
 
 // Add collaborator
 // githubRouter.post('/api/github/addCollaborator', (req, res) => {

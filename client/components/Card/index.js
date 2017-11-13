@@ -7,6 +7,7 @@ import ModalIssueComment from '../Modal/comment_modal';
 import { addUserComment } from '../../actions/githubActions/addCommentAction';
 import IssuePullModal from '../Modal/newissuePull_Modal';
 import { convertDate } from '../EventFeed/logical_solutions';
+import { addNewAssignees } from '../../actions/githubActions/addAssigneesAction';
 
 class IssueCard extends Component {
   state = {
@@ -19,9 +20,10 @@ class IssueCard extends Component {
     currentIssueNumber: '',
     expandedCards: {},
     currentModalState: '',
+    assigneeData: null,
   }
   handleCardExpansionChange = (issueNum) => {
-    const expansionValue = !this.state.expandedCards[issueNum].expanded ? true : false;
+    const expansionValue = !this.state.expandedCards[issueNum].expanded;
     console.log('Expansin value', expansionValue);
     let newObjGroup = this.state.expandedCards;
     newObjGroup = Object.assign({}, newObjGroup, { [issueNum]: { expanded: expansionValue } });
@@ -36,10 +38,10 @@ class IssueCard extends Component {
   }
   handleShowCardsExpandedOnRefresh = (issueNum) => {
     const classList = document.getElementById(`collapse${issueNum}`).getAttribute('class');
-    const currentClassState = classList.includes('collapsing') || classList.includes('show') ? true : false;
+    const currentClassState = !!(classList.includes('collapsing') || classList.includes('show'));
     const classToSet = currentClassState ? 'show' : '';
     if (!currentClassState && this.state.expandedCards[issueNum].expanded) {
-      console.log('I think I should show htis.');
+      // console.log('I think I should show htis.');
     }
   }
   componentDidMount() {
@@ -52,6 +54,7 @@ class IssueCard extends Component {
     // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues, repoName, repoOwner } = nextProps;
+    console.log('new issues coming in on next props to check for new assignees', issues);
     // this.setState({ issueComments });
     // console.log('State Prios in Card itself need to see if this is being modified', this.state.issues);
     // console.log('AM I geting the new issue Array', issues);
@@ -61,8 +64,9 @@ class IssueCard extends Component {
     if (this.state.issues !== null) {
       if (this.props.issues.length !== issues.length) {
         this.setState({ issuesLoaded: false });
+        const assigneeData = this.props.issues.map((issue) => issue.assignees);
         // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
-        this.setState({ issues, issuesLoaded: true });
+        this.setState({ issues, issuesLoaded: true, assigneeData });
         issues.map((issue) => {
           this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
         });
@@ -72,20 +76,20 @@ class IssueCard extends Component {
     if (commentsLength === issuesLength) {
       // console.log('Issues in Issue Card from next props', issues);
       // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
-
-      this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true });
+      const assigneeData = this.props.issues.map((issue) => issue.assignees);
+      this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true, assigneeData });
       // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
     }
     if (this.state.issueComments !== null) {
       if (issueComments.length !== this.state.issueComments.length) {
-        console.log('do these comments reset?????');
+        // console.log('do these comments reset?????');
         this.setState({ issueComments });
       }
     }
   }
-  handleModalStateChange = (state) => {
-    this.setState({ currentModalState: state });
-  }
+handleModalStateChange = (state) => {
+  this.setState({ currentModalState: state });
+}
 modifyTextState = (event) => {
   this.setState({ newCommentText: event.target.value });
 }
@@ -106,15 +110,19 @@ shouldComponentUpdate(nextProps, nextState) {
 }
 handeStateInCardFromModal = () => {
   this.setState({ issuesLoaded: false, commentsLoaded: false });
-  console.log('I work');
+  // console.log('I work');
 }
-
+handleAddAssignees = (assignees) => {
+  this.props.addNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
+  this.props.handleIssuePullClose();
+}
 render() {
-  console.log('issue card mocal state', this.props.modalState);
+  console.log('STATE of issues at render', this.state.issues);
+  // console.log('issue card mocal state', this.props.modalState);
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded } = this.state;
   // console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
-  console.log('Here are the expanded cards', this.state.expandedCards);
+  // console.log('Here are the expanded cards', this.state.expandedCards);
   // console.log('Here aremy issue comments', this.state.issueComments);
   if (issuesLoaded && commentsLoaded) {
     const { issues, issueComments, isShowingModal } = this.state;
@@ -132,7 +140,7 @@ render() {
         </div>
       );
     }
-    const assigneeData = this.props.issues.map((issue, j) => issue.assignees);
+    // const assigneeData = this.props.issues.map((issue) => issue.assignees);
 
     return (
       // <div className={styles.mainCont}>
@@ -161,7 +169,7 @@ render() {
                 </div>
                 <h5 style={{ marginTop: 5 }}>Current Assignees:</h5>
                 <div className={styles.mainContAss} >
-                  { assigneeData[i].map((assignee) => (
+                  { this.state.assigneeData[i].map((assignee) => (
                     <div key={assignee.id}>
                       <img className={`${styles.avatarFix} pull-left`} src={assignee.avatar_url} alt="user" />
                     </div>
@@ -170,13 +178,13 @@ render() {
                 <div className={styles.buttonOrganizer}>
                   <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleClick(issue.number)}>Comment</div>
                   <div style={{ marginRight: 5 }} className={`btn btn-primary`} onClick={() => this.handleCloseIssue(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token)}>Close</div>
-                  {/* <div className={`btn btn-primary`} onClick={()=>this.props.handleModalState('assignee')}>Add Assignee</div> */}
+                  <div className={`btn btn-primary`} onClick={() => this.props.handleModalState('assignee', issue.number)}>Assignees</div>
                 </div>
               </div>
             </div>
           </div>
         ))}
-        <IssuePullModal modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
+        <IssuePullModal modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleAddAssignees={this.handleAddAssignees} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
       </div>
     );
   }
@@ -205,4 +213,5 @@ export default connect((state, ownProps) => ({
   closeUserIssue: (userId, repoName, issueNum, token) => dispatch(closeUserIssue(userId, repoName, issueNum, token)),
   fetchUserComments: (userId, repoName, issueNum, token) => dispatch(fetchUserComments(userId, repoName, issueNum, token)),
   addUserComment: (userName, repoName, issueNum, body, token) => dispatch(addUserComment(userName, repoName, issueNum, body, token)),
+  addNewAssignees: (userName, repoName, issueNum, assignees, token) => dispatch(addNewAssignees(userName, repoName, issueNum, assignees, token)),
 }))(IssueCard);
