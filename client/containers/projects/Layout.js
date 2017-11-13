@@ -123,6 +123,7 @@ class ProjLayout extends Component {
             </div>
             <div>
               <IssueCard
+                handleCardExpansion={this.handleCardExpansion}
                 handleCreateIssueData={this.handleCreateIssueData}
                 modalState={this.state.modalShowState}
                 handleIssuePullClose={this.handleIssuePullClose}
@@ -160,7 +161,7 @@ class ProjLayout extends Component {
   }
   render() {
     // console.log('Here re my branches?????', this.state.branches);
-    console.log('AREMY ISSUES MODIFYING IN STATE????????', this.state.issues);
+    console.log('are my expanded cards actually working', this.state.expandedCards);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}

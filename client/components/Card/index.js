@@ -19,31 +19,8 @@ class IssueCard extends Component {
     issueComments: null,
     newCommentText: '',
     currentIssueNumber: '',
-    expandedCards: {},
     currentModalState: '',
     assigneeData: null,
-  }
-  handleCardExpansionChange = (issueNum) => {
-    const expansionValue = !this.state.expandedCards[issueNum].expanded;
-    console.log('Expansin value', expansionValue);
-    let newObjGroup = this.state.expandedCards;
-    newObjGroup = Object.assign({}, newObjGroup, { [issueNum]: { expanded: expansionValue } });
-    this.setState({ expandedCards: newObjGroup });
-  }
-  handleCardExpansion = () => {
-    let objGroup = {};
-    this.props.issues.map((issue) => {
-      objGroup = Object.assign({}, objGroup, { [issue.number]: { expanded: false } });
-    });
-    this.setState({ expandedCards: objGroup });
-  }
-  handleShowCardsExpandedOnRefresh = (issueNum) => {
-    const classList = document.getElementById(`collapse${issueNum}`).getAttribute('class');
-    const currentClassState = !(classList.includes('collapsing') || classList.includes('show'));
-    const classToSet = currentClassState ? 'show' : '';
-    if (!currentClassState && this.state.expandedCards[issueNum].expanded) {
-      // console.log('I think I should show htis.');
-    }
   }
   componentDidMount() {
     // console.log('INTIAL COMMENTS DATA TO SEND OFF ', this.props.repoOwner, this.props.repoName);
@@ -55,7 +32,7 @@ class IssueCard extends Component {
     // console.log(' WHEN DO WE GET NEW ISSUES?', nextProps.issueComments);
     // console.log("this should show projects connected in state", nextProps.currentProject);
     const { issueComments, issues, repoName, repoOwner } = nextProps;
-    console.log('new issues coming in on next props to check for new assignees', issues);
+    // console.log('new issues coming in on next props to check for new assignees', issues);
     // this.setState({ issueComments });
     // console.log('State Prios in Card itself need to see if this is being modified', this.state.issues);
     // console.log('AM I geting the new issue Array', issues);
@@ -116,10 +93,10 @@ handeStateInCardFromModal = () => {
 handleAddAssignees = (assignees) => {
   this.props.addNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
   this.props.handleIssuePullClose();
-  this.props.handleRefresh()
+  this.props.handleRefresh();
 }
 render() {
-  console.log('STATE of issues at render', this.state.issues);
+  // console.log('STATE of issues at render', this.state.issues);
   // console.log('issue card mocal state', this.props.modalState);
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, assigneesLoaded } = this.state;
@@ -128,22 +105,6 @@ render() {
   // console.log('Here aremy issue comments', this.state.issueComments);
   if (issuesLoaded && commentsLoaded && assigneesLoaded) {
     const { issues, issueComments, isShowingModal } = this.state;
-    if (isShowingModal) {
-      return (
-        <div>
-          <ModalIssueComment
-            changeHandler={this.modifyTextState}
-            handleClick={this.handleClick}
-            handleClose={this.handleClose}
-            isShowingModal={this.state.isShowingModal}
-            value={this.state.newCommentText}
-            handleAddComment={this.handleAddNewComment}
-          />
-        </div>
-      );
-    }
-    // const assigneeData = this.props.issues.map((issue) => issue.assignees);
-
     return (
       // <div className={styles.mainCont}>
       <div className={`card-group ${styles.mainCont}`}>
@@ -187,6 +148,16 @@ render() {
           </div>
         ))}
         <IssuePullModal modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleAddAssignees={this.handleAddAssignees} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
+
+        <ModalIssueComment
+          changeHandler={this.modifyTextState}
+          handleClick={this.handleClick}
+          handleClose={this.handleClose}
+          isShowingModal={this.state.isShowingModal}
+          value={this.state.newCommentText}
+          handleAddComment={this.handleAddNewComment}
+        />
+
       </div>
     );
   }
