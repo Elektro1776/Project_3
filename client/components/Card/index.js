@@ -14,6 +14,7 @@ class IssueCard extends Component {
     isShowingModal: false,
     issuesLoaded: false,
     commentsLoaded: false,
+    assigneesLoaded: false,
     issues: null,
     issueComments: null,
     newCommentText: '',
@@ -38,7 +39,7 @@ class IssueCard extends Component {
   }
   handleShowCardsExpandedOnRefresh = (issueNum) => {
     const classList = document.getElementById(`collapse${issueNum}`).getAttribute('class');
-    const currentClassState = !!(classList.includes('collapsing') || classList.includes('show'));
+    const currentClassState = !(classList.includes('collapsing') || classList.includes('show'));
     const classToSet = currentClassState ? 'show' : '';
     if (!currentClassState && this.state.expandedCards[issueNum].expanded) {
       // console.log('I think I should show htis.');
@@ -66,7 +67,7 @@ class IssueCard extends Component {
         this.setState({ issuesLoaded: false });
         const assigneeData = this.props.issues.map((issue) => issue.assignees);
         // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
-        this.setState({ issues, issuesLoaded: true, assigneeData });
+        this.setState({ issues, issuesLoaded: true, assigneeData, assigneesLoaded: true });
         issues.map((issue) => {
           this.props.fetchUserComments(this.props.repoOwner, this.props.repoName, issue.number, this.props.git_token);
         });
@@ -77,7 +78,7 @@ class IssueCard extends Component {
       // console.log('Issues in Issue Card from next props', issues);
       // console.log('SETTING ISSUES STATE AS WE READ', this.state.issuesLoaded);
       const assigneeData = this.props.issues.map((issue) => issue.assignees);
-      this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true, assigneeData });
+      this.setState({ issueComments, issues, commentsLoaded: true, issuesLoaded: true, assigneeData, assigneesLoaded: true });
       // console.log('Now this is state again and should be modified thus causing a re render', this.state.issues, this.state.issuesLoaded);
     }
     if (this.state.issueComments !== null) {
@@ -115,16 +116,17 @@ handeStateInCardFromModal = () => {
 handleAddAssignees = (assignees) => {
   this.props.addNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
   this.props.handleIssuePullClose();
+  this.props.handleRefresh()
 }
 render() {
   console.log('STATE of issues at render', this.state.issues);
   // console.log('issue card mocal state', this.props.modalState);
   // console.log('Expanded card State', this.state.expandedCards);
-  const { issuesLoaded, commentsLoaded } = this.state;
+  const { issuesLoaded, commentsLoaded, assigneesLoaded } = this.state;
   // console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
   // console.log('Here are the expanded cards', this.state.expandedCards);
   // console.log('Here aremy issue comments', this.state.issueComments);
-  if (issuesLoaded && commentsLoaded) {
+  if (issuesLoaded && commentsLoaded && assigneesLoaded) {
     const { issues, issueComments, isShowingModal } = this.state;
     if (isShowingModal) {
       return (

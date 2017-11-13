@@ -130,6 +130,7 @@ class ProjLayout extends Component {
                 currentIssueNumber={this.state.currentIssueNumber}
                 handleModalState={this.handleModalShowState}
                 handleIssuePullClick={this.handleIssuePullClick}
+                handleRefresh={this.handleRefresh}
                 issues={this.state.issues}
                 repoName={this.state.repoName}
                 repoOwner={this.state.currentRepoOwner}

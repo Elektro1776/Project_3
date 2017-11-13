@@ -31,7 +31,7 @@ class IssuePullModal extends Component {
   componentWillReceiveProps(nextProps) {
     const { modalState } = nextProps;
     // console.log('incoming props on modal', modalState);
-      this.setState({ showing: modalState });
+      this.setState({ showing: modalState, assignees: [] });
 
   }
   handlePullRequestDisplay = (value) => {
