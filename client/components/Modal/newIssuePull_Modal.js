@@ -73,14 +73,12 @@ class IssuePullModal extends Component {
   // Handles submission of the new issue form
   handleSubmit = (event, butt) => {
     event.preventDefault();
-    console.log('submit fires');
-
-    // if (this.state.showing === 'issue') {
-    //   this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
-    //   this.setState({ title: '', body: '' });
-    // } else if (this.state.showing === 'assignee') {
-    //   this.props.handleAddAssignees(this.state.assignees);
-    // }
+    if (this.state.showing === 'issue') {
+      this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
+      this.setState({ title: '', body: '' });
+    } else if (this.state.showing === 'assignee') {
+      this.props.handleAddAssignees(this.state.assignees);
+    }
   }
   render() {
     // console.log('Here is what is showing', this.state.showing);
