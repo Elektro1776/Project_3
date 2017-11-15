@@ -21,7 +21,7 @@ class RepoDrawer extends Component {
   componentDidMount() {
     if (this.props.git_profile.login) {
       const { login } = this.props.git_profile;
-      this.props.fetchUserRepos(login, this.props.git_token);
+      this.props.fetchUserRepos(login, this.props.git_token, '1');
     }
     if (this.state.currentRepo === 1) {
       this.setState({ lastRepoNumber: this.props.lastRepoNum });
@@ -31,7 +31,7 @@ class RepoDrawer extends Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.git_profile.login && (nextProps.git_profile.login !== this.props.git_profile.login)) {
       const { login } = nextProps.git_profile;
-      this.props.fetchUserRepos(login, nextProps.git_token);
+      this.props.fetchUserRepos(login, nextProps.git_token, '1');
     }
     const { userRepos, currentProject, fetchingRepos } = nextProps;
     if (userRepos.length !== 0) {
@@ -111,6 +111,6 @@ export default connect((state, ownProps) => ({
   fetchingRepos: state.repos,
   lastRepoNum: state.repos.lastRepoNumber,
 }), (dispatch) => ({
-  fetchUserRepos: (userId, user_token) => dispatch(fetchUserRepos(userId, user_token)),
+  fetchUserRepos: (userId, user_token, page) => dispatch(fetchUserRepos(userId, user_token, page)),
   loadCurrentProject: (projectId) => dispatch(loadCurrentProject(projectId)),
 }))(RepoDrawer);
