@@ -8,6 +8,7 @@ import { addUserComment } from '../../actions/githubActions/addCommentAction';
 import IssuePullModal from '../Modal/newissuePull_Modal';
 import { convertDate } from '../EventFeed/logical_solutions';
 import { addNewAssignees } from '../../actions/githubActions/addAssigneesAction';
+import { removeNewAssignees } from '../../actions/githubActions/removeAssigneesAction';
 
 class IssueCard extends Component {
   state = {
@@ -90,8 +91,14 @@ handeStateInCardFromModal = () => {
   this.setState({ issuesLoaded: false, commentsLoaded: false });
   // console.log('I work');
 }
+// this function handles adding new assignees, closing the modal, and refreshing the page
 handleAddAssignees = (assignees) => {
   this.props.addNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
+  this.props.handleIssuePullClose();
+  this.props.handleRefresh();
+}
+handleRemoveAssignees = (assignees) => {
+  this.props.removeNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
   this.props.handleIssuePullClose();
   this.props.handleRefresh();
 }
@@ -147,7 +154,7 @@ render() {
             </div>
           </div>
         ))}
-        <IssuePullModal modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleAddAssignees={this.handleAddAssignees} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
+        <IssuePullModal assigneeData={this.state.assigneeData} modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleAddAssignees={this.handleAddAssignees} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} handleRemoveAssignees={this.handleRemoveAssignees} />
 
         <ModalIssueComment
           changeHandler={this.modifyTextState}
@@ -187,4 +194,5 @@ export default connect((state, ownProps) => ({
   fetchUserComments: (userId, repoName, issueNum, token) => dispatch(fetchUserComments(userId, repoName, issueNum, token)),
   addUserComment: (userName, repoName, issueNum, body, token) => dispatch(addUserComment(userName, repoName, issueNum, body, token)),
   addNewAssignees: (userName, repoName, issueNum, assignees, token) => dispatch(addNewAssignees(userName, repoName, issueNum, assignees, token)),
+  removeNewAssignees: (userName, repoName, issueNum, assignees, token) => dispatch(removeNewAssignees(userName, repoName, issueNum, assignees, token)),
 }))(IssueCard);

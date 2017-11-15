@@ -101,45 +101,6 @@ githubRouter.post('/createIssue', (req, res) => {
   });
 });
 
-// Get branches
-// githubRouter.post('/branches', (req, res) => {
-//   console.log('HITTING branches ROUTE ON SERVER', req.body);
-//   request({
-//     headers: {
-//       Accept: 'application/vnd.github.v3.full+json',
-//       'User-Agent': 'request',
-//     },
-//     method: 'POST',
-//     json: true,
-//     url: `https://api.github.com/repos/${req.body.id}/${req.body.repoName}/branches?access_token=${req.body.token}`,
-//   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY? FOR CREATE ISSUE', body);
-//   //   if (!err) {
-//   //     return res.status(200).json({ createdIssue: body, err: null });
-//   //   }
-//   //   res.status(500).json({ err, collabs: null });
-//   });
-// });
-
-// Create a pull request
-// githubRouter.post('/api/github/createPullRequest', (req, res) => {
-//   request({
-//     headers: {
-//       Accept: 'application/vnd.github.v3.full+json',
-//       'User-Agent': 'request',
-//     },
-//     method: 'POST',
-//     json: true,
-//     url: `https://api.github.com/repos/${req.body.owner}/${req.body.repo}/pulls?access_token=${req.user.github.token}`,
-//     body: { title: req.body.title,
-//       head: req.body.head,
-//       base: req.body.base,
-//       body: req.body.body },
-//   }, (err, response, body) => {
-//     console.log(' WHAT IS THE BODY?', body);
-//   });
-// });
-
 // Add assignees to issues
 githubRouter.post('/addAssignees', (req, res) => {
   // console.log('HITTING ASSIGNEES ROUTE', req.body);
@@ -161,7 +122,7 @@ githubRouter.post('/addAssignees', (req, res) => {
   });
 });
 
-// Add assignees to issues
+// Remove assignees to issues
 githubRouter.post('/removeAssignees', (req, res) => {
   // console.log('HITTING ASSIGNEES ROUTE', req.body);
   request({

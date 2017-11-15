@@ -84,6 +84,21 @@ export default function (state = initialState, action) {
     case FAILURE_ADD_ASSIGNEES: {
       return Object.assign({}, state, { errorAddingAssignees: action.payload.err });
     }
+    case REMOVING_ASSIGNEES: {
+      return Object.assign({}, state, { addingAssignees: true });
+    }
+    case RECEIVED_REMOVED_ASSIGNEES: {
+      let oldState = state.repoIssues;
+      oldState.map((issue, i) => {
+        if (issue.number === action.payload.issueNum) {
+            oldState[i] = action.payload.issue.modifiedIssue;
+        }
+      });
+      return Object.assign({}, state, { repoIssues: oldState, modifiedIssue: action.payload.issue.modifiedIssue });
+    }
+    case FAILURE_REMOVE_ASSIGNEES: {
+      return Object.assign({}, state, { errorAddingAssignees: action.payload.err });
+    }
     default:
       return { ...state };
   }

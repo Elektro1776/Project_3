@@ -31,8 +31,7 @@ class IssuePullModal extends Component {
   componentWillReceiveProps(nextProps) {
     const { modalState } = nextProps;
     // console.log('incoming props on modal', modalState);
-      this.setState({ showing: modalState, assignees: [] });
-
+    this.setState({ showing: modalState, assignees: [] });
   }
   handlePullRequestDisplay = (value) => {
     this.setState({ showing: value });
@@ -73,12 +72,16 @@ class IssuePullModal extends Component {
   // Handles submission of the new issue form
   handleSubmit = (event, butt) => {
     event.preventDefault();
-    if (this.state.showing === 'issue') {
-      this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
-      this.setState({ title: '', body: '' });
-    } else if (this.state.showing === 'assignee') {
-      this.props.handleAddAssignees(this.state.assignees);
-    }
+    this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
+    this.setState({ title: '', body: '' });
+  }
+  // handles if users want to add assignees
+  handleAddAssignees = () => {
+    this.props.handleAddAssignees(this.state.assignees);
+  }
+  // handles if users want to remove assignees
+  handleRemoveAssignees = () => {
+    this.props.handleRemoveAssignees(this.state.assignees);
   }
   render() {
     // console.log('Here is what is showing', this.state.showing);
@@ -119,8 +122,8 @@ class IssuePullModal extends Component {
                     ))}
 
                   </div>
-                  <button label='submit' className="btn btn-lg btn-success" type="submit">Submit</button>
-                  <div label='cancel' className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</div>
+                  <button label="submit" className="btn btn-lg btn-success" type="submit">Submit</button>
+                  <div label="cancel" className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</div>
                 </form>
               </ModalDialog>
 
@@ -143,9 +146,9 @@ class IssuePullModal extends Component {
                   source={values}
                   value={this.state.showing}
                 /> */}
-                <form style={{ marginBottom: 25 }} onSubmit={this.handleSubmit}>
+                <form style={{ marginBottom: 25 }} onSubmit={(event) => event.preventDefault()}>
                   <div>
-                    <p> Add Assignees</p>
+                    <h5 style={{ marginTop: 5 }}>Manage Assignees:</h5>
                     {this.props.collabs.map((collab) => (
                       <div key={collab.id} >
                         <MuiThemeProvider>
@@ -159,8 +162,8 @@ class IssuePullModal extends Component {
                     ))}
 
                   </div>
-                  <button className="btn btn-lg btn-success" type="submit">Submit</button>
-                  <div className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</div>
+                  <button className="btn btn-lg btn-success" onClick={this.handleAddAssignees}>Add Assignees</button>
+                  <button className="btn btn-lg btn-danger" onClick={this.handleRemoveAssignees}>Remove Assignees</button>
                 </form>
               </ModalDialog>
 
@@ -169,14 +172,14 @@ class IssuePullModal extends Component {
         </div>
       );
     }
-      return (
-        <div>
-          {this.props.isShowing &&
-            <p>Loading......</p>
-          }
+    return (
+      <div>
+        {this.props.isShowing &&
+        <p>Loading......</p>
+        }
 
-        </div>
-      );
+      </div>
+    );
 
     // else if (this.state.showing === 'pull_request') {
     //   return (
