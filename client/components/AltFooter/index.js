@@ -13,7 +13,6 @@ class AltFooter extends Component {
 
 
   render() {
-    const bootStrap = 'col-xs-12';
     const styles = {
       basic: {
         width: '100vw',
@@ -21,24 +20,15 @@ class AltFooter extends Component {
         height: '50px',
         bottom: '0',
         position: 'fixed',
-
+        color: 'white',
+        textAlign: 'center',
+        lineHeight: '44px',
       },
-      icons: {
-        height: '10px',
-        fontSize: 12,
-        color: '#ddd',
-        margin: 'auto',
-        padding: '5px',
-
-      },
-
     };
 
     return (
       <div style={styles.basic}>
-
-        <Button icon="copyright" label="copyright 2017" className={bootStrap} style={styles.icons} />
-
+          <p>&#9400;Copyright 2017 uTile</p>
       </div>
     );
   }

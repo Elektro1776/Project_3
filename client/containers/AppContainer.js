@@ -16,7 +16,7 @@ class AppContainer extends Component {
   }
   render() {
     return (
-      <div style={{backgroundColor: "black", height: '100%'}}>
+      <div style={{background: "black", height: '100%'}}>
         {this.props.children}
       </div>
     );
