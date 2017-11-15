@@ -160,7 +160,7 @@ class IssuePullModal extends Component {
 
                   </div>
                   <button className="btn btn-lg btn-success" type="submit">Submit</button>
-                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+                  <div className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</div>
                 </form>
               </ModalDialog>
 
