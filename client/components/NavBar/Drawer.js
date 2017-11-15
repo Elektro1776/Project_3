@@ -14,12 +14,17 @@ class RepoDrawer extends Component {
       active: false,
       repos: [],
       currentProject: {},
+      currentRepo: '1',
+      lastRepoNumber: null,
     };
   }
   componentDidMount() {
     if (this.props.git_profile.login) {
       const { login } = this.props.git_profile;
       this.props.fetchUserRepos(login, this.props.git_token);
+    }
+    if (this.state.currentRepo === 1) {
+      this.setState({ lastRepoNumber: this.props.lastRepoNum });
     }
     // console.log(' WHAT IS OUR LOGIN AND TOKEN ON MOUNT OF DRAWER???', this.props.git_profile, this.props.git_token);
   }
@@ -40,7 +45,15 @@ class RepoDrawer extends Component {
     this.props.loadCurrentProject(id);
     this.handleToggle();
   }
+  handleRepoBackClick = () => {
+    // if on repo one go to last page otherwise subtract one
+  }
+  handleRepoForwardClick = () => {
+    //if on last page go to 1 if not add one
+  }
   render() {
+    console.log('current repo number', this.state.currentRepo);
+    console.log('lastRepoNumber', this.state.lastRepoNumber);
     const { repos } = this.state;
     const backArrow = () => (
       <div>
@@ -96,7 +109,7 @@ export default connect((state, ownProps) => ({
   git_profile: state.auth.git_profile,
   git_token: state.auth.github_token,
   fetchingRepos: state.repos,
-
+  lastRepoNum: state.repos.lastRepoNumber,
 }), (dispatch) => ({
   fetchUserRepos: (userId, user_token) => dispatch(fetchUserRepos(userId, user_token)),
   loadCurrentProject: (projectId) => dispatch(loadCurrentProject(projectId)),

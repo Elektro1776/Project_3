@@ -32,9 +32,13 @@ githubRouter.post('/getRepos', (req, res) => {
     json: true,
     url: `https://api.github.com/users/${req.body.id}/repos?sort=pushed&type=all&access_token=${req.body.token}`,
   }, (err, response, body) => {
-    // console.log(' WHAT IS THE BODY?', body);
+    const headerLinks = response.headers.link.split(';');
+    const lastLink = headerLinks[1].split(',');
+    const whereToStart = lastLink[1].indexOf('page=');
+    const lastPageNumberToPass = lastLink[1].charAt(parseInt(whereToStart) + 5);
+    console.log('here are my repo headers....', lastPageNumberToPass);
     if (!err) {
-      return res.status(200).json({ repos: body, err: null });
+      return res.status(200).json({ repos: body, lastRepoPage: lastPageNumberToPass, err: null });
     }
     res.status(500).json({ err, repos: null });
   });

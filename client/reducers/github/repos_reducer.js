@@ -7,6 +7,7 @@ const initialState = {
   userRepos: [],
   errorMessage: '',
   currentProject: {},
+  lastRepoNumber: null,
 };
 function updateCurrentProject(array, projectId) {
   const updatedCurrentProject = array.filter((project) => {
@@ -25,8 +26,8 @@ export default function (state = initialState, action) {
     case FETCHING_REPOS:
       return Object.assign({}, state, { fetchingRepos: true });
     case SUCCESS_GETTING_REPOS: {
-      // console.info('What are the reducers repos', action.payload, )
-      return Object.assign({}, state, { userRepos: action.payload.repos, fetchedRepos: true, currentProject: action.payload.repos[0] });
+      console.info('What are the reducers repos ;ast number', action.payload.lastRepoPage);
+      return Object.assign({}, state, { userRepos: action.payload.repos, lastRepoNumber: action.payload.lastRepoPage, fetchedRepos: true, currentProject: action.payload.repos[0] });
     }
     case FAILURE_GETTING_REPOS:
       return Object.assign({}, state, { errorMessage: action.payload.err });
