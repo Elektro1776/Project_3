@@ -44,7 +44,6 @@ class RepoDrawer extends Component {
     const { repos } = this.state;
     const currentUrl = document.URL;
     let specialClass = `${styles.hide}`;
-    console.log(currentUrl.split('/').indexOf('dashboard'));
     if (currentUrl.split('/').indexOf('dashboard') === -1) {
       specialClass = `${styles.show}`;
     }

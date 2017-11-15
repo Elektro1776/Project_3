@@ -29,6 +29,9 @@ class Footer extends Component {
         height: '50px',
         position: 'fixed',
         bottom: '0',
+        color: 'white',
+        textAlign: 'center',
+        lineHeight: '42px'
       },
       icons: {
         height: '50px',
@@ -40,14 +43,15 @@ class Footer extends Component {
     // console.log(currentRoute);
     return (
       <div style={styles.basic}>
-        <Button icon="search" className={bootStrap} style={styles.icons} />
+            <p>&#9400;Copyright 2017 uTile</p>
+        {/* <Button icon="search" className={bootStrap} style={styles.icons} />
         <Button icon="announcement" className={bootStrap} style={styles.icons} />
         <Button
           onClick={() => currentRoute === '/dashboard' ? this.dashboardButton() : this.projectsButton()}
           icon={currentRoute === '/dashboard' ? 'launch' : 'add_circle'}
           className={bootStrap}
           style={styles.icons}
-        />
+        /> */}
       </div>
     );
   }
