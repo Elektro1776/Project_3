@@ -20,11 +20,10 @@ class RepoDrawer extends Component {
     if (this.props.git_profile.login) {
       const { login } = this.props.git_profile;
       this.props.fetchUserRepos(login, this.props.git_token);
-
     }
     // console.log(' WHAT IS OUR LOGIN AND TOKEN ON MOUNT OF DRAWER???', this.props.git_profile, this.props.git_token);
   }
- componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.git_profile.login && (nextProps.git_profile.login !== this.props.git_profile.login)) {
       const { login } = nextProps.git_profile;
       this.props.fetchUserRepos(login, nextProps.git_token);
@@ -43,8 +42,14 @@ class RepoDrawer extends Component {
   }
   render() {
     const { repos } = this.state;
+    const currentUrl = document.URL;
+    let specialClass = `${styles.hide}`;
+    console.log(currentUrl.split('/').indexOf('dashboard'));
+    if (currentUrl.split('/').indexOf('dashboard') === -1) {
+      specialClass = `${styles.show}`;
+    }
     return (
-      <div>
+      <div className={specialClass}>
         <Button className={styles.repoButton} label="Repos" onClick={this.handleToggle} />
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
           {repos.map((repo) => (

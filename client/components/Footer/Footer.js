@@ -25,7 +25,7 @@ class Footer extends Component {
     const styles = {
       basic: {
         width: '100vw',
-        background: '#35b',
+        background: '#334299',
         height: '50px',
         position: 'fixed',
         bottom: '0',

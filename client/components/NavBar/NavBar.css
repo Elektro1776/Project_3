@@ -10,3 +10,12 @@
   background-color: #59ffd8;
 
 }
+.navMargin {
+  margin-left: 61%;
+}
+.show {
+  visibility: none;
+}
+.hide {
+  visibility: hidden;
+}
