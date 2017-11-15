@@ -69,16 +69,18 @@ class IssuePullModal extends Component {
     const prop = event.target.name;
     const val = event.target.value;
     this.setState({ [prop]: val });
-    // console.log('heres state', this.state);
   }
-  handleSubmit = (event) => {
+  // Handles submission of the new issue form
+  handleSubmit = (event, butt) => {
     event.preventDefault();
-    if (this.state.showing === 'issue') {
-      this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
-      this.setState({ title: '', body: '' });
-    } else if (this.state.showing === 'assignee') {
-      this.props.handleAddAssignees(this.state.assignees);
-    }
+    console.log('submit fires');
+
+    // if (this.state.showing === 'issue') {
+    //   this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
+    //   this.setState({ title: '', body: '' });
+    // } else if (this.state.showing === 'assignee') {
+    //   this.props.handleAddAssignees(this.state.assignees);
+    // }
   }
   render() {
     // console.log('Here is what is showing', this.state.showing);
@@ -119,8 +121,8 @@ class IssuePullModal extends Component {
                     ))}
 
                   </div>
-                  <button className="btn btn-lg btn-success" type="submit">Submit</button>
-                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+                  <button label='submit' className="btn btn-lg btn-success" type="submit">Submit</button>
+                  <div label='cancel' className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</div>
                 </form>
               </ModalDialog>
 
