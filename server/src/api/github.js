@@ -36,7 +36,7 @@ githubRouter.post('/getRepos', (req, res) => {
     const lastLink = headerLinks[1].split(',');
     const whereToStart = lastLink[1].indexOf('page=');
     const lastPageNumberToPass = lastLink[1].charAt(parseInt(whereToStart) + 5);
-    console.log('here are my repo headers....', lastPageNumberToPass);
+    // console.log('here are my repo headers....', lastPageNumberToPass);
     if (!err) {
       return res.status(200).json({ repos: body, lastRepoPage: lastPageNumberToPass, err: null });
     }
