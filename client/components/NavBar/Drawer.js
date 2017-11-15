@@ -42,6 +42,11 @@ class RepoDrawer extends Component {
   }
   render() {
     const { repos } = this.state;
+    const backArrow = () => (
+      <div>
+        <i className="material-icons">arrow_back</i>
+      </div>
+    );
     const currentUrl = document.URL;
     let specialClass = `${styles.hide}`;
     if (currentUrl.split('/').indexOf('dashboard') === -1) {
@@ -51,6 +56,22 @@ class RepoDrawer extends Component {
       <div className={specialClass}>
         <Button className={styles.repoButton} label="Repos" onClick={this.handleToggle} />
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
+          <div className={styles.pageButtons}>
+            <Button
+              className={styles.button}
+              label="Back"
+              raised
+              ripple
+              primary
+            />
+            <Button
+              className={styles.button}
+              label="Forward"
+              raised
+              ripple
+              primary
+            />
+          </div>
           {repos.map((repo) => (
             <div key={repo.id}>
               <Button
