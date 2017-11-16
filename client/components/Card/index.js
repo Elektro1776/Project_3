@@ -9,6 +9,7 @@ import IssuePullModal from '../Modal/newissuePull_Modal';
 import { convertDate } from '../EventFeed/logical_solutions';
 import { addNewAssignees } from '../../actions/githubActions/addAssigneesAction';
 import { removeNewAssignees } from '../../actions/githubActions/removeAssigneesAction';
+import Markdown from 'react-remarkable';
 
 class IssueCard extends Component {
   state = {
@@ -105,7 +106,7 @@ render() {
   // console.log('issue card mocal state', this.props.modalState);
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, assigneesLoaded } = this.state;
-  // console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
+  console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
   // console.log('Here are the expanded cards', this.state.expandedCards);
   // console.log('Here aremy issue comments', this.state.issueComments);
   if (issuesLoaded && commentsLoaded && assigneesLoaded) {
@@ -122,14 +123,14 @@ render() {
                 <h6 className={`card-title pull-left ${styles.titleBump}`}>{`Opened By ${issue.user.login}`}</h6>
                 <br />
                 <br />
-                <p className="card-text">{issue.body}</p>
+                <Markdown className="card-text" source={`${issue.body}`} />
                 <br />
                 <div>
                   {issueComments[issue.number].map((comment) => (
                     <div key={comment.id}>
                       <br />
                       <h6 className={styles.byWho}>{ `Comment by ${comment.user.login}${convertDate(comment.created_at)}` }</h6>
-                      <p className="card-text">{ comment.body }</p>
+                      <Markdown className="card-text" source={`${comment.body}`} />
                     </div>
                   ),
                   )
@@ -170,7 +171,11 @@ render() {
     <div>
       <div className={styles.loaderContainerThree}>
         <img className={`center-block ${styles.loaderImageThree}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
-        <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>Loading...</h1>
+        {setTimeout(()=>{
+          return (
+          <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>It does not looks like there are any issues currently.</h1>
+        );
+        }, 5000)}
       </div>
     </div>
   );
