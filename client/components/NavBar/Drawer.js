@@ -47,11 +47,13 @@ class RepoDrawer extends Component {
   }
   handleRepoBackClick = () => {
     const pageNumber = this.state.currentRepo === '1' ? this.state.lastRepoNumber : (parseInt(this.state.currentRepo) - 1);
-      this.props.fetchUserRepos(this.props.git_profile.login, this.props.git_token, pageNumber);
-      this.setState({ currentRepo: pageNumber.toString() });
+    this.props.fetchUserRepos(this.props.git_profile.login, this.props.git_token, pageNumber);
+    this.setState({ currentRepo: pageNumber.toString() });
   }
   handleRepoForwardClick = () => {
-    //if on last page go to 1 if not add one
+    const pageNumber = this.state.currentRepo === this.state.lastRepoNumber ? 1 : (parseInt(this.state.currentRepo) + 1);
+    this.props.fetchUserRepos(this.props.git_profile.login, this.props.git_token, pageNumber);
+    this.setState({ currentRepo: pageNumber.toString() });
   }
   render() {
     // console.log('current repo number', this.state.currentRepo);
@@ -72,7 +74,7 @@ class RepoDrawer extends Component {
       <div className={specialClass}>
         <Button className={styles.repoButton} label="Repos" onClick={this.handleToggle} />
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
-          <div className={styles.pageButtons}>
+          <div className={styles.pageButtons} style={{marginTop: '25%'}}>
             <Button
               className={styles.button}
               label="Back"
@@ -87,6 +89,7 @@ class RepoDrawer extends Component {
               raised
               ripple
               primary
+              onClick={this.handleRepoForwardClick}
             />
           </div>
           {repos.map((repo) => (

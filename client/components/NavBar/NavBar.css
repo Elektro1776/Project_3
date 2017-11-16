@@ -1,13 +1,19 @@
 .button {
 
-  width: 100%;
+  width: 90%;
   margin-bottom: 2px;
+  margin-top: 3%;
+  margin-bottom: 3%;
+  /*padding-right: 2%;*/
+  margin-left: 5%;
+  margin-right: 5%;
 
 }
 
 .repoButton {
   color: #f00;
   background-color: #59ffd8;
+
 
 }
 .navMargin {
@@ -21,7 +27,7 @@
 }
 .pageButtons {
   display:flex;
-  margin-left: 7%;
+  /*margin-left: 3%;*/
   margin-top: 3%;
   margin-bottom: 3%;
 }

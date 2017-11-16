@@ -37,7 +37,7 @@ githubRouter.post('/getRepos', (req, res) => {
     const whereToStart = lastLink[1].indexOf('&page=');
     console.log('What amI getting here', parseInt(lastLink[1].charAt(parseInt(whereToStart) + 7)));
     const lastPageNumberToPass = isNaN(parseInt(lastLink[1].charAt(parseInt(whereToStart) + 7))) ? lastLink[1].charAt(parseInt(whereToStart) + 6) : lastLink[1].charAt(parseInt(whereToStart) + 6) + lastLink[1].charAt(parseInt(whereToStart) + 7);
-    console.log('here are my repo headers....', lastPageNumberToPass);
+    // console.log('here are my repo headers....', lastPageNumberToPass);
     if (!err) {
       return res.status(200).json({ repos: body, lastRepoPage: lastPageNumberToPass, err: null });
     }
