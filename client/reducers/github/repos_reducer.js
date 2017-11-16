@@ -27,6 +27,7 @@ export default function (state = initialState, action) {
       return Object.assign({}, state, { fetchingRepos: true });
     case SUCCESS_GETTING_REPOS: {
       // console.info('What are the reducers repos ;ast number', action.payload.lastRepoPage);
+      console.log('Here are new repos in reducer', action.payload.repos);
       return Object.assign({}, state, { userRepos: action.payload.repos, lastRepoNumber: action.payload.lastRepoPage, fetchedRepos: true, currentProject: action.payload.repos[0] });
     }
     case FAILURE_GETTING_REPOS:

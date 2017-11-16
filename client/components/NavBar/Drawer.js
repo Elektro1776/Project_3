@@ -34,7 +34,7 @@ class RepoDrawer extends Component {
       this.setState({ currentRepo: '1', lastRepoNumber: this.props.lastRepoNum });
     }
     const { userRepos, currentProject, fetchingRepos } = nextProps;
-    if (userRepos.length !== 0) {
+    if (userRepos.length !== 0 || this.props.userRepos === userRepos) {
       this.setState({ repos: userRepos, currentProject });
     }
   }
@@ -46,7 +46,9 @@ class RepoDrawer extends Component {
     this.handleToggle();
   }
   handleRepoBackClick = () => {
-    // if on repo one go to last page otherwise subtract one
+    const pageNumber = this.state.currentRepo === '1' ? this.state.lastRepoNumber : (parseInt(this.state.currentRepo) - 1);
+      this.props.fetchUserRepos(this.props.git_profile.login, this.props.git_token, pageNumber);
+      this.setState({ currentRepo: pageNumber.toString() });
   }
   handleRepoForwardClick = () => {
     //if on last page go to 1 if not add one
@@ -77,6 +79,7 @@ class RepoDrawer extends Component {
               raised
               ripple
               primary
+              onClick={this.handleRepoBackClick}
             />
             <Button
               className={styles.button}

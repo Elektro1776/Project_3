@@ -30,13 +30,14 @@ githubRouter.post('/getRepos', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `https://api.github.com/users/${req.body.id}/repos?sort=pushed&type=all&page=${req.body.page}&access_token=${req.body.token}`,
+    url: `https://api.github.com/users/${req.body.id}/repos?sort=pushed&per_page=10&type=all&page=${req.body.page}&access_token=${req.body.token}`,
   }, (err, response, body) => {
     const headerLinks = response.headers.link.split(';');
     const lastLink = headerLinks[1].split(',');
-    const whereToStart = lastLink[1].indexOf('page=');
-    const lastPageNumberToPass = lastLink[1].charAt(parseInt(whereToStart) + 5);
-    // console.log('here are my repo headers....', lastPageNumberToPass);
+    const whereToStart = lastLink[1].indexOf('&page=');
+    console.log('What amI getting here', parseInt(lastLink[1].charAt(parseInt(whereToStart) + 7)));
+    const lastPageNumberToPass = isNaN(parseInt(lastLink[1].charAt(parseInt(whereToStart) + 7))) ? lastLink[1].charAt(parseInt(whereToStart) + 6) : lastLink[1].charAt(parseInt(whereToStart) + 6) + lastLink[1].charAt(parseInt(whereToStart) + 7);
+    console.log('here are my repo headers....', lastPageNumberToPass);
     if (!err) {
       return res.status(200).json({ repos: body, lastRepoPage: lastPageNumberToPass, err: null });
     }
