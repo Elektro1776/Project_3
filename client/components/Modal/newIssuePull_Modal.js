@@ -20,7 +20,7 @@ const styles = {
 
 class IssuePullModal extends Component {
   state = {
-    showing: 'issue',
+    showing: 'assignee',
     title: '',
     body: '',
     assignees: [],
@@ -30,9 +30,8 @@ class IssuePullModal extends Component {
   }
   componentWillReceiveProps(nextProps) {
     const { modalState } = nextProps;
-    if (this.props.modalState !== modalState) {
-      this.setState({ showing: modalState });
-    }
+    // console.log('incoming props on modal', modalState);
+    this.setState({ showing: modalState, assignees: [] });
   }
   handlePullRequestDisplay = (value) => {
     this.setState({ showing: value });
@@ -69,18 +68,26 @@ class IssuePullModal extends Component {
     const prop = event.target.name;
     const val = event.target.value;
     this.setState({ [prop]: val });
-    // console.log('heres state', this.state);
   }
-  handleSubmit = (event) => {
+  // Handles submission of the new issue form
+  handleSubmit = (event, butt) => {
     event.preventDefault();
-    if (this.state.showing === 'issue') {
-      this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
-    } else if (this.state.showing === 'pull_request') {
-      console.log('you submitted a pull request');
-    }
+    this.props.handleCreateIssueData(this.state.title, this.state.body, this.state.assignees);
+    this.setState({ title: '', body: '' });
+  }
+  // handles if users want to add assignees
+  handleAddAssignees = () => {
+    this.props.handleAddAssignees(this.state.assignees);
+    this.setState({ assignees: [] });
+  }
+  // handles if users want to remove assignees
+  handleRemoveAssignees = () => {
+    this.props.handleRemoveAssignees(this.state.assignees);
+    this.setState({ assignees: [] });
   }
   render() {
-    console.log('Here is what is showing', this.state.showing);
+    // console.log('Here is what is showing', this.state.showing);
+    console.log('ASSIGNEES IN PULL MODAL', this.state.assignees);
     if (this.state.showing === 'issue') {
       return (
         // <div onClick={this.props.handleIssuePullClick}>
@@ -117,8 +124,8 @@ class IssuePullModal extends Component {
                     ))}
 
                   </div>
-                  <button className="btn btn-lg btn-success" type="submit">Submit</button>
-                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+                  <button label="submit" className="btn btn-lg btn-success" type="submit">Submit</button>
+                  <div label="cancel" className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</div>
                 </form>
               </ModalDialog>
 
@@ -141,9 +148,9 @@ class IssuePullModal extends Component {
                   source={values}
                   value={this.state.showing}
                 /> */}
-                <form style={{ marginBottom: 25 }} onSubmit={this.handleSubmit}>
+                <form style={{ marginBottom: 25 }} onSubmit={(event) => event.preventDefault()}>
                   <div>
-                    <p> Add Assignees</p>
+                    <h5 style={{ marginTop: 5 }}>Manage Assignees:</h5>
                     {this.props.collabs.map((collab) => (
                       <div key={collab.id} >
                         <MuiThemeProvider>
@@ -157,8 +164,8 @@ class IssuePullModal extends Component {
                     ))}
 
                   </div>
-                  <button className="btn btn-lg btn-success" type="submit">Submit</button>
-                  <button className="btn btn-lg btn-danger" onClick={this.props.handleIssuePullClose}> Cancel</button>
+                  <button className="btn btn-lg btn-success" onClick={this.handleAddAssignees}>Add Assignees</button>
+                  <button className="btn btn-lg btn-danger" onClick={this.handleRemoveAssignees}>Remove Assignees</button>
                 </form>
               </ModalDialog>
 
@@ -167,16 +174,15 @@ class IssuePullModal extends Component {
         </div>
       );
     }
-    else {
-      return (
-        <div>
-          {this.props.isShowing &&
-            <p>Loading......</p>
-          }
+    return (
+      <div>
+        {this.props.isShowing &&
+        <p>Loading......</p>
+        }
 
-        </div>
-      );
-    }
+      </div>
+    );
+
     // else if (this.state.showing === 'pull_request') {
     //   return (
     //     <div onClick={this.props.handleIssuePullClick}>

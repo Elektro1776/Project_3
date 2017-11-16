@@ -22,7 +22,8 @@ class ProjLayout extends Component {
       repoName: '',
       currentRepoOwner: null,
       issuePullModalShowing: false,
-      modalShowState: 'issue',
+      modalShowState: '',
+      currentIssueNumber: '',
       // branches: null,
     };
   }
@@ -35,7 +36,7 @@ class ProjLayout extends Component {
   componentWillReceiveProps(nextProps) {
     // console.log('Current layout state in receive props', this.state);
     // console.log('Next Props coming in', nextProps);
-    const { userIssues, readme, repoName, git_profile, currentRepoOwner } = nextProps;
+    const { userIssues, readme, repoName, git_profile, currentRepoOwner, modifiedIssue } = nextProps;
     // console.log(' issues received by Layout', userIssues);
     // console.log("helpful console log", currentRepoOwner, this.state.currentRepoOwner, this.state.repoName);
     // console.log('IssueState', this.state.issues.length);
@@ -64,11 +65,12 @@ class ProjLayout extends Component {
       this.setState({ issues: userIssues, readme });
     }
   }
-  handleModalShowState = (state) => {
-    this.setState({ modalShowState: state });
+  handleModalShowState = (state, issueNum) => {
+    this.setState({ modalShowState: state, currentIssueNumber: issueNum });
+    this.setState({ issuePullModalShowing: true });
   }
   handleRefresh = () => {
-    console.log('What we are sending REFRESH', this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
+    // console.log('What we are sending REFRESH', this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
     this.props.fetchUserIssues(this.state.currentRepoOwner, this.state.repoName, this.props.git_token);
   }
   handleCreateIssueData = (title, body, assignees) => {
@@ -77,7 +79,7 @@ class ProjLayout extends Component {
     this.handleIssuePullClose();
   }
   handleIssuePullClick = () => {
-    this.handleModalShowState('issue');
+    this.handleModalShowState('issue', '');
     this.setState({ issuePullModalShowing: true });
   }
   handleIssuePullClose = () => {
@@ -120,9 +122,20 @@ class ProjLayout extends Component {
 
             </div>
             <div>
-              <IssueCard handleCreateIssueData={this.handleCreateIssueData}
-                modalState={this.state.modalShowState} handleIssuePullClose={this.handleIssuePullClose} issueModalState={this.state.issuePullModalShowing}
-              handleModalState={this.handleModalShowState} handleIssuePullClick={this.handleIssuePullClick} issues={this.state.issues} repoName={this.state.repoName} repoOwner={this.state.currentRepoOwner} />
+              <IssueCard
+                handleCardExpansion={this.handleCardExpansion}
+                handleCreateIssueData={this.handleCreateIssueData}
+                modalState={this.state.modalShowState}
+                handleIssuePullClose={this.handleIssuePullClose}
+                issueModalState={this.state.issuePullModalShowing}
+                currentIssueNumber={this.state.currentIssueNumber}
+                handleModalState={this.handleModalShowState}
+                handleIssuePullClick={this.handleIssuePullClick}
+                handleRefresh={this.handleRefresh}
+                issues={this.state.issues}
+                repoName={this.state.repoName}
+                repoOwner={this.state.currentRepoOwner}
+              />
             </div>
           </div>
         );
@@ -148,7 +161,7 @@ class ProjLayout extends Component {
   }
   render() {
     // console.log('Here re my branches?????', this.state.branches);
-    console.log('modal show state in layout', this.state.modalShowState);
+    console.log('are my expanded cards actually working', this.state.expandedCards);
     return (
       <div className={styles.layout}>
         {this.whatStateToUse(this.props.currentScreen)}
@@ -160,6 +173,7 @@ class ProjLayout extends Component {
 
 export default connect((state, ownProps) => ({
   userIssues: state.issues.repoIssues,
+  modifiedIssue: state.issues.modifiedIssue,
   readme: state.readme.readme,
   git_profile: state.auth.git_profile,
   git_token: state.auth.github_token,

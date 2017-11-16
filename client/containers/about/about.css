@@ -2,5 +2,12 @@
 
 background-color: black;
 
-
+}
+.backgroundHelper {
+  margin-top: 1%;
+  height: 750px;
+  background:black;
+}
+.loader {
+  margin-left: 13%;
 }
