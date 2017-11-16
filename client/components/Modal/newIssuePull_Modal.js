@@ -78,10 +78,12 @@ class IssuePullModal extends Component {
   // handles if users want to add assignees
   handleAddAssignees = () => {
     this.props.handleAddAssignees(this.state.assignees);
+    this.setState({ assignees: [] });
   }
   // handles if users want to remove assignees
   handleRemoveAssignees = () => {
     this.props.handleRemoveAssignees(this.state.assignees);
+    this.setState({ assignees: [] });
   }
   render() {
     // console.log('Here is what is showing', this.state.showing);

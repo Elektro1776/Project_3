@@ -30,7 +30,7 @@ githubRouter.post('/getRepos', (req, res) => {
     },
     method: 'GET',
     json: true,
-    url: `https://api.github.com/users/${req.body.id}/repos?sort=pushed&type=all&access_token=${req.body.token}`,
+    url: `https://api.github.com/users/${req.body.id}/repos?sort=pushed&type=all&page=${req.body.page}&access_token=${req.body.token}`,
   }, (err, response, body) => {
     const headerLinks = response.headers.link.split(';');
     const lastLink = headerLinks[1].split(',');

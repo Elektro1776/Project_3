@@ -87,20 +87,18 @@ handleCloseIssue = (login, repoName, issueNum, token) => {
 shouldComponentUpdate(nextProps, nextState) {
   return true;
 }
-handeStateInCardFromModal = () => {
-  this.setState({ issuesLoaded: false, commentsLoaded: false });
-  // console.log('I work');
-}
 // this function handles adding new assignees, closing the modal, and refreshing the page
 handleAddAssignees = (assignees) => {
+  this.setState({ assigneesLoaded: false });
   this.props.addNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
   this.props.handleIssuePullClose();
-  this.props.handleRefresh();
+  setTimeout(this.props.handleRefresh(), 2000);
 }
 handleRemoveAssignees = (assignees) => {
+  this.setState({ assigneesLoaded: false });
   this.props.removeNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
   this.props.handleIssuePullClose();
-  this.props.handleRefresh();
+  setTimeout(this.props.handleRefresh(), 2000);
 }
 render() {
   // console.log('STATE of issues at render', this.state.issues);
