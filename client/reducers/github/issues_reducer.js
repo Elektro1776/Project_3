@@ -2,6 +2,7 @@ import { FETCHING_ISSUES, SUCCESS_GETTING_ISSUES, FAILURE_GETTING_ISSUES } from 
 import { CLOSING_ISSUE, RECEIVED_CLOSING_ISSUE, FAILURE_CLOSING_ISSUE } from '../../actions/githubActions/closeIssueAction';
 import { CREATING_ISSUE, RECEIVED_CREATED_ISSUE, FAILURE_CREATING_ISSUE } from '../../actions/githubActions/createIssueAction';
 import { ADDING_ASSIGNEES, RECEIVED_ASSIGNEES, FAILURE_ADD_ASSIGNEES } from '../../actions/githubActions/addAssigneesAction';
+import { REMOVING_ASSIGNEES, RECEIVED_REMOVED_ASSIGNEES, FAILURE_REMOVE_ASSIGNEES } from '../../actions/githubActions/removeAssigneesAction';
 
 const initialState = {
   fetchingIssues: false,
@@ -78,10 +79,24 @@ export default function (state = initialState, action) {
             oldState[i] = action.payload.issue.modifiedIssue;
         }
       });
-      console.log('Here is modified old state', oldState);
       return Object.assign({}, state, { repoIssues: oldState, modifiedIssue: action.payload.issue.modifiedIssue });
     }
     case FAILURE_ADD_ASSIGNEES: {
+      return Object.assign({}, state, { errorAddingAssignees: action.payload.err });
+    }
+    case REMOVING_ASSIGNEES: {
+      return Object.assign({}, state, { addingAssignees: true });
+    }
+    case RECEIVED_REMOVED_ASSIGNEES: {
+      let oldState = state.repoIssues;
+      oldState.map((issue, i) => {
+        if (issue.number === action.payload.issueNum) {
+            oldState[i] = action.payload.issue.modifiedIssue;
+        }
+      });
+      return Object.assign({}, state, { repoIssues: oldState, modifiedIssue: action.payload.issue.modifiedIssue });
+    }
+    case FAILURE_REMOVE_ASSIGNEES: {
       return Object.assign({}, state, { errorAddingAssignees: action.payload.err });
     }
     default:

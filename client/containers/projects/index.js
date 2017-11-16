@@ -21,7 +21,8 @@ class Projects extends Component {
     componentWillReceiveProps(nextProps) {
       // console.log("this should show projects connected in state", nextProps.currentProject);
       const { currentProject } = nextProps;
-      if (currentProject.length !== 0 && currentProject.id !== this.props.currentProject.id) {
+      console.log('Current proj in nextprops', currentProject);
+      if (currentProject.id !== this.props.currentProject.id) {
         this.setState({ currentProject });
       }
     }

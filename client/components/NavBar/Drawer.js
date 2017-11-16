@@ -14,23 +14,27 @@ class RepoDrawer extends Component {
       active: false,
       repos: [],
       currentProject: {},
+      currentRepo: '1',
+      lastRepoNumber: null,
     };
   }
   componentDidMount() {
     if (this.props.git_profile.login) {
       const { login } = this.props.git_profile;
-      this.props.fetchUserRepos(login, this.props.git_token);
-
+      this.props.fetchUserRepos(login, this.props.git_token, this.state.currentRepo);
     }
+    console.log('SEETTTTTTTTTTTTING LAAAAAASTT NUMMBERRRERER');
+    this.setState({ lastRepoNumber: this.props.lastRepoNum });
     // console.log(' WHAT IS OUR LOGIN AND TOKEN ON MOUNT OF DRAWER???', this.props.git_profile, this.props.git_token);
   }
- componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps) {
     if (nextProps.git_profile.login && (nextProps.git_profile.login !== this.props.git_profile.login)) {
       const { login } = nextProps.git_profile;
-      this.props.fetchUserRepos(login, nextProps.git_token);
+      this.props.fetchUserRepos(login, nextProps.git_token, '1');
+      this.setState({ currentRepo: '1', lastRepoNumber: this.props.lastRepoNum });
     }
     const { userRepos, currentProject, fetchingRepos } = nextProps;
-    if (userRepos.length !== 0) {
+    if (userRepos.length !== 0 || this.props.userRepos === userRepos) {
       this.setState({ repos: userRepos, currentProject });
     }
   }
@@ -41,12 +45,53 @@ class RepoDrawer extends Component {
     this.props.loadCurrentProject(id);
     this.handleToggle();
   }
+  handleRepoBackClick = () => {
+    const pageNumber = this.state.currentRepo === '1' ? this.state.lastRepoNumber : (parseInt(this.state.currentRepo) - 1);
+    this.props.fetchUserRepos(this.props.git_profile.login, this.props.git_token, pageNumber);
+    this.setState({ currentRepo: pageNumber.toString() });
+  }
+  handleRepoForwardClick = () => {
+    const pageNumber = this.state.currentRepo === this.state.lastRepoNumber ? 1 : (parseInt(this.state.currentRepo) + 1);
+    this.props.fetchUserRepos(this.props.git_profile.login, this.props.git_token, pageNumber);
+    this.setState({ currentRepo: pageNumber.toString() });
+  }
   render() {
+    // console.log('current repo number', this.state.currentRepo);
+    console.log('last number on Props', this.props.lastRepoNum);
+    console.log('lastRepoNumber on State', this.state.lastRepoNumber);
     const { repos } = this.state;
-    return (
+    const backArrow = () => (
       <div>
+        <i className="material-icons">arrow_back</i>
+      </div>
+    );
+    const currentUrl = document.URL;
+    let specialClass = `${styles.hide}`;
+    if (currentUrl.split('/').indexOf('dashboard') === -1) {
+      specialClass = `${styles.show}`;
+    }
+    return (
+      <div className={specialClass}>
         <Button className={styles.repoButton} label="Repos" onClick={this.handleToggle} />
         <Drawer active={this.state.active} onOverlayClick={this.handleToggle}>
+          <div className={styles.pageButtons} style={{marginTop: '25%'}}>
+            <Button
+              className={styles.button}
+              label="Back"
+              raised
+              ripple
+              primary
+              onClick={this.handleRepoBackClick}
+            />
+            <Button
+              className={styles.button}
+              label="Forward"
+              raised
+              ripple
+              primary
+              onClick={this.handleRepoForwardClick}
+            />
+          </div>
           {repos.map((repo) => (
             <div key={repo.id}>
               <Button
@@ -71,8 +116,8 @@ export default connect((state, ownProps) => ({
   git_profile: state.auth.git_profile,
   git_token: state.auth.github_token,
   fetchingRepos: state.repos,
-
+  lastRepoNum: state.repos.lastRepoNumber,
 }), (dispatch) => ({
-  fetchUserRepos: (userId, user_token) => dispatch(fetchUserRepos(userId, user_token)),
+  fetchUserRepos: (userId, user_token, page) => dispatch(fetchUserRepos(userId, user_token, page)),
   loadCurrentProject: (projectId) => dispatch(loadCurrentProject(projectId)),
 }))(RepoDrawer);

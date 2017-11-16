@@ -8,6 +8,7 @@ class LoginForm extends Component {
   render() {
     const { email, password } = this.props;
     return (
+
       <form className={styles.form}>
         <Input
           type="text"

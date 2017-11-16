@@ -1,7 +1,10 @@
 .logo {
   background-color: green;
 }
-
+.about {
+  margin-left: 80%;
+  text-decoration: none;
+}
 .menuStyle {
 
   text-align: center;

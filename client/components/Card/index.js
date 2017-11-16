@@ -8,6 +8,8 @@ import { addUserComment } from '../../actions/githubActions/addCommentAction';
 import IssuePullModal from '../Modal/newissuePull_Modal';
 import { convertDate } from '../EventFeed/logical_solutions';
 import { addNewAssignees } from '../../actions/githubActions/addAssigneesAction';
+import { removeNewAssignees } from '../../actions/githubActions/removeAssigneesAction';
+import Markdown from 'react-remarkable';
 
 class IssueCard extends Component {
   state = {
@@ -86,21 +88,25 @@ handleCloseIssue = (login, repoName, issueNum, token) => {
 shouldComponentUpdate(nextProps, nextState) {
   return true;
 }
-handeStateInCardFromModal = () => {
-  this.setState({ issuesLoaded: false, commentsLoaded: false });
-  // console.log('I work');
-}
+// this function handles adding new assignees, closing the modal, and refreshing the page
 handleAddAssignees = (assignees) => {
+  this.setState({ assigneesLoaded: false });
   this.props.addNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
   this.props.handleIssuePullClose();
-  this.props.handleRefresh();
+  setTimeout(this.props.handleRefresh(), 2000);
+}
+handleRemoveAssignees = (assignees) => {
+  this.setState({ assigneesLoaded: false });
+  this.props.removeNewAssignees(this.props.repoOwner, this.props.repoName, this.props.currentIssueNumber, assignees, this.props.git_token);
+  this.props.handleIssuePullClose();
+  setTimeout(this.props.handleRefresh(), 2000);
 }
 render() {
   // console.log('STATE of issues at render', this.state.issues);
   // console.log('issue card mocal state', this.props.modalState);
   // console.log('Expanded card State', this.state.expandedCards);
   const { issuesLoaded, commentsLoaded, assigneesLoaded } = this.state;
-  // console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
+  console.log('Card state issues!!!!!!!!!!!!!!!!!!!!', this.state.issues);
   // console.log('Here are the expanded cards', this.state.expandedCards);
   // console.log('Here aremy issue comments', this.state.issueComments);
   if (issuesLoaded && commentsLoaded && assigneesLoaded) {
@@ -117,14 +123,14 @@ render() {
                 <h6 className={`card-title pull-left ${styles.titleBump}`}>{`Opened By ${issue.user.login}`}</h6>
                 <br />
                 <br />
-                <p className="card-text">{issue.body}</p>
+                <Markdown className="card-text" source={`${issue.body}`} />
                 <br />
                 <div>
                   {issueComments[issue.number].map((comment) => (
                     <div key={comment.id}>
                       <br />
                       <h6 className={styles.byWho}>{ `Comment by ${comment.user.login}${convertDate(comment.created_at)}` }</h6>
-                      <p className="card-text">{ comment.body }</p>
+                      <Markdown className="card-text" source={`${comment.body}`} />
                     </div>
                   ),
                   )
@@ -147,7 +153,7 @@ render() {
             </div>
           </div>
         ))}
-        <IssuePullModal modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleAddAssignees={this.handleAddAssignees} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} />
+        <IssuePullModal assigneeData={this.state.assigneeData} modalState={this.props.modalState} handleCreateIssueData={this.props.handleCreateIssueData} collabs={this.props.collabs} isShowing={this.props.issueModalState} handleAddAssignees={this.handleAddAssignees} handleIssuePullClick={this.props.handleIssuePullClick} handleIssuePullClose={this.props.handleIssuePullClose} handleRemoveAssignees={this.handleRemoveAssignees} />
 
         <ModalIssueComment
           changeHandler={this.modifyTextState}
@@ -165,7 +171,11 @@ render() {
     <div>
       <div className={styles.loaderContainerThree}>
         <img className={`center-block ${styles.loaderImageThree}`} src="./images/uTile_black_loader_100.gif" alt="loader" />
-        <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>Loading...</h1>
+        {setTimeout(()=>{
+          return (
+          <h1 className={styles.loaderTextThree} style={{ color: 'white' }}>It does not looks like there are any issues currently.</h1>
+        );
+        }, 5000)}
       </div>
     </div>
   );
@@ -187,4 +197,5 @@ export default connect((state, ownProps) => ({
   fetchUserComments: (userId, repoName, issueNum, token) => dispatch(fetchUserComments(userId, repoName, issueNum, token)),
   addUserComment: (userName, repoName, issueNum, body, token) => dispatch(addUserComment(userName, repoName, issueNum, body, token)),
   addNewAssignees: (userName, repoName, issueNum, assignees, token) => dispatch(addNewAssignees(userName, repoName, issueNum, assignees, token)),
+  removeNewAssignees: (userName, repoName, issueNum, assignees, token) => dispatch(removeNewAssignees(userName, repoName, issueNum, assignees, token)),
 }))(IssueCard);

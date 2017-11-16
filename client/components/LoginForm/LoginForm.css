@@ -16,6 +16,13 @@
   margin-top: 15px;
   margin: auto;
 }
-
-
-
+.logo {
+  margin-left: 25%;
+}
+.formFix {
+  margin-left: 23%;
+}
+.backFix {
+  height:750px;
+  background: black;
+}

@@ -221,6 +221,16 @@ class EventGenerator extends Component {
     }
   }
   render() {
+
+      const displayMorePlease = () => {
+      if (this.state.displayed < 26) {
+      return (
+        <div className={`row`}>
+          <button className={`${styles.displayMore} btn col-xs-4`} onClick={this.displayMore}> Click for More </button>
+        </div>
+      );
+    }
+  }
     return (
       <div>
         <h1 className={styles.headerText}>Your Recent Events:</h1>
@@ -233,9 +243,8 @@ class EventGenerator extends Component {
             );
           }
         })}
-        <div className={`row`}>
-          <button className={`${styles.displayMore} btn col-xs-4 col-xs-offset-4`} onClick={this.displayMore}> Click for More </button>
-        </div>
+
+        {displayMorePlease()}
       </div>
     );
   }
